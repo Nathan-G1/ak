@@ -18,6 +18,7 @@ import {
 } from './views';
 
 const Routes = () => {
+  // TODO: Get to login or landing page first
   return (
     <Switch>
       <Redirect
