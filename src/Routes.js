@@ -20,6 +20,7 @@ import {
 const Routes = () => {
   // TODO: Get to login or landing page first
   // TODO: Route to page not authorized instead of not found
+  // TODO: Rearragnge and understand index files
   return (
     <Switch>
       <Redirect
