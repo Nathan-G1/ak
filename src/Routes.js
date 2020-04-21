@@ -19,6 +19,7 @@ import {
 
 const Routes = () => {
   // TODO: Get to login or landing page first
+  // TODO: Route to page not authorized instead of not found
   return (
     <Switch>
       <Redirect
