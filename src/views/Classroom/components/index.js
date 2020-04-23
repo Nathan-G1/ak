@@ -1,2 +1,2 @@
-export { default as Notifications } from './Notifications';
+export { default as Video } from './Video';
 export { default as Password } from './Password';

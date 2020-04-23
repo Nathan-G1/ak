@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const Notifications = props => {
+const Video = props => {
   const { className, ...rest } = props;
 
   const classes = useStyles();
@@ -35,8 +35,8 @@ const Notifications = props => {
     >
       <form>
         <CardHeader
-          subheader="Manage the notifications"
-          title="Notifications"
+          subheader="Subtitle or description about the video"
+          title="Video Ttitle"
         />
         <Divider />
         <CardContent>
@@ -56,7 +56,7 @@ const Notifications = props => {
                 gutterBottom
                 variant="h6"
               >
-                Notifications
+                Biology
               </Typography>
               <FormControlLabel
                 control={
@@ -142,8 +142,8 @@ const Notifications = props => {
   );
 };
 
-Notifications.propTypes = {
+Video.propTypes = {
   className: PropTypes.string
 };
 
-export default Notifications;
+export default Video;
