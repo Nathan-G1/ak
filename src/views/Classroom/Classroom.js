@@ -26,14 +26,14 @@ const Classroom = () => {
         >
           <Notifications />
         </Grid>
-        <Grid
+      </Grid>
+      <Grid
           item
           md={5}
           xs={12}
         >
           <Password />
         </Grid>
-      </Grid>
     </div>
   );
 };
