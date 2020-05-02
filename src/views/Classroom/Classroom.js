@@ -6,7 +6,7 @@ import { Video, Password } from './components';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: theme.spacing(4)
+    padding: theme.spacing(1)
   }
 }));
 
@@ -20,7 +20,7 @@ const Classroom = () => {
       >
         <Grid
           item
-          lg={11}
+          lg={12}
           md={12}
           xs={12}
         >

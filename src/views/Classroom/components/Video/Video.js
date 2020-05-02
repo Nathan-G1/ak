@@ -14,6 +14,8 @@ import {
   Typography,
   Button
 } from '@material-ui/core';
+import ReactPlayer from 'react-player'
+
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -43,19 +45,14 @@ const Video = props => {
           <Grid
             container
             spacing={6}
-            wrap="wrap"
+            
           >
+            <ReactPlayer url='https://youtu.be/juxyvqiOMfY' controls width='100%'/>
           </Grid>
         </CardContent>
         <Divider />
         <CardActions>
-           {/* TODO: Like, Unlike, share and speed control widgets go here */}
-          <Button
-            color="primary"
-            variant="outlined"
-          >
-            Save
-          </Button>
+          {/* TODO: Like, Unlike, share and speed control widgets go here */}
         </CardActions>
       </form>
     </Card>
