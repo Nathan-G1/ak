@@ -283,7 +283,7 @@ const SignIn = props => {
                   label="Email address"
                   name="email"
                   onChange={handleChange}
-                  type="text"
+                  type="email"
                   value={formState.values.email || ''}
                   variant="outlined"
                 />
