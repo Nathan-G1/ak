@@ -11,6 +11,7 @@ import {
   Link,
   FormHelperText,
   Checkbox,
+  MenuItem,
   Typography
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -152,6 +153,17 @@ const SignUp = props => {
     errors: {}
   });
 
+  const userRole = [
+    {
+      value: 'Student',
+      label: 'Student'
+    },
+    {
+      value: 'Teacher',
+      label: 'Teacher'
+    }
+  ]
+
   useEffect(() => {
     const errors = validate(formState.values, schema);
 
@@ -236,11 +248,11 @@ const SignUp = props => {
           xs={12}
         >
           <div className={classes.content}>
-            <div className={classes.contentHeader}>
+            {/* <div className={classes.contentHeader}>
               <IconButton onClick={handleBack}>
                 <ArrowBackIcon />
               </IconButton>
-            </div>
+            </div> */}
             <div className={classes.contentBody}>
               <form
                 className={classes.form}
@@ -286,6 +298,29 @@ const SignUp = props => {
                   value={formState.values.lastName || ''}
                   variant="outlined"
                 />
+
+                <TextField
+                  className={classes.textField}
+                  fullWidth
+                  label="Select role"
+                  name="userRole"
+                  onChange={handleChange}
+                  required
+                  select
+                  // eslint-disable-next-line react/jsx-sort-props
+                  SelectProps={{ native: true }}
+                  value={formState.values.userRole}
+                  variant="outlined"
+                >
+                  {userRole.map(option => (
+                    <option
+                      key={option.value}
+                      value={option.value}
+                    >
+                      {option.label}
+                    </option>
+                  ))}
+                </TextField>
                 <TextField
                   className={classes.textField}
                   error={hasError('email')}

@@ -11,6 +11,7 @@ import {
   Typography as TypographyView,
   Icons as IconsView,
   Classroom as Classroom,
+  CourseDetail as CourseDetailView,
   Account as AccountView,
   Settings as SettingsView,
   SignUp as SignUpView,
@@ -27,7 +28,7 @@ const Routes = () => {
       <Redirect
         exact
         from="/"
-        to="/dashboard"
+        to="/sign-in"
       />
       <RouteWithLayout
         component={DashboardView}
@@ -48,6 +49,12 @@ const Routes = () => {
         path="/courses"
       />
       <RouteWithLayout
+        component={SettingsView}
+        exact
+        layout={MainLayout}
+        path="/settings"
+      />
+      <RouteWithLayout
         component={TypographyView}
         exact
         layout={MainLayout}
@@ -56,7 +63,7 @@ const Routes = () => {
       <RouteWithLayout
         component={Classroom}
         exact
-        layout={MainLayout}
+        layout={MinimalLayout}
         path="/classroom"
       />
       <RouteWithLayout
@@ -72,10 +79,10 @@ const Routes = () => {
         path="/account"
       />
       <RouteWithLayout
-        component={SettingsView}
+        component={CourseDetailView}
         exact
         layout={MainLayout}
-        path="/settings"
+        path="/course-detail"
       />
       <RouteWithLayout
         component={SignUpView}

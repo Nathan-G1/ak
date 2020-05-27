@@ -3,7 +3,7 @@
 import React, { forwardRef, useState } from 'react';
 import { NavLink as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
+import PropTypes, { func } from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { List, ListItem, Button, colors } from '@material-ui/core';
 
@@ -40,43 +40,42 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const CustomRouterLink = forwardRef((props, ref) => (
-  <div
-    ref={ref}
-    style={{ flexGrow: 1 }}
-  >
-    <RouterLink {...props} />
-  </div>
-));
+// const CustomRouterLink = forwardRef((props, ref) => (
+//   <div
+//     ref={ref}
+//     style={{ flexGrow: 1 }}
+//   >
+//     <RouterLink {...props} />
+//   </div>
+// ));
 
 const SidebarNav = props => {
-  const { pages, className, ...rest } = props;
-
-  // get user and set it here
-  const [ userStatus, setUserStatus ] = useState('admin');
+  const { coursevideos, className, ...rest } = props;
 
   const classes = useStyles();
+
+  function handleCourseVideo(coursevideo){
+    props.onCourseVideoChange(coursevideo);
+  }
 
   return (
     <List
       {...rest}
       className={clsx(classes.root, className)}
     >
-      {pages.map(page => (
-        userStatus == page.user &&
+      {coursevideos.map(coursevideo => (
         <ListItem
           className={classes.item}
           disableGutters
-          key={page.title}
+          key={coursevideo.order}
         >
           <Button
             activeClassName={classes.active}
             className={classes.button}
-            component={CustomRouterLink}
-            to={page.href}
+            // component={CustomRouterLink}
+            onClick={() => handleCourseVideo(coursevideo)}
           >
-            <div className={classes.icon}>{page.icon}</div>
-            {page.title}
+            {coursevideo.title}
           </Button>
         </ListItem>
       ))}
@@ -86,7 +85,6 @@ const SidebarNav = props => {
 
 SidebarNav.propTypes = {
   className: PropTypes.string,
-  pages: PropTypes.array.isRequired
 };
 
 export default SidebarNav;

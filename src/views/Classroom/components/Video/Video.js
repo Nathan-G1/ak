@@ -28,6 +28,8 @@ const useStyles = makeStyles(() => ({
 const Video = props => {
   const { className, ...rest } = props;
 
+  const currentlecture = props.currentlecture;
+
   const classes = useStyles();
 
   return (
@@ -38,16 +40,15 @@ const Video = props => {
       <form>
         <CardHeader
           subheader="Subtitle or description about the video"
-          title="Video Ttitle"
+          title={currentlecture.title}
         />
         <Divider />
         <CardContent>
           <Grid
             container
             spacing={6}
-            
           >
-            <ReactPlayer url='https://youtu.be/juxyvqiOMfY' controls width='100%'/>
+            <ReactPlayer url={currentlecture.video} controls width='100%'/>
           </Grid>
         </CardContent>
         <Divider />

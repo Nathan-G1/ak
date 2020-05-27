@@ -42,56 +42,11 @@ const Sidebar = props => {
 
   const classes = useStyles();
 
-  const pages = [
-    {
-      user: 'admin',
-      title: 'Dashboard',
-      href: '/dashboard',
-      icon: <DashboardIcon />
-    },
-    {
-      user: 'admin',
-      title: 'Users',
-      href: '/users',
-      icon: <PeopleIcon />
-    },
-    {
-      user: 'admin',
-      title: 'Courses',
-      href: '/courses',
-      icon: <ShoppingBasketIcon />
-    },
-    {
-      user: 'admin',
-      title: 'Authentication',
-      href: '/sign-in',
-      icon: <LockOpenIcon />
-    },
-    {
-      user: 'admin',
-      title: 'Typography',
-      href: '/typography',
-      icon: <TextFieldsIcon />
-    },
-    {
-      user: 'admin',
-      title: 'Cetrtificates',
-      href: '/certificates',
-      icon: <ImageIcon />
-    },
-    {
-      user: 'admin',
-      title: 'Account',
-      href: '/account',
-      icon: <AccountBoxIcon />
-    },
-    {
-      user: 'admin',
-      title: 'Settings',
-      href: '/settings',
-      icon: <SettingsIcon />
-    }
-  ];
+  const coursevideos = props.coursevideos
+
+  function handleCourseVideoChange(coursevideo){
+    props.onCourseVideoChange(coursevideo)
+  }
 
   return (
     <Drawer
@@ -109,7 +64,8 @@ const Sidebar = props => {
         <Divider className={classes.divider} />
         <SidebarNav
           className={classes.nav}
-          pages={pages}
+          coursevideos={coursevideos}
+          onCourseVideoChange={handleCourseVideoChange}
         />
         <UpgradePlan />
       </div>
