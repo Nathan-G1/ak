@@ -10,7 +10,7 @@ import {
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import clsx from 'clsx';
-import { Video, Password, Sidebar, CourseList } from './components';
+import { Video, Comment, Sidebar, CourseList } from './components';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -205,7 +205,7 @@ const Classroom = () => {
           md={12}
           xs={12}
         >
-          <Password />
+          <Comment />
         </Grid>
       </main>
     </div>

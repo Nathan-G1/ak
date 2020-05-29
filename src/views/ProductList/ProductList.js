@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end'
-  }
+  },
 }));
 
 const ProductList = () => {

@@ -2,21 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import moment from 'moment';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles, useTheme} from '@material-ui/styles';
 import {
   Grid,
-  Typography,
+  useMediaQuery,
   ListItem,
-  Paper
+  List,
+  ListItemText,
+  ListItemIcon,
+  Divider
 } from '@material-ui/core';
+
+import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 
 const useStyles = makeStyles(theme => ({
   main:{
     marginTop: theme.spacing(3), 
   },
-  paper: {
-    paddingTop: theme.spacing(3),     
-    textAlign: 'center',
+  listStyle: {
+    marginTop: theme.spacing(2), 
+    display: 'flex',
+    flexDirection: 'row',
+    padding: 0,
   },
 }));
 
@@ -25,27 +32,29 @@ const WhatToLearn = props => {
 
   const classes = useStyles();
 
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'), {
+    defaultMatches: true
+  });
+
   const itemList = props.lists;
 
   return (
-    <Grid
-        className={classes.main}
-        container
-        spacing={3}
+    <List 
+      className={isDesktop ? classes.listStyle : ''}
     >
-        <Grid item md={6} xs={12} className={classes.paper}>
-          <Paper>{itemList[0]}</Paper>
-        </Grid>
-        <Grid item md={6} xs={12} className={classes.paper}>
-          <Paper>{itemList[1]}</Paper>
-        </Grid>
-        <Grid item md={6} xs={12} className={classes.paper}>
-          <Paper>{itemList[2]}</Paper>
-        </Grid>
-        <Grid item md={6} xs={12} className={classes.paper}>
-          <Paper>{itemList[3]}</Paper>
-        </Grid>
-    </Grid>
+      {
+        itemList.map((item) => (
+          
+          <ListItem>
+            <ListItemIcon style={{color:"green"}}>
+              <DoneOutlineIcon/>
+            </ListItemIcon>
+            <ListItemText>{item}</ListItemText>
+          </ListItem>
+        ))
+      }
+    </List>
   );
 };
 
