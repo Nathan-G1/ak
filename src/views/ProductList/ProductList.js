@@ -27,11 +27,13 @@ const ProductList = () => {
   const classes = useStyles();
 
   const [products] = useState(mockData);
-
+  const [userRole, setUserRole] = useState("Teacher");
 
   return (
     <div className={classes.root}>
-      <ProductsToolbar />
+      <ProductsToolbar 
+        userRole={userRole}
+      />
       <div className={classes.content}>
         <Grid
           container

@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ProductsToolbar = props => {
-  const { className, ...rest } = props;
+  const { className,userRole, ...rest } = props;
   const [open, setOpen] = React.useState(false);
 
   const classes = useStyles();
@@ -66,13 +66,16 @@ const ProductsToolbar = props => {
     >
       <div className={classes.row}>
         <span className={classes.spacer} />
-       <Button
-          onClick={handleOpen}
-          color="primary"
-          variant="contained"
+       { 
+        userRole == "Teacher" && 
+        <Button
+            onClick={handleOpen}
+            color="primary"
+            variant="contained"
         >
-          Add courses
+            Add courses
         </Button>
+       }
         <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
