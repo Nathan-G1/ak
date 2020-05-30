@@ -4,6 +4,7 @@ import { IconButton, Grid, Typography } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
+import { Classroom } from '../';
 import { ProductsToolbar, ProductCard } from './components';
 import mockData from './data';
 
@@ -27,6 +28,7 @@ const ProductList = () => {
 
   const [products] = useState(mockData);
 
+
   return (
     <div className={classes.root}>
       <ProductsToolbar />
@@ -43,7 +45,9 @@ const ProductList = () => {
               md={6}
               xs={12}
             >
-              <ProductCard product={product} />
+              <ProductCard 
+                product={product}
+              />
             </Grid>
           ))}
         </Grid>

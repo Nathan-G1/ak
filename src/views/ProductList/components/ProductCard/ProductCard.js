@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/styles';
 import {
   Card,
@@ -44,12 +45,18 @@ const useStyles = makeStyles(theme => ({
 const ProductCard = props => {
   const { className, product, ...rest } = props;
 
+  const history = useHistory();
+
   const classes = useStyles();
 
   return (
     <Card
       {...rest}
       className={clsx(classes.root, className)}
+      onClick={()=>{
+        history.push("/classroom");
+      }}
+      
     >
       <CardContent>
         <div className={classes.imageContainer}>
@@ -105,7 +112,7 @@ const ProductCard = props => {
           </Grid>
         </Grid>
       </CardActions>
-    </Card>
+    </Card> 
   );
 };
 
