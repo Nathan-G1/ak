@@ -192,26 +192,18 @@ const Comment = props => {
         <CardContent>
           <List>
               {
-                comments.map((comment, i) => (
-                  <div>
-                    <ListItem key={i} alignItems="flex-start">
+                comments.map((comment) => (
+                  <React.Fragment>
+                    <ListItem key={comment.id} alignItems="flex-start">
                       <CommentItem
                         comment={comment}
                       />
                     </ListItem>
                     <Divider variant="inset" component="li" />
-                  </div>
-                  
+                  </React.Fragment>
                   )
                 )
               }
-              
-            
-            {/* <CommentItem
-              commentlist={comments}
-              handleLikeCount={handleLikeCount}
-              handleDisLikeCount={handleDisLikeCount}
-            /> */}
           </List>
         </CardContent>
       </Card>

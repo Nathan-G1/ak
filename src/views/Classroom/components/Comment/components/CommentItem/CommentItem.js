@@ -120,15 +120,15 @@ const CommentItem = props => {
               isRepliesVisibile &&
               <List>
                 {
-                  comment.replies.map((comment, i) => (
-                    <div>
-                      <ListItem key={i} alignItems="flex-start">
+                  comment.replies.map((comment) => (
+                    <React.Fragment>
+                      <ListItem key={comment.id} alignItems="flex-start">
                         <CommentItem
                           comment={comment}
                         />
                       </ListItem>
                       <Divider variant="inset" component="li" />
-                    </div>
+                    </React.Fragment>
                   )
                   )
                 }

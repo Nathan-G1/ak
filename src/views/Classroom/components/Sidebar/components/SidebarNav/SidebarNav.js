@@ -67,13 +67,14 @@ const SidebarNav = props => {
         <ListItem
           className={classes.item}
           disableGutters
-          key={coursevideo.order}
+          key={coursevideo.id}
         >
           <Button
             activeClassName={classes.active}
             className={classes.button}
             // component={CustomRouterLink}
             onClick={() => handleCourseVideo(coursevideo)}
+            key={coursevideo.id}
           >
             {coursevideo.title}
           </Button>
