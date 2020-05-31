@@ -172,6 +172,7 @@ const Classroom = () => {
                   color="primary"
                   variant="outlined"
                   onClick={handlePrev}
+                  size="small"
                 >
                 <ArrowBackIosIcon/>
                 Prev
@@ -184,6 +185,7 @@ const Classroom = () => {
                   color="primary"
                   variant="outlined"
                   onClick={handleNext}
+                  size="small"
                 >
                 next
                 <ArrowForwardIosIcon/>
