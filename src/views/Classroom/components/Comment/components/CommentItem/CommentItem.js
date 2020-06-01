@@ -44,8 +44,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CommentItem = props => {
-  const { className, comment, ...rest } = props;
+  const { className, comment , ...rest } = props;
   const [isRepliesVisibile, setIsRepliesVisible] = useState(false);
+  const [isLikeClicked, setIsLikeClicked] = useState(false);
   // const [currentComment, setCurrentComment] = useState(commentlist[0]);
 
   const classes = useStyles();
@@ -53,6 +54,46 @@ const CommentItem = props => {
   const viewReplies = () => {
     // console.log(currentComment.replies);
     setIsRepliesVisible(!isRepliesVisibile);
+  }
+
+  const handleLikeCount = (e) => {
+    props.handleLikeCount(comment.id);
+    setIsLikeClicked(!isLikeClicked);
+  }
+
+  const handleDisLikeCount = (e) => {
+    props.handleDisLikeCount(comment.id);
+    setIsLikeClicked(!isLikeClicked);
+  }
+
+  const handleLikeCountForReplies = (id) => {
+    var i = 0;
+    for(var j = 0; j < comment.replies.length; j++){
+      if(id == comment.replies[j].id){
+        i = j
+      }
+    }
+
+    const items = comment.replies;
+    const item = items[i];
+    item.likes++;
+    items[i]=item;
+    comment.replies = items;
+  }
+
+  const handleDisLikeCountForReplies = (id) => {
+    var i = 0;
+    for(var j = 0; j < comment.replies.length; j++){
+      if(id == comment.replies[j].id){
+        i = j
+      }
+    }
+
+    const items = comment.replies;
+    const item = items[i];
+    item.dislikes++;
+    items[i]=item;
+    comment.replies = items;
   }
 
   return (
@@ -76,16 +117,15 @@ const CommentItem = props => {
                             {comment.userName}
                         </Typography> */}
             {comment.comment}<br />
-            <IconButton
-              onClick={() => {
-
-              }
-              }
+            <IconButton 
+              onClick={handleLikeCount}
             >
               <ThumbUpIcon />
               <Typography>{comment.likes}</Typography>
             </IconButton>
-            <IconButton>
+            <IconButton
+              onClick={handleDisLikeCount}
+            >
               <ThumbDownAltIcon />
               <Typography>{comment.dislikes}</Typography>
             </IconButton>
@@ -125,6 +165,9 @@ const CommentItem = props => {
                       <ListItem key={comment.id} alignItems="flex-start">
                         <CommentItem
                           comment={comment}
+                          handleLikeCount={handleLikeCountForReplies}
+                          handleDisLikeCount={handleDisLikeCountForReplies}
+                        
                         />
                       </ListItem>
                       <Divider variant="inset" component="li" />

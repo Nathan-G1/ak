@@ -144,12 +144,40 @@ const Comment = props => {
     });
   };
 
-  const handleLikeCount = (likes) => {
-    likes++;
+  const handleLikeCount = (id) => {
+      var i = 0;
+      for(var j = 0; j < comments.length; j++){
+        if(id == comments[j].id){
+          i = j
+        }
+      }
+
+      const items = comments;
+      const item = items[i];
+      item.likes++;
+      items[i]=item;
+      setComments(items);
+      // setComments(prevState => ({
+      //   comments : {
+      //     ...prevState,
+      //     [prevState[i].likes]: prevState[i].likes + 1,
+      //   }
+      // }));
   }
 
-  const handleDisLikeCount = (dislikes) => {
-    dislikes++;
+  const handleDisLikeCount = (id) => {
+    var i = 0;
+    for(var j = 0; j < comments.length; j++){
+      if(id == comments[j].id){
+        i = j
+      }
+    }
+
+    const items = comments;
+    const item = items[i];
+    item.dislikes++;
+    items[i]=item;
+    setComments(items);
   }
 
   return (
@@ -197,6 +225,8 @@ const Comment = props => {
                     <ListItem key={comment.id} alignItems="flex-start">
                       <CommentItem
                         comment={comment}
+                        handleLikeCount={handleLikeCount}
+                        handleDisLikeCount={handleDisLikeCount}
                       />
                     </ListItem>
                     <Divider variant="inset" component="li" />
