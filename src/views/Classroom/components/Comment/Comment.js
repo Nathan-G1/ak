@@ -18,7 +18,7 @@ import {
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: '#f0f5f5',
   },
   inline: {
     // display: 'inline',
@@ -181,7 +181,7 @@ const Comment = props => {
   }
 
   return (
-    <div>
+    <React.Fragment>
       <Card
         {...rest}
         className={clsx(classes.root, className)}
@@ -216,7 +216,7 @@ const Comment = props => {
           </CardActions>
         </form>
       </Card>
-      <Card>
+      <Card className={classes.root}>
         <CardContent>
           <List>
               {
@@ -237,8 +237,7 @@ const Comment = props => {
           </List>
         </CardContent>
       </Card>
-    </div>
-
+    </React.Fragment>
   );
 };
 
