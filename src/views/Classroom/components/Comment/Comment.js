@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
-import { CommentItem } from './components'
+import { CommentItem, CommentForm } from './components'
 import {
   Card,
   CardHeader,
@@ -13,6 +13,10 @@ import {
   TextField,
   List,
   ListItem,
+  Avatar,
+  ListItemAvatar,
+  Grid,
+  ListItemText,
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     width: 40,
     height: 40
+  },
+  commentBtn:{
+    
   }
 }));
 
@@ -33,6 +40,11 @@ const Comment = props => {
   const { className, ...rest } = props;
 
   const classes = useStyles();
+
+  const [currentUser, setCurrentUser] = useState({
+    name: 'Girma',
+    avatar: '/images/avatars/avatar_7.png'
+  });
 
   const [comments, setComments] = useState([
     {
@@ -132,18 +144,6 @@ const Comment = props => {
     },
   ]);
 
-  const [values, setValues] = useState({
-    password: '',
-    comment: ''
-  });
-
-  const handleChange = event => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value
-    });
-  };
-
   const handleLikeCount = (id) => {
       var i = 0;
       for(var j = 0; j < comments.length; j++){
@@ -186,35 +186,15 @@ const Comment = props => {
         {...rest}
         className={clsx(classes.root, className)}
       >
-        <form>
-          <CardHeader
-            subheader="Discussion"
-            title="Q&A"
-          />
-          <Divider />
-          <CardContent>
-
-            <TextField
-              fullWidth
-              label="Comment..."
-              margin="dense"
-              name="qna"
-              onChange={handleChange}
-
-              value={values.comment}
-              variant="outlined"
-            />
-          </CardContent>
-          <Divider />
-          <CardActions>
-            <Button
-              color="primary"
-              variant="outlined"
-            >
-              Comment
-            </Button>
-          </CardActions>
-        </form>
+      <CardHeader
+        subheader="Discussion"
+        title="Q&A"
+      />
+      <CardContent>
+        <CommentForm
+          currentuser={currentUser}
+        />
+      </CardContent>
       </Card>
       <Card className={classes.root}>
         <CardContent>
@@ -225,6 +205,7 @@ const Comment = props => {
                     <ListItem key={comment.id} alignItems="flex-start">
                       <CommentItem
                         comment={comment}
+                        currentuser={currentUser}
                         handleLikeCount={handleLikeCount}
                         handleDisLikeCount={handleDisLikeCount}
                       />

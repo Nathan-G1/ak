@@ -6,6 +6,7 @@ import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import { CommentForm } from '../'
 import {
   List,
   ListItem,
@@ -44,10 +45,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CommentItem = props => {
-  const { className, comment , ...rest } = props;
+  const { className, comment ,currentuser, ...rest } = props;
   const [isRepliesVisibile, setIsRepliesVisible] = useState(false);
   const [isLikeClicked, setIsLikeClicked] = useState(false);
-  // const [currentComment, setCurrentComment] = useState(commentlist[0]);
+  const [isCommentFormVisible, setIsCommentFormVisible] = useState(false);
 
   const classes = useStyles();
 
@@ -131,10 +132,20 @@ const CommentItem = props => {
             </IconButton>
             <Button
               size="small"
+              onClick={() => {
+                setIsCommentFormVisible(!isCommentFormVisible);
+              }}
             >
               Reply
             </Button>
             <br />
+            {
+              isCommentFormVisible && 
+              <CommentForm
+                currentuser={currentuser}
+              />
+            }
+            
             <Button
               size="small"
               className={isRepliesVisibile ? classes.clickedViewReply : classes.notActiveViewReply}
