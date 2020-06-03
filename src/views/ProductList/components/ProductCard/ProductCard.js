@@ -54,7 +54,7 @@ const ProductCard = props => {
       {...rest}
       className={clsx(classes.root, className)}
       onClick={()=>{
-        history.push("/classroom");
+        history.push("/course-detail");
       }}
       
     >

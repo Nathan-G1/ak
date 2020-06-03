@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
+import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/styles';
 import {
   Grid,
@@ -129,6 +130,8 @@ const SignIn = props => {
   const { history } = props;
 
   const classes = useStyles();
+  
+  const navHistory = useHistory();
 
   const [formState, setFormState] = useState({
     isValid: false,
@@ -309,6 +312,10 @@ const SignIn = props => {
                   size="large"
                   type="submit"
                   variant="contained"
+                  //Demo
+                  onClick={()=>{
+                    navHistory.push("/courses");
+                  }}
                 >
                   Sign in now
                 </Button>

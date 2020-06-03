@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { WhatToLearn, About } from './components';
+import { WhatToLearn, About, PaymentForm } from './components';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
 import StarIcon from '@material-ui/icons/Star';
 import {
   Card,
@@ -49,11 +52,26 @@ const useStyles = makeStyles(theme => ({
   },
   helper: {
     marginTop: theme.spacing(3), 
-  }
+  },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: '1%',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    width: 700,
+    height: 400
+  },
 }));
 
 const CourseDetail = () => {
   const classes = useStyles();
+
+  const [open, setOpen] = React.useState(false);
 
   const [values, setValues] = useState({
     courseIcon: '/images/products/product_5.png',
@@ -78,6 +96,15 @@ const CourseDetail = () => {
     } 
     return rate;
   }
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
 
   return (
     <React.Fragment>
@@ -135,11 +162,32 @@ const CourseDetail = () => {
               className={classes.button}
               color="primary"
               variant="contained"
+              onClick={()=>{
+                handleOpen();
+                // history.push("/classroom");
+              }}
             >
               Enroll
         </Button>
         </Typography>
-
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          className={classes.modal}
+          open={open}
+          onClose={handleClose}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={open}>
+            <div className={classes.paper}>
+              <PaymentForm/>
+            </div>
+          </Fade>
+        </Modal>
         </CardContent>
       </Card>
       

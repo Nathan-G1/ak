@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
+import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/styles';
 import {
   Grid,
@@ -145,6 +146,8 @@ const SignUp = props => {
   const { history } = props;
 
   const classes = useStyles();
+  
+  const navHistory = useHistory();
 
   const [formState, setFormState] = useState({
     isValid: false,
@@ -152,17 +155,6 @@ const SignUp = props => {
     touched: {},
     errors: {}
   });
-
-  const userRole = [
-    {
-      value: 'Student',
-      label: 'Student'
-    },
-    {
-      value: 'Teacher',
-      label: 'Teacher'
-    }
-  ]
 
   useEffect(() => {
     const errors = validate(formState.values, schema);
@@ -301,28 +293,6 @@ const SignUp = props => {
 
                 <TextField
                   className={classes.textField}
-                  fullWidth
-                  label="Select role"
-                  name="userRole"
-                  onChange={handleChange}
-                  required
-                  select
-                  // eslint-disable-next-line react/jsx-sort-props
-                  SelectProps={{ native: true }}
-                  value={formState.values.userRole}
-                  variant="outlined"
-                >
-                  {userRole.map(option => (
-                    <option
-                      key={option.value}
-                      value={option.value}
-                    >
-                      {option.label}
-                    </option>
-                  ))}
-                </TextField>
-                <TextField
-                  className={classes.textField}
                   error={hasError('email')}
                   fullWidth
                   helperText={
@@ -387,6 +357,11 @@ const SignUp = props => {
                   size="large"
                   type="submit"
                   variant="contained"
+                  // Demo
+                  onClick={()=>{
+                      navHistory.push("/courses");
+                    }
+                  }
                 >
                   Sign up now
                 </Button>
