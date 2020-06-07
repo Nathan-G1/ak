@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AddCourseForm = props => {
-  const { className, ...rest } = props;
+  const { className,handleClose, ...rest } = props;
 
   const classes = useStyles();
 
@@ -198,6 +198,7 @@ const AddCourseForm = props => {
           <Button
             color="primary"
             variant="contained"
+            onClick={() => handleClose()}
           >
             Save
           </Button>

@@ -90,7 +90,9 @@ const ProductsToolbar = props => {
         >
           <Fade in={open}>
             <div className={classes.paper}>
-              <AddCourseForm/>
+              <AddCourseForm
+                handleClose={handleClose}
+              />
             </div>
           </Fade>
         </Modal>
