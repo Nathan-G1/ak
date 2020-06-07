@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { WhatToLearn, About, PaymentForm, Requirements, CourseContent } from './components';
+import { WhatToLearn, About, PaymentForm, Requirements, CourseContent, Review } from './components';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
@@ -247,6 +247,11 @@ const CourseDetail = () => {
 
         </CardContent>
       </Card>
+
+      <Review
+        className={classes.helper}
+      />
+      
     </React.Fragment>
     
   );
