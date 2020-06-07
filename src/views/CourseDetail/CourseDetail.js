@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { WhatToLearn, About, PaymentForm, Requirements } from './components';
+import { WhatToLearn, About, PaymentForm, Requirements, CourseContent } from './components';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
@@ -224,6 +224,10 @@ const CourseDetail = () => {
 
         </CardContent>
       </Card>
+
+      <CourseContent
+        className={classes.helper}
+      />
 
       <Card className={classes.helper}>
       <CardHeader
