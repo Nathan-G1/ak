@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { WhatToLearn, About, PaymentForm } from './components';
+import { WhatToLearn, About, PaymentForm, Requirements } from './components';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
@@ -87,6 +87,7 @@ const CourseDetail = () => {
       'The point of using Lorem'
     ],
     about: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.',
+    requirements: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which  Lorem Ipsum available, but the majority have suffered alteration in some form, by injected hu',
   });
 
   const getRatingStars = () => {
@@ -202,6 +203,25 @@ const CourseDetail = () => {
               lists = {values.whatToLearn}
             />
           </Typography>
+        </CardContent>
+      </Card>
+
+      <Card className={classes.helper}>
+      <CardHeader
+          title="Requirement"
+      />
+      <Divider />
+        <CardContent>
+          <Typography
+              className={classes.title}
+              variant="h5"
+          >
+
+              <Requirements
+                requirements = {values.requirements}
+              />
+          </Typography>
+
         </CardContent>
       </Card>
 
