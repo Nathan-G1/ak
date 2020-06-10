@@ -3,6 +3,8 @@ import { Link as RouterLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
 import { useHistory } from "react-router-dom";
+import { connect } from 'react-redux';
+import { handleSignup } from '../../actions/signupAction';
 import { makeStyles } from '@material-ui/styles';
 import {
   Grid,
@@ -191,6 +193,7 @@ const SignUp = props => {
 
   const handleSignUp = event => {
     event.preventDefault();
+    props.handleSignup(formState.values);
     history.push('/');
   };
 
@@ -357,11 +360,11 @@ const SignUp = props => {
                   size="large"
                   type="submit"
                   variant="contained"
-                  // Demo
-                  onClick={()=>{
-                      navHistory.push("/courses");
-                    }
-                  }
+                  // // Demo
+                  // onClick={()=>{
+                  //     navHistory.push("/courses");
+                  //   }
+                  // }
                 >
                   Sign up now
                 </Button>
@@ -387,8 +390,12 @@ const SignUp = props => {
   );
 };
 
+const mapStateToProps = state => ({
+  
+});
+
 SignUp.propTypes = {
   history: PropTypes.object
 };
 
-export default withRouter(SignUp);
+export default connect(mapStateToProps, {handleSignup}) (withRouter(SignUp));
