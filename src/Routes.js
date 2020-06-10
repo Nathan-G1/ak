@@ -3,6 +3,7 @@ import { Switch, Redirect } from 'react-router-dom';
 
 import { RouteWithLayout } from './components';
 import { Main as MainLayout, Minimal as MinimalLayout } from './layouts';
+import requireAuth from './requireAuth';
 
 import {
   Dashboard as DashboardView,
@@ -31,55 +32,55 @@ const Routes = () => {
         to="/sign-in"
       />
       <RouteWithLayout
-        component={DashboardView}
+        component={requireAuth(DashboardView)}
         exact
         layout={MainLayout}
         path="/dashboard"
       />
       <RouteWithLayout
-        component={UserListView}
+        component={requireAuth(UserListView)}
         exact
         layout={MainLayout}
         path="/users"
       />
       <RouteWithLayout
-        component={ProductListView}
+        component={requireAuth(ProductListView)}
         exact
         layout={MainLayout}
         path="/courses"
       />
       <RouteWithLayout
-        component={SettingsView}
+        component={requireAuth(SettingsView)}
         exact
         layout={MainLayout}
         path="/settings"
       />
       <RouteWithLayout
-        component={TypographyView}
+        component={requireAuth(TypographyView)}
         exact
         layout={MainLayout}
         path="/typography"
       />
       <RouteWithLayout
-        component={Classroom}
+        component={requireAuth(Classroom)}
         exact
         layout={MinimalLayout}
         path="/classroom"
       />
       <RouteWithLayout
-        component={IconsView}
+        component={requireAuth(IconsView)}
         exact
         layout={MainLayout}
         path="/certificates"
       />
       <RouteWithLayout
-        component={AccountView}
+        component={requireAuth(AccountView)}
         exact
         layout={MainLayout}
         path="/account"
       />
       <RouteWithLayout
-        component={CourseDetailView}
+        component={requireAuth(CourseDetailView)}
         exact
         layout={MainLayout}
         path="/course-detail"
