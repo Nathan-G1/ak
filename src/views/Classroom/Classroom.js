@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles, useTheme } from '@material-ui/styles';
-import { 
+import { connect } from 'react-redux';
+import {
   Grid,
   useMediaQuery,
-  Card, 
+  Card,
   CardContent,
   Button,
- } from '@material-ui/core';
+} from '@material-ui/core';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import clsx from 'clsx';
 import { Video, Comment, Sidebar, CourseList } from './components';
+import { func } from 'prop-types';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,53 +33,55 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Classroom = () => {
+const Classroom = ({ courseVideosState }) => {
 
-  const courseVideos = [
-    {
-      id: 1,
-      title: 'create repository',
-      video: 'https://youtu.be/juxyvqiOMfY',
-      order: 1 
-      },
-    {
-      id: 2,
-      title: 'cloning a repository',
-      video: 'https://www.youtube.com/watch?v=p8N0xN0ihMA',
-      order: 2
-    },
-    {
-      id: 3,
-      title: 'push and pull',
-      video: 'https://www.youtube.com/watch?v=c2Kf-rXI_pk',
-      order: 3 
-    },
-    {
-      id: 4,
-      title: 'rebasing and stashing',
-      video: 'https://www.youtube.com/watch?v=GbECT1J9bXg',
-      order: 4 
-    },
-    {
-      id: 5,
-      title: 'create branch',
-      video: 'https://www.youtube.com/watch?v=VGosZWBTF7A',
-      order: 5 
-    },
-    {
-      id: 6,
-      title: 'delete branch',
-      video: 'https://www.youtube.com/watch?v=gDqGSmTPtOQ',
-      order: 6 
-    },
-    {
-      id: 7,
-      title: 'delete repository',
-      video: 'https://www.youtube.com/watch?v=5dZ_lvDgevk',
-      order: 7 
-    }
+  // const courseVideos = [
+  //   {
+  //     id: 1,
+  //     title: 'create repository',
+  //     video: 'https://youtu.be/juxyvqiOMfY',
+  //     order: 1 
+  //     },
+  //   {
+  //     id: 2,
+  //     title: 'cloning a repository',
+  //     video: 'https://www.youtube.com/watch?v=p8N0xN0ihMA',
+  //     order: 2
+  //   },
+  //   {
+  //     id: 3,
+  //     title: 'push and pull',
+  //     video: 'https://www.youtube.com/watch?v=c2Kf-rXI_pk',
+  //     order: 3 
+  //   },
+  //   {
+  //     id: 4,
+  //     title: 'rebasing and stashing',
+  //     video: 'https://www.youtube.com/watch?v=GbECT1J9bXg',
+  //     order: 4 
+  //   },
+  //   {
+  //     id: 5,
+  //     title: 'create branch',
+  //     video: 'https://www.youtube.com/watch?v=VGosZWBTF7A',
+  //     order: 5 
+  //   },
+  //   {
+  //     id: 6,
+  //     title: 'delete branch',
+  //     video: 'https://www.youtube.com/watch?v=gDqGSmTPtOQ',
+  //     order: 6 
+  //   },
+  //   {
+  //     id: 7,
+  //     title: 'delete repository',
+  //     video: 'https://www.youtube.com/watch?v=5dZ_lvDgevk',
+  //     order: 7 
+  //   }
 
-  ];  
+  // ];  
+
+  const courseVideos = courseVideosState;
 
   const [currentLecture, setCurrentLecture] = useState(courseVideos[0]);
 
@@ -103,14 +107,14 @@ const Classroom = () => {
   };
 
   const handleNext = () => {
-    for(var i=0; i < courseVideos.length; i++){
-      if(courseVideos[i].order == (currentLecture.order + 1)){
+    for (var i = 0; i < courseVideos.length; i++) {
+      if (courseVideos[i].order == (currentLecture.order + 1)) {
         console.log(currentLecture.title);
         setCurrentLecture(courseVideos[i]);
-        if(i == (courseVideos.length - 1)){
+        if (i == (courseVideos.length - 1)) {
           setIsLastLecture(true);
           setIsFirstLecture(false);
-        }else{
+        } else {
           setIsLastLecture(false);
           setIsFirstLecture(false);
         }
@@ -119,14 +123,14 @@ const Classroom = () => {
   }
 
   const handlePrev = () => {
-    for(var i=0; i < courseVideos.length; i++){
-      if(courseVideos[i].order == (currentLecture.order - 1)){
+    for (var i = 0; i < courseVideos.length; i++) {
+      if (courseVideos[i].order == (currentLecture.order - 1)) {
         console.log(currentLecture.title);
         setCurrentLecture(courseVideos[i]);
-        if(i == 0){
+        if (i == 0) {
           setIsFirstLecture(true);
           setIsLastLecture(false);
-        }else{
+        } else {
           setIsFirstLecture(false);
           setIsLastLecture(false);
         }
@@ -139,76 +143,76 @@ const Classroom = () => {
   const shouldOpenList = isDesktop ? false : true;
 
   return (
-    <div 
+    <div
       className={clsx({
         [classes.root]: true,
         [classes.shiftContent]: isDesktop
       })}
     >
-    <Sidebar
+      <Sidebar
         onClose={handleSidebarClose}
         open={shouldOpenSidebar}
         coursevideos={courseVideos}
         onCourseVideoChange={hanldeCourseVideoChange}
         variant={isDesktop ? 'persistent' : 'temporary'}
-    />
-    <main className={classes.content}>
-      <Grid
-        container
-      >
+      />
+      <main className={classes.content}>
         <Grid
-          item
-          lg={12}
-          md={12}
-          xs={12}
+          container
         >
-          <Video 
-            currentlecture = {currentLecture}
-          />
           <Grid
+            item
+            lg={12}
+            md={12}
+            xs={12}
+          >
+            <Video
+              currentlecture={currentLecture}
+            />
+            <Grid
               container
               className={classes.buttonGrid}
               direction="row"
               justify="space-between"
               alignItems="center"
-          >
+            >
               <Grid>
-              {isFirstLecture ? '' :
-                <Button
-                  className = {classes.button}
-                  color="primary"
-                  variant="outlined"
-                  onClick={handlePrev}
-                  size="small"
-                >
-                <ArrowBackIosIcon/>
+                {isFirstLecture ? '' :
+                  <Button
+                    className={classes.button}
+                    color="primary"
+                    variant="outlined"
+                    onClick={handlePrev}
+                    size="small"
+                  >
+                    <ArrowBackIosIcon />
                 Prev
-                </Button> 
+                </Button>
                 }
               </Grid>
               <Grid>
-              { isLastLecture ? '' : 
-                <Button
-                  color="primary"
-                  variant="outlined"
-                  onClick={handleNext}
-                  size="small"
-                >
-                next
-                <ArrowForwardIosIcon/>
-                </Button>
-              }
+                {isLastLecture ? '' :
+                  <Button
+                    color="primary"
+                    variant="outlined"
+                    onClick={handleNext}
+                    size="small"
+                  >
+                    next
+                <ArrowForwardIosIcon />
+                  </Button>
+                }
               </Grid>
+            </Grid>
+            {shouldOpenList ?
+              <CourseList
+                courseList={courseVideos}
+                onCourseVideoChange={hanldeCourseVideoChange}
+              /> : ''
+            }
           </Grid>
-          { shouldOpenList ? 
-            <CourseList
-              courseList={courseVideos}
-              onCourseVideoChange={hanldeCourseVideoChange}
-            /> : ''
-           }
         </Grid>
-      </Grid>
-      <Grid
+        <Grid
           item
           lg={12}
           md={12}
@@ -221,4 +225,10 @@ const Classroom = () => {
   );
 };
 
-export default Classroom;
+function mapStateToProps(state) {
+  return {
+    courseVideosState: state.courseVideos
+  }
+};
+
+export default connect(mapStateToProps)(Classroom);

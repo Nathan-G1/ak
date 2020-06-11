@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 
 export default function (ComposedComponent) {
     const Authenticate = props => {
-        const isAuthenticated = false;
+        const isAuthenticated = true;
 
         const navHistory = useHistory();
 
