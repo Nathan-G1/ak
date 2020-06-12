@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { useHistory } from "react-router-dom";
+import { connect } from 'react-redux';
 
 export default function (ComposedComponent) {
-    const Authenticate = props => {
-        const isAuthenticated = true;
-
+    const Authenticate = (props, {isAuthenticated = props.isAuthenticated} ) => {
         const navHistory = useHistory();
 
         useEffect(() => {
@@ -18,5 +17,14 @@ export default function (ComposedComponent) {
         );
     }
 
-    return Authenticate;
+
+    function mapStateToProps(state) {
+        return {
+            isAuthenticated : state.auth.isAuthenticated
+        }
+    }
+
+    return connect(mapStateToProps)(Authenticate);
+
 }
+

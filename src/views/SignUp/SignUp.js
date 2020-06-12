@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import validate from 'validate.js';
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
-import { handleSignup } from '../../actions/signupAction';
+import { handleSignup } from '../../actions/authAction';
 import { makeStyles } from '@material-ui/styles';
 import {
   Grid,

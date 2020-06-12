@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import validate from 'validate.js';
 import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/styles';
+import { connect } from 'react-redux';
+import { handleSignin } from '../../actions/authAction';
 import {
   Grid,
   Button,
@@ -175,7 +177,9 @@ const SignIn = props => {
 
   const handleSignIn = event => {
     event.preventDefault();
-    history.push('/');
+    const loginData = JSON.stringify(formState.values);
+    props.handleSignin(loginData);
+    navHistory.push('/dashboard');
   };
 
   const hasError = field =>
@@ -313,9 +317,9 @@ const SignIn = props => {
                   type="submit"
                   variant="contained"
                   //Demo
-                  onClick={()=>{
-                    navHistory.push("/courses");
-                  }}
+                  // onClick={()=>{
+                  //   navHistory.push("/courses");
+                  // }}
                 >
                   Sign in now
                 </Button>
@@ -345,4 +349,8 @@ SignIn.propTypes = {
   history: PropTypes.object
 };
 
-export default withRouter(SignIn);
+const mapStateToProps = state => ({
+  
+});
+
+export default connect(mapStateToProps, { handleSignin })(withRouter(SignIn));
