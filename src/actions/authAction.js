@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SIGN_UP, SIGN_IN_SUCCESS, SIGN_IN_FAIL } from './types';
+import { SIGN_UP, SIGN_IN_SUCCESS, SIGN_IN_FAIL, SIGN_OUT } from './types';
 
 export const handleSignup = (userData) => dispatch => {
     dispatch({
@@ -20,6 +20,12 @@ export const handleSignin = (userData) => (dispatch, getState) => {
             })
         })
 
+}
+
+export const handleSignout = () => (dispatch) => {
+    dispatch({
+        type: SIGN_OUT
+    });
 }
 
 export const tokenConfig = getState => {

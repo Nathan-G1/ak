@@ -1,20 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { AppBar, Toolbar } from '@material-ui/core';
+import { AppBar, Toolbar, Badge, Hidden, IconButton, Avatar, Typography } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
+import InputIcon from '@material-ui/icons/Input';
+import { connect } from 'react-redux';
+import { handleSignout } from '../../../../actions/authAction';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     boxShadow: 'none'
+  },
+  flexGrow: {
+    flexGrow: 1
+  },
+  signOutButton: {
+    marginLeft: theme.spacing(1)
+  },
+  small: {
+    width: theme.spacing(4),
+    height: theme.spacing(4)
+  },
+  nameTxt: {
+    color: 'white',
+    paddingLeft: theme.spacing(1)
   }
 }));
 
-const Topbar = props => {
-  const { className, ...rest } = props;
+const Topbar = (props, { isAuthenticated = props.isauthenticated }) => {
+  const { className, onSidebarOpen,handleSignout, ...rest } = props;
 
   const classes = useStyles();
+
+  const [notifications] = useState([]);
+
+  const handleSignOut = () => {
+    props.handleSignout();
+  }
 
   return (
     <AppBar
@@ -30,6 +55,44 @@ const Topbar = props => {
             src="/images/logos/logo.svg"
           />
         </RouterLink>
+        {
+          isAuthenticated &&
+          <React.Fragment>
+            <div className={classes.flexGrow} />
+            <Hidden mdDown>
+              <Avatar
+                className={classes.small}
+                src="/images/avatars/avatar_1.png" />
+              <Typography
+                className={classes.nameTxt}
+              >James</Typography>
+              <IconButton color="inherit">
+                <Badge
+                  badgeContent={notifications.length}
+                  color="primary"
+                  variant="dot"
+                >
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+              <IconButton
+                className={classes.signOutButton}
+                color="inherit"
+                onClick={handleSignOut}
+              >
+                <InputIcon />
+              </IconButton>
+            </Hidden>
+            <Hidden lgUp>
+              <IconButton
+                color="inherit"
+                onClick={onSidebarOpen}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Hidden>
+          </React.Fragment>
+        }
       </Toolbar>
     </AppBar>
   );
@@ -39,4 +102,10 @@ Topbar.propTypes = {
   className: PropTypes.string
 };
 
-export default Topbar;
+function mapStateToProps(state) {
+  return {
+    isauthenticated: state.auth.isAuthenticated
+  }
+};
+
+export default connect(mapStateToProps, { handleSignout })(Topbar);

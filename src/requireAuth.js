@@ -3,11 +3,11 @@ import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
 
 export default function (ComposedComponent) {
-    const Authenticate = (props, {isAuthenticated = props.isAuthenticated} ) => {
+    const Authenticate = (props, {token = props.token} ) => {
         const navHistory = useHistory();
 
         useEffect(() => {
-            if (!isAuthenticated) {
+            if (!token) {
                 navHistory.push("/sign-in");
             }
         });
@@ -20,7 +20,7 @@ export default function (ComposedComponent) {
 
     function mapStateToProps(state) {
         return {
-            isAuthenticated : state.auth.isAuthenticated
+            token : state.auth.token
         }
     }
 
