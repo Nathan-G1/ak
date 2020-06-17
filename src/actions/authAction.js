@@ -1,20 +1,42 @@
 import axios from 'axios';
-import { SIGN_UP, SIGN_IN_SUCCESS, SIGN_IN_FAIL, SIGN_OUT } from './types';
+import { push, replace } from 'react-router-redux';
+import { SIGN_UP,
+         SIGN_IN_SUCCESS,
+         SIGN_IN_FAIL,
+         SIGN_OUT,
+         SIGN_UP_FAIL } from './types';
 
-export const handleSignup = (userData) => dispatch => {
-    dispatch({
-        type: SIGN_UP,
-        payload: userData
-    });
+export const handleSignup = (userData) => (dispatch, getState) => {
+    // dispatch({
+    //         type: SIGN_UP,
+    //         payload: userData
+    //     })
+    axios.post('https://apiak.herokuapp.com/api/AkUsers', userData, tokenConfig(getState))
+        .then(res => {
+            dispatch({
+                type: SIGN_UP,
+                payload: res.data
+            });
+
+            // dispatch(push('/dashboard'));
+        }).catch(err => {
+            dispatch({
+                type: SIGN_UP_FAIL
+            })
+        })
+
 }
 
 export const handleSignin = (userData) => (dispatch, getState) => {
     axios.post('https://apiak.herokuapp.com/api/AkUsers/login', userData, tokenConfig(getState))
-        .then(res => dispatch({
-            type: SIGN_IN_SUCCESS,
-            payload: res.data
-        }
-        )).catch(err => {
+        .then(res => {
+            dispatch({
+                type: SIGN_IN_SUCCESS,
+                payload: res.data,
+            });
+
+            dispatch(push('/dashboard'));
+        }).catch(err => {
             dispatch({
                 type: SIGN_IN_FAIL
             })

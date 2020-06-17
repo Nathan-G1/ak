@@ -193,7 +193,20 @@ const SignUp = props => {
 
   const handleSignUp = event => {
     event.preventDefault();
-    props.handleSignup(formState.values);
+    const user = JSON.stringify({
+      userType: "student",
+      firstName: formState.values.firstName,
+      lastName: formState.values.lastName,
+      phoneNumber: "",
+      password: formState.values.password,
+      realm: "",
+      username: "",
+      email: formState.values.email,
+      emailVerified: true
+    })
+
+
+    props.handleSignup(user);
     history.push('/');
   };
 

@@ -179,7 +179,8 @@ const SignIn = props => {
     event.preventDefault();
     const loginData = JSON.stringify(formState.values);
     props.handleSignin(loginData);
-    navHistory.push('/dashboard');
+    // history.push('/dashboard');
+    // navHistory.push('/dashboard');
   };
 
   const hasError = field =>

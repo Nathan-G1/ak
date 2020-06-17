@@ -35,6 +35,10 @@ export default function (state = initialState, action) {
             
         case 'SIGN_IN_FAIL':
         case 'SIGN_UP_FAIL':
+            return {
+                ...state,
+                isAuthenticating: true
+            }
         case 'SIGN_OUT':
             localStorage.removeItem('token');
             return {
