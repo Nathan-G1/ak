@@ -2,7 +2,10 @@ import React from 'react';
 import { Switch, Redirect } from 'react-router-dom';
 
 import { RouteWithLayout } from './components';
-import { Main as MainLayout, Minimal as MinimalLayout } from './layouts';
+import { 
+  Main as MainLayout,
+  Minimal as MinimalLayout,
+  MinimalAuth as MinimalAuthLayout } from './layouts';
 import requireAuth from './requireAuth';
 
 import {
@@ -88,13 +91,13 @@ const Routes = () => {
       <RouteWithLayout
         component={SignUpView}
         exact
-        layout={MinimalLayout}
+        layout={MinimalAuthLayout}
         path="/sign-up"
       />
       <RouteWithLayout
         component={SignInView}
         exact
-        layout={MinimalLayout}
+        layout={MinimalAuthLayout}
         path="/sign-in"
       />
       <RouteWithLayout

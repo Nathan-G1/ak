@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Topbar = (props, { isAuthenticated = props.isauthenticated }) => {
+const Topbar = (props, { isAuthenticated = props.token }) => {
   const { className, onSidebarOpen,handleSignout, ...rest } = props;
 
   const classes = useStyles();
@@ -104,7 +104,7 @@ Topbar.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    isauthenticated: state.auth.isAuthenticated
+    token: state.auth.token
   }
 };
 
