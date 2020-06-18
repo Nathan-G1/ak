@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
+import { connect } from 'react-redux';
 import { CommentItem, CommentForm } from './components'
 import {
   Card,
@@ -41,108 +42,9 @@ const Comment = props => {
 
   const classes = useStyles();
 
-  const [currentUser, setCurrentUser] = useState({
-    name: 'Girma',
-    avatar: '/images/avatars/avatar_7.png'
-  });
+  const [currentUser, setCurrentUser] = useState(props.currentUserState);
 
-  const [comments, setComments] = useState([
-    {
-      id: 1,
-      userName: 'Abebe',
-      avatar: '/images/avatars/avatar_11.png',
-      comment: 'I like it . this is so helpful. Thanks ',
-      likes: 12,
-      dislikes: 1,
-      replies: [
-        {
-          id: 2,
-          userName: 'Abebe',
-          avatar: '/images/avatars/avatar_11.png',
-          comment: 'I like it . this is so helpful. Thanks ',
-          likes: 12,
-          dislikes: 1,
-          replies: [
-
-          ]
-        },
-      ]
-    },
-    {
-      id: 3,
-      userName: 'Abebe',
-      avatar: '/images/avatars/avatar_1.png',
-      comment: 'I like it . this is so helpful. Thanks ',
-      likes: 12,
-      dislikes: 1,
-      replies: [
-        {
-          id: 4,
-          userName: 'Abebe',
-          avatar: '/images/avatars/avatar_2.png',
-          comment: 'I like it . this is so helpful. Thanks ',
-          likes: 12,
-          dislikes: 1,
-          replies: [
-
-          ]
-        },
-      ]
-    },
-    {
-      id: 5,
-      userName: 'Abebe',
-      avatar: '/images/avatars/avatar_3.png',
-      comment: 'I like it . this is so helpful. Thanks ',
-      likes: 12,
-      dislikes: 1,
-      replies: [
-        {
-          id: 6,
-          userName: 'Abebe',
-          avatar: '/images/avatars/avatar_4.png',
-          comment: 'I like it . this is so helpful. Thanks ',
-          likes: 12,
-          dislikes: 1,
-          replies: [
-
-          ]
-        },
-      ]
-    },
-    {
-      id: 7,
-      userName: 'Abebe',
-      avatar: '/images/avatars/avatar_5.png',
-      comment: 'I like it . this is so helpful. Thanks ',
-      likes: 12,
-      dislikes: 1,
-      replies: [
-        {
-          id: 8,
-          userName: 'Abebe',
-          avatar: '/images/avatars/avatar_6.png',
-          comment: 'I like it . this is so helpful. Thanks ',
-          likes: 12,
-          dislikes: 1,
-          replies: [
-
-          ]
-        },
-        {
-          id: 9,
-          userName: 'Abebe',
-          avatar: '/images/avatars/avatar_7.png',
-          comment: 'I like it . this is so helpful. Thanks ',
-          likes: 12,
-          dislikes: 1,
-          replies: [
-
-          ]
-        },
-      ]
-    },
-  ]);
+  const [comments, setComments] = useState(props.incomingComments);
 
   const handleLikeCount = (id) => {
       var i = 0;
@@ -226,4 +128,11 @@ Comment.propTypes = {
   className: PropTypes.string
 };
 
-export default Comment;
+const mapStateToProps = (state) => {
+  return{
+    incomingComments: state.comments.comments,
+    currentUserState: state.comments.currentUser
+  }
+}
+
+export default connect(mapStateToProps, {})(Comment);
