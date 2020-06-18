@@ -35,52 +35,6 @@ const useStyles = makeStyles(theme => ({
 
 const Classroom = ({ courseVideosState }) => {
 
-  // const courseVideos = [
-  //   {
-  //     id: 1,
-  //     title: 'create repository',
-  //     video: 'https://youtu.be/juxyvqiOMfY',
-  //     order: 1 
-  //     },
-  //   {
-  //     id: 2,
-  //     title: 'cloning a repository',
-  //     video: 'https://www.youtube.com/watch?v=p8N0xN0ihMA',
-  //     order: 2
-  //   },
-  //   {
-  //     id: 3,
-  //     title: 'push and pull',
-  //     video: 'https://www.youtube.com/watch?v=c2Kf-rXI_pk',
-  //     order: 3 
-  //   },
-  //   {
-  //     id: 4,
-  //     title: 'rebasing and stashing',
-  //     video: 'https://www.youtube.com/watch?v=GbECT1J9bXg',
-  //     order: 4 
-  //   },
-  //   {
-  //     id: 5,
-  //     title: 'create branch',
-  //     video: 'https://www.youtube.com/watch?v=VGosZWBTF7A',
-  //     order: 5 
-  //   },
-  //   {
-  //     id: 6,
-  //     title: 'delete branch',
-  //     video: 'https://www.youtube.com/watch?v=gDqGSmTPtOQ',
-  //     order: 6 
-  //   },
-  //   {
-  //     id: 7,
-  //     title: 'delete repository',
-  //     video: 'https://www.youtube.com/watch?v=5dZ_lvDgevk',
-  //     order: 7 
-  //   }
-
-  // ];  
-
   const courseVideos = courseVideosState;
 
   const [currentLecture, setCurrentLecture] = useState(courseVideos[0]);
@@ -227,7 +181,7 @@ const Classroom = ({ courseVideosState }) => {
 
 function mapStateToProps(state) {
   return {
-    courseVideosState: state.courseVideos
+    courseVideosState: state.currentCourse.videos
   }
 };
 
