@@ -32,8 +32,8 @@ const useStyles = makeStyles((theme) => ({
     width: 40,
     height: 40
   },
-  commentBtn:{
-    
+  commentForm:{
+    paddingBottom: theme.spacing(0)
   }
 }));
 
@@ -91,6 +91,7 @@ const Comment = props => {
       <CardHeader
         subheader="Discussion"
         title="Q&A"
+        className = {classes.commentForm}
       />
       <CardContent>
         <CommentForm

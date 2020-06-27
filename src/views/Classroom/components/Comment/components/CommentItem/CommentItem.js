@@ -176,6 +176,7 @@ const CommentItem = props => {
                       <ListItem key={comment.id} alignItems="flex-start">
                         <CommentItem
                           comment={comment}
+                          currentuser={props.currentuser}
                           handleLikeCount={handleLikeCountForReplies}
                           handleDisLikeCount={handleDisLikeCountForReplies}
                         
