@@ -3,6 +3,7 @@ import uuid from 'uuid/v1';
 export default [
   {
     id: uuid(),
+    rating: 5,
     title: 'Dropbox',
     time: 3,
     description:
@@ -13,6 +14,7 @@ export default [
   },
   {
     id: uuid(),
+    rating: 5,
     title: 'Medium Corporation',
     time: 8,
     description:
@@ -23,6 +25,7 @@ export default [
   },
   {
     id: uuid(),
+    rating: 5,
     title: 'Slack',
     time: 9,
     description:
@@ -33,6 +36,7 @@ export default [
   },
   {
     id: uuid(),
+    rating: 5,
     title: 'Lyft',
     time: 3,
     description:
@@ -43,6 +47,7 @@ export default [
   },
   {
     id: uuid(),
+    rating: 5,
     title: 'GitHub',
     time: 8,
     description:
@@ -53,6 +58,7 @@ export default [
   },
   {
     id: uuid(),
+    rating: 5,
     title: 'Squarespace',
     time: 3,
     description:

@@ -14,7 +14,7 @@ import {
   CardMedia,
   CardContent
 } from '@material-ui/core';
-import StarIcon from '@material-ui/icons/Star';
+// import StarIcon from '@material-ui/icons/Star';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
@@ -48,8 +48,7 @@ const useStyles = makeStyles(theme => ({
   },
   rating:{
     alignContent: "center",
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(1)
+    marginTop: theme.spacing(1),
   },
   btn: {
     marginTop: theme.spacing(3)
@@ -69,7 +68,7 @@ const Profile = props => {
   const course = {
     name: 'Github',
     avatar: '/images/products/product_5.png',
-    rating: 5
+    // rating: 5
   };
 
   const handleOpen = () => {
@@ -80,13 +79,13 @@ const Profile = props => {
     setOpen(false);
   };
 
-  const getRatingStars = () => {
-    var rate = [];
-    for(var i = 0; i < course.rating; i++){
-      rate.push(<StarIcon></StarIcon>);
-    } 
-    return rate;
-  }
+  // const getRatingStars = () => {
+  //   var rate = [];
+  //   for(var i = 0; i < course.rating; i++){
+  //     rate.push(<StarIcon></StarIcon>);
+  //   } 
+  //   return rate;
+  // }
 
   return (
     <div
@@ -106,11 +105,12 @@ const Profile = props => {
       >
         {course.name}
       </Typography>
-      <Typography variant="body2">{getRatingStars()}</Typography>
+      {/* <Typography variant="body2">{getRatingStars()}</Typography> */}
       <Button
+          className = {classes.rating}
           onClick={handleOpen}
           color="primary"
-          variant="contained"
+          variant="outlined"
           size="small"
       >
         Rate

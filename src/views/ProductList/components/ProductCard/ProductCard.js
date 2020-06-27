@@ -11,6 +11,7 @@ import {
   Grid,
   Divider
 } from '@material-ui/core';
+import StarIcon from '@material-ui/icons/Star';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import GetAppIcon from '@material-ui/icons/GetApp';
 
@@ -39,7 +40,10 @@ const useStyles = makeStyles(theme => ({
   statsIcon: {
     color: theme.palette.icon,
     marginRight: theme.spacing(1)
-  }
+  },
+  rating:{
+    marginTop: theme.spacing(2),
+  },
 }));
 
 const ProductCard = props => {
@@ -48,6 +52,14 @@ const ProductCard = props => {
   const history = useHistory();
 
   const classes = useStyles();
+
+  const getRatingStars = () => {
+    var rate = [];
+    for(var i = 0; i < product.rating; i++){
+      rate.push(<StarIcon></StarIcon>);
+    } 
+    return rate;
+  }
 
   return (
     <Card
@@ -79,6 +91,12 @@ const ProductCard = props => {
         >
           {product.description}
         </Typography>
+        <Typography 
+          variant="body2" 
+          className={classes.rating}
+          align = "center"
+          size = "small"
+          >{getRatingStars()}</Typography>
       </CardContent>
       <Divider />
       <CardActions>
