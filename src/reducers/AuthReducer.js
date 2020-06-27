@@ -1,3 +1,5 @@
+import { push, replace } from 'react-router-redux';
+
 const initialState = {
     token: localStorage.getItem('token'),
     userId: null,
@@ -24,6 +26,7 @@ export default function (state = initialState, action) {
         case 'SIGN_IN_SUCCESS':
             {
                 localStorage.setItem('token', action.payload.id);
+                window.location.replace('/dashboard');
                 return {
                     ...state,
                     token: action.payload.id,
@@ -31,8 +34,12 @@ export default function (state = initialState, action) {
                     isAuthenticated: true,
                     isAuthenticating: false
                 };
+                
             }
             
+        // case '@@router/CALL_HISTORY_METHOD':
+        //     window.location.replace('/dashboard');
+
         case 'SIGN_IN_FAIL':
         case 'SIGN_UP_FAIL':
             return {

@@ -35,7 +35,7 @@ export const handleSignin = (userData) => (dispatch, getState) => {
                 payload: res.data,
             });
 
-            dispatch(push('/dashboard'));
+            // dispatch(push('/dashboard'));
         }).catch(err => {
             dispatch({
                 type: SIGN_IN_FAIL
