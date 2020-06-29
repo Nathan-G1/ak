@@ -19,3 +19,27 @@ export const getComments = (courseData) => (dispatch, getState) => {
     //     })
 
 }
+
+export const getComments = (videoId) => (dispatch, getState) => {
+    dispatch({
+            type: 'GET_COMMENTS',
+            id: videoId,
+            // state: getState()
+    });
+}
+
+export const getCourseReview = (courseId) => (dispatch, getState) => {
+    dispatch({
+            type: 'GET_COURSE_REVIEW',
+            id: courseId,
+            // state: getState()
+    });
+}
+
+export const addComment = (commentContent) => (dispatch, getState) => {
+    dispatch({
+            type: 'ADD_COMMENT',
+            payload: commentContent, // includes videoId, userId, commentText,...
+            // state: getState()
+    });
+}

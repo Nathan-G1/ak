@@ -66,6 +66,9 @@ const useStyles = makeStyles(theme => ({
     width: 700,
     height: 400
   },
+  enrolledStd: {
+    marginTop: theme.spacing(2)
+  }
 }));
 
 const CourseDetail = () => {
@@ -75,7 +78,7 @@ const CourseDetail = () => {
 
   const [values, setValues] = useState({
     courseIcon: '/images/products/product_5.png',
-    courseName: 'Applied Data Science with Python Specialization',
+    courseName: 'Biology in Amharic',
     description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. \nLorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has ',
     rating: 5,
     instructorPhoto: '/images/avatars/avatar_11.png',
@@ -189,6 +192,12 @@ const CourseDetail = () => {
             </div>
           </Fade>
         </Modal>
+        <Typography
+          className={classes.enrolledStd}
+        >
+          <b>2332</b> already enrolled
+        </Typography>
+        
         </CardContent>
       </Card>
       
