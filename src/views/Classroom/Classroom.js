@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import { connect } from 'react-redux';
+import { getVideo } from '../../actions/courseVideoAction'
 import {
   Grid,
   useMediaQuery,
@@ -33,11 +34,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Classroom = ({ courseVideosState }) => {
+const Classroom = props => {
 
-  const courseVideos = courseVideosState;
+  const courseVideos = props.courseVideosState;
 
   const [currentLecture, setCurrentLecture] = useState(courseVideos[0]);
+
+  const [isVideoChange, setIsVideoChanged] = useState(false);
 
   const classes = useStyles();
 
@@ -45,6 +48,12 @@ const Classroom = ({ courseVideosState }) => {
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'), {
     defaultMatches: true
   });
+
+  useEffect(() => {
+    if(isVideoChange){
+      setCurrentLecture(props.selectedVideoState);
+    }
+  })
 
   const [openSidebar, setOpenSidebar] = useState(false);
 
@@ -56,14 +65,14 @@ const Classroom = ({ courseVideosState }) => {
     setOpenSidebar(false);
   };
 
-  const hanldeCourseVideoChange = (course) => {
-    setCurrentLecture(course);
+  const hanldeCourseVideoChange = (courseVideo) => {
+    props.getVideo(courseVideo.id);
+    setIsVideoChanged(true);
   };
 
   const handleNext = () => {
     for (var i = 0; i < courseVideos.length; i++) {
       if (courseVideos[i].order == (currentLecture.order + 1)) {
-        console.log(currentLecture.title);
         setCurrentLecture(courseVideos[i]);
         if (i == (courseVideos.length - 1)) {
           setIsLastLecture(true);
@@ -181,8 +190,9 @@ const Classroom = ({ courseVideosState }) => {
 
 function mapStateToProps(state) {
   return {
-    courseVideosState: state.currentCourse.videos
+    courseVideosState: state.currentCourse.videos,
+    selectedVideoState: state.selectedVideo.video,
   }
 };
 
-export default connect(mapStateToProps)(Classroom);
+export default connect(mapStateToProps, { getVideo })(Classroom);

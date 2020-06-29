@@ -5,7 +5,7 @@ import { NavLink as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes, { func } from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { List, ListItem, Button, colors } from '@material-ui/core';
+import { List, ListItem, Button, colors, Divider } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -64,6 +64,7 @@ const SidebarNav = props => {
       className={clsx(classes.root, className)}
     >
       {coursevideos.map(coursevideo => (
+        <div>
         <ListItem
           className={classes.item}
           disableGutters
@@ -79,6 +80,8 @@ const SidebarNav = props => {
             {coursevideo.title}
           </Button>
         </ListItem>
+        <Divider/>
+        </div>
       ))}
     </List>
   );
