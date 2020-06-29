@@ -12,7 +12,8 @@ import {
   IconButton,
   TextField,
   Link,
-  Typography
+  Typography,
+  LinearProgress
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
@@ -187,6 +188,13 @@ const SignIn = props => {
     formState.touched[field] && formState.errors[field] ? true : false;
 
   return (
+    <React.Fragment>
+    <div>
+      {
+        props.isAuthenticating && 
+        <LinearProgress/>
+      }
+    </div>
     <div className={classes.root}>
       <Grid
         className={classes.grid}
@@ -343,6 +351,7 @@ const SignIn = props => {
         </Grid>
       </Grid>
     </div>
+    </React.Fragment>
   );
 };
 
@@ -351,7 +360,7 @@ SignIn.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  
+  isAuthenticating: state.auth.isAuthenticating
 });
 
 export default connect(mapStateToProps, { handleSignin })(withRouter(SignIn));

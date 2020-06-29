@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { push, replace } from 'react-router-redux';
 import { SIGN_UP,
+         SIGN_IN_REQUEST,
          SIGN_IN_SUCCESS,
          SIGN_IN_FAIL,
          SIGN_OUT,
@@ -28,6 +29,10 @@ export const handleSignup = (userData) => (dispatch, getState) => {
 }
 
 export const handleSignin = (userData) => (dispatch, getState) => {
+    dispatch({
+        type: SIGN_IN_REQUEST
+    });
+
     axios.post('https://apiak.herokuapp.com/api/AkUsers/login', userData, tokenConfig(getState))
         .then(res => {
             dispatch({

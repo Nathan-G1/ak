@@ -26,7 +26,7 @@ export default function (state = initialState, action) {
         case 'SIGN_IN_SUCCESS':
             {
                 localStorage.setItem('token', action.payload.id);
-                window.location.replace('/dashboard');
+                window.location.replace('/courses');
                 return {
                     ...state,
                     token: action.payload.id,
