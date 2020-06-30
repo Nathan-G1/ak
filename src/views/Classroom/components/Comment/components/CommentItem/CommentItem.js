@@ -97,6 +97,9 @@ const CommentItem = props => {
     comment.replies = items;
   }
 
+  const changeFormVisibility= () => {
+    setIsCommentFormVisible(!isCommentFormVisible);
+  }
   return (
     <React.Fragment>
       <ListItemAvatar>
@@ -133,7 +136,7 @@ const CommentItem = props => {
             <Button
               size="small"
               onClick={() => {
-                setIsCommentFormVisible(!isCommentFormVisible);
+                changeFormVisibility();
               }}
             >
               Reply
@@ -143,6 +146,9 @@ const CommentItem = props => {
               isCommentFormVisible && 
               <CommentForm
                 currentuser={currentuser}
+                istheformforreply={true}
+                commentid={comment.id}
+                setistheformvisible={changeFormVisibility}
               />
             }
             

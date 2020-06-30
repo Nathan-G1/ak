@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
+import { connect } from 'react-redux';
+import { addComment, addReply } from '../../../../../../actions/commentAction';
 import {
   Card,
   List,
@@ -36,9 +38,13 @@ const CommentForm = props => {
   const classes = useStyles();
 
   const [isFormActionVisible, setIsFormActionVisible] = useState(false);
+  const [isTheFormForReply, setIsTheFormForReply] = useState(props.istheformforreply);
   const [values, setValues] = useState({
     qna: ''
   });
+
+  useEffect(() => {
+  })
 
   const handleChange = event => {
     setValues({
@@ -47,63 +53,93 @@ const CommentForm = props => {
     });
   };
 
+  const handleSubmit = event => {
+    event.preventDefault();
+    const comment = {
+      id: 43,
+      userName: props.currentuser.name,
+      avatar: props.currentuser.avatar,
+      comment: values.qna,
+      likes: 0,
+      dislikes: 0,
+      replies: [
+
+      ]
+    };
+
+    if(isTheFormForReply){
+      props.addReply(props.commentid, comment);
+    }else{
+      props.addComment(comment);
+    }
+    
+    setValues(values => ({
+      ...values,
+      qna: ''
+    }));
+
+    props.setistheformvisible();
+  }
   return (
-    <form>
-        <Divider />
-        <CardContent>
+    <form
+      onSubmit={handleSubmit}
+    >
+      <Divider />
+      <CardContent>
         <List>
-            <ListItem>
+          <ListItem>
             <ListItemAvatar>
-                <Avatar
+              <Avatar
                 className={classes.avatar}
-                src={currentuser.avatar}  
-                />
+                src={currentuser.avatar}
+              />
             </ListItemAvatar>
             <ListItemText
-                primary={
+              primary={
                 <React.Fragment>
-                    <TextField
+                  <TextField
                     fullWidth
-                    label="Question..."
+                    label={isTheFormForReply ? 'Reply...' :'Question...' }
                     margin="dense"
                     name="qna"
                     onChange={handleChange}
                     onClick={() => {
-                        setIsFormActionVisible(true);
+                      setIsFormActionVisible(true);
                     }}
-                    />
+                    value={values.qna}
+                  />
                 </React.Fragment>
-                }
+              }
             >
             </ListItemText>
-            </ListItem>
-            {
-                isFormActionVisible && 
-                <Grid
-                container
-                className={classes.commentBtn}
-                justify="flex-end"
-                >
-                <Button 
-                    size="small"
-                    onClick={() => {
-                        setIsFormActionVisible(false);
-                    }}
-                >
-                    Cancel
+          </ListItem>
+          {
+            isFormActionVisible &&
+            <Grid
+              container
+              className={classes.commentBtn}
+              justify="flex-end"
+            >
+              <Button
+                size="small"
+                onClick={() => {
+                  setIsFormActionVisible(false);
+                }}
+              >
+                Cancel
                 </Button>
-                <Button 
-                    variant="outlined"
-                    size="small"
-                    type="submit"
-                >
-                    Ask
+              <Button
+                variant="outlined"
+                size="small"
+                type="submit"
+              >
+                {isTheFormForReply ? 'Reply' :'Ask' }
                 </Button>
-                </Grid>
-            }
-                
+            </Grid>
+          }
+
         </List>
-        </CardContent>
+      </CardContent>
     </form>
   );
 };
@@ -112,4 +148,9 @@ CommentForm.propTypes = {
   className: PropTypes.string
 };
 
-export default CommentForm;
+const mapStateToProps = state => ({
+  currentuser: state.comments.currentUser
+});
+
+
+export default connect(mapStateToProps, { addComment, addReply })(CommentForm);

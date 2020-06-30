@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
+// import { updateComments } from '../../../../actions/commentAction';
 import { CommentItem, CommentForm } from './components'
 import {
   Card,
@@ -45,6 +46,13 @@ const Comment = props => {
   const [currentUser, setCurrentUser] = useState(props.currentUserState);
 
   const [comments, setComments] = useState(props.incomingComments);
+
+  useEffect(() => {
+    if(props.isCommentAdded){
+      setComments(props.incomingComments);
+    //   // props.updateComments();
+    }
+  })
 
   const handleLikeCount = (id) => {
       var i = 0;
@@ -132,7 +140,8 @@ Comment.propTypes = {
 const mapStateToProps = (state) => {
   return{
     incomingComments: state.comments.comments,
-    currentUserState: state.comments.currentUser
+    currentUserState: state.comments.currentUser,
+    isCommentAdded: state.comments.isCommentAdded,
   }
 }
 

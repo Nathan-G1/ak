@@ -101,7 +101,9 @@ const initialState = {
     currentUser: {
         name: 'Girma',
         avatar: '/images/avatars/avatar_7.png'
-    }
+    },
+
+    isCommentAdded: false,
 
 };
 
@@ -113,6 +115,36 @@ export default function (state = initialState, action) {
                 comments: [...state.comments]
                 // value: action.payload
             };
+
+        case 'ADD_COMMENT':
+            // console.log(action.commentContent)
+            return {
+                ...state,
+                comments: state.comments.concat(action.payload),
+                isCommentAdded: true
+            }
+
+        case 'UPDATE_STATE':
+            return {
+                ...state,
+                isCommentAdded: !state.isCommentAdded
+            }
+
+        case 'ADD_REPLY':
+            // Fix this part
+            var comments = state.comments.map((c) => {
+                if (c.id == action.commentId) {
+                    c.replies = c.replies.concat(action.payload)
+                    return c ;
+                } else {
+                    return c;
+                }
+            });
+            return {
+                ...state,
+                // comments: state.comments.filter(c => c.id === action.commentId)[0].replies.concat(action.payload)
+                comments: comments
+            }
         default:
             return state;
     }
