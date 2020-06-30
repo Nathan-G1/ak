@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
+import { connect } from 'react-redux';
+import { addCourse } from '../../../../actions/courseAction';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import {
@@ -27,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     marginRight: 'auto',
-    height:60,
+    height: 60,
     width: 60,
     flexShrink: 0,
     flexGrow: 0
@@ -38,8 +40,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AddCourseForm = props => {
-  const { className,handleClose, ...rest } = props;
+  const { className, handleClose, ...rest } = props;
+  const [isCourseAdded, setIsCourseAdded] = useState(false);
 
+  // useEffect(() => {
+  //   if(isCourseUpdated){}
+  // })
   const classes = useStyles();
 
   const [values, setValues] = useState({
@@ -49,6 +55,23 @@ const AddCourseForm = props => {
     courseObjective: '',
     courseDescription: 'ET'
   });
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    const course = {
+      id: 12,
+      rating: 0,
+      title: values.courseTitle,
+      time: 3,
+      description: values.courseDescription,
+      imageUrl: '/images/products/product_1.png',
+      totalDownloads: '0',
+      updatedAt: '27/03/2019'
+    }
+
+    props.addCourse(course);
+    setIsCourseAdded(true);
+  }
 
   const handleChange = event => {
     setValues({
@@ -80,6 +103,7 @@ const AddCourseForm = props => {
       <form
         autoComplete="off"
         noValidate
+        onSubmit={handleSubmit}
       >
         <CardHeader
           subheader="The information can be edited later"
@@ -105,7 +129,7 @@ const AddCourseForm = props => {
                 color="primary"
                 variant="text"
               >
-              Upload Image
+                Upload Image
               </Button>
             </Grid>
             <Grid
@@ -113,16 +137,16 @@ const AddCourseForm = props => {
               md={6}
               xs={12}
             >
-                <TextField
-                  fullWidth
-                  helperText="Please specify the course title"
-                  label="Course title"
-                  margin="dense"
-                  name="courseTitle"
-                  onChange={handleChange}
-                  required
-                  value={values.courseTitle}
-                  variant="outlined"
+              <TextField
+                fullWidth
+                helperText="Please specify the course title"
+                label="Course title"
+                margin="dense"
+                name="courseTitle"
+                onChange={handleChange}
+                required
+                value={values.courseTitle}
+                variant="outlined"
               />
             </Grid>
             <Grid
@@ -131,29 +155,29 @@ const AddCourseForm = props => {
               xs={12}
             >
               <TextField
-                  fullWidth
-                  label="Select category"
-                  margin="dense"
-                  name="courseCategory"
-                  onChange={handleChange}
-                  required
-                  select
-                  // eslint-disable-next-line react/jsx-sort-props
-                  SelectProps={{ native: true }}
-                  value={values.courseCategory}
-                  variant="outlined"
-                >
-                  {categories.map(option => (
-                    <option
-                      key={option.value}
-                      value={option.value}
-                    >
-                      {option.label}
-                    </option>
-                  ))}
-                </TextField>
+                fullWidth
+                label="Select category"
+                margin="dense"
+                name="courseCategory"
+                onChange={handleChange}
+                required
+                select
+                // eslint-disable-next-line react/jsx-sort-props
+                SelectProps={{ native: true }}
+                value={values.courseCategory}
+                variant="outlined"
+              >
+                {categories.map(option => (
+                  <option
+                    key={option.value}
+                    value={option.value}
+                  >
+                    {option.label}
+                  </option>
+                ))}
+              </TextField>
 
-              
+
             </Grid>
             <Grid
               item
@@ -170,7 +194,7 @@ const AddCourseForm = props => {
                 value={values.courseObjective}
                 variant="outlined"
               />
-              
+
             </Grid>
             <Grid
               item
@@ -183,8 +207,8 @@ const AddCourseForm = props => {
                 margin="dense"
                 name="courseDescription"
                 multiline
-                rows= '3'
-                rowsMax= '10'
+                rows='3'
+                rowsMax='10'
                 onChange={handleChange}
                 required
                 value={values.courseDescription}
@@ -198,6 +222,7 @@ const AddCourseForm = props => {
           <Button
             color="primary"
             variant="contained"
+            type='submit'
             onClick={() => handleClose()}
           >
             Save
@@ -212,4 +237,8 @@ AddCourseForm.propTypes = {
   className: PropTypes.string
 };
 
-export default AddCourseForm;
+const mapStateToProps = state => ({
+  
+});
+
+export default connect(mapStateToProps, { addCourse })(AddCourseForm);

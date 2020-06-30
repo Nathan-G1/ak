@@ -68,7 +68,9 @@ const initialState = {
             totalDownloads: '835',
             createdAt: '04/04/2019'
           }
-    ]
+    ],
+
+    isCourseUpdated: false
 }
 
 export default function (state = initialState, action) {
@@ -84,7 +86,12 @@ export default function (state = initialState, action) {
                 ...state,
                 course: action.state.currentCourse.videos.filter((v) => v.id === action.id)[0],
             }
-
+        case 'ADD_COURSE':
+            return{
+              ...state,
+              courses: state.courses.concat(action.payload),
+              isCourseUpdated: true
+            }
         default:
             return state;
     }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { IconButton, Grid, Typography } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -26,8 +26,14 @@ const useStyles = makeStyles(theme => ({
 const ProductList = (props) => {
   const classes = useStyles();
 
-  const [products] = useState(props.courseList);
+  const [products, setProducts] = useState(props.courseList);
   const [userRole, setUserRole] = useState("Teacher");
+
+  useEffect(() => {
+    if(props.isCourseUpdated){
+      setProducts(props.courseList)
+    }
+  })
 
   return (
     <div className={classes.root}>
@@ -68,7 +74,8 @@ const ProductList = (props) => {
 };
 
 const mapStateToProps = state => ({
-  courseList: state.courseList.courses
+  courseList: state.courseList.courses,
+  isCourseUpdated: state.courseList.isCourseUpdated
 });
 
 export default connect(mapStateToProps)(ProductList);
