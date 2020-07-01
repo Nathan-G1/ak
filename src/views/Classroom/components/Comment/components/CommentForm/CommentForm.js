@@ -78,7 +78,10 @@ const CommentForm = props => {
       qna: ''
     }));
 
-    props.setistheformvisible();
+    if(props.setistheformvisible){
+      props.setistheformvisible();
+    }
+    
   }
   return (
     <form
@@ -102,6 +105,7 @@ const CommentForm = props => {
                     label={isTheFormForReply ? 'Reply...' :'Question...' }
                     margin="dense"
                     name="qna"
+                    required
                     onChange={handleChange}
                     onClick={() => {
                       setIsFormActionVisible(true);

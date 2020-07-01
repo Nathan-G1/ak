@@ -39,17 +39,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Comment = props => {
-  const { className, ...rest } = props;
+  const { className,incomingComments, currentUserState , isCommentAdded, ...rest } = props;
 
   const classes = useStyles();
 
-  const [currentUser, setCurrentUser] = useState(props.currentUserState);
+  const [currentUser, setCurrentUser] = useState(currentUserState);
 
-  const [comments, setComments] = useState(props.incomingComments);
+  const [comments, setComments] = useState(incomingComments);
 
   useEffect(() => {
-    if(props.isCommentAdded){
-      setComments(props.incomingComments);
+    if(isCommentAdded){
+      setComments(incomingComments);
     //   // props.updateComments();
     }
   })

@@ -50,12 +50,12 @@ const useStyles = makeStyles(theme => ({
 // ));
 
 const SidebarNav = props => {
-  const { coursevideos, className, ...rest } = props;
+  const { coursevideos, className, onCourseVideoChange, ...rest } = props;
 
   const classes = useStyles();
 
   function handleCourseVideo(coursevideo){
-    props.onCourseVideoChange(coursevideo);
+    onCourseVideoChange(coursevideo);
   }
 
   return (
