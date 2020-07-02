@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { useHistory } from "react-router-dom";
+import { connect } from 'react-redux';
+import { getCourse } from '../../../../actions/courseAction';
 import { makeStyles } from '@material-ui/styles';
 import {
   Card,
@@ -47,7 +49,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ProductCard = props => {
-  const { className, product, ...rest } = props;
+  const { className, course, getCourse, ...rest } = props;
 
   const history = useHistory();
 
@@ -55,7 +57,7 @@ const ProductCard = props => {
 
   const getRatingStars = () => {
     var rate = [];
-    for(var i = 0; i < product.rating; i++){
+    for(var i = 0; i < course.rating; i++){
       rate.push(<StarIcon></StarIcon>);
     } 
     return rate;
@@ -66,6 +68,9 @@ const ProductCard = props => {
       {...rest}
       className={clsx(classes.root, className)}
       onClick={()=>{
+        // add conditional state here
+        // for teacher and student
+        getCourse(course.id);
         history.push("/course-detail");
       }}
       
@@ -75,7 +80,7 @@ const ProductCard = props => {
           <img
             alt="Product"
             className={classes.image}
-            src={product.imageUrl}
+            src={course.imageUrl}
           />
         </div>
         <Typography
@@ -83,13 +88,13 @@ const ProductCard = props => {
           gutterBottom
           variant="h4"
         >
-          {product.title}
+          {course.title}
         </Typography>
         <Typography
           align="center"
           variant="body1"
         >
-          {product.description}
+          {course.description}
         </Typography>
         <Typography 
           variant="body2" 
@@ -113,7 +118,7 @@ const ProductCard = props => {
               display="inline"
               variant="body2"
             >
-              {product.time}hr to Complete
+              {course.time}hr to Complete
             </Typography>
           </Grid>
           <Grid
@@ -125,7 +130,7 @@ const ProductCard = props => {
               display="inline"
               variant="body2"
             >
-              {product.totalDownloads} Enrolled
+              {course.totalDownloads} Enrolled
             </Typography>
           </Grid>
         </Grid>
@@ -136,7 +141,13 @@ const ProductCard = props => {
 
 ProductCard.propTypes = {
   className: PropTypes.string,
-  product: PropTypes.object.isRequired
+  course: PropTypes.object.isRequired
 };
 
-export default ProductCard;
+function mapStateToProps(state) {
+  return {
+  }
+};
+
+
+export default connect(mapStateToProps, { getCourse })(ProductCard);

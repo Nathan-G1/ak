@@ -190,7 +190,7 @@ const Classroom = props => {
 
 function mapStateToProps(state) {
   return {
-    courseVideosState: state.currentCourse.videos,
+    courseVideosState: state.currentCourse.course.videos,
     selectedVideoState: state.selectedVideo.video,
   }
 };

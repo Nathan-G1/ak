@@ -54,7 +54,7 @@ const ProductList = (props) => {
               xs={12}
             >
               <ProductCard 
-                product={product}
+                course={product}
               />
             </Grid>
           ))}

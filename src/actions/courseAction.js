@@ -2,7 +2,7 @@ export const getCourse = (courseId) => (dispatch, getState) => {
     dispatch({
             type: 'GET_COURSE',
             id: courseId,
-            // state: getState()
+            state: getState()
     });
 }
 

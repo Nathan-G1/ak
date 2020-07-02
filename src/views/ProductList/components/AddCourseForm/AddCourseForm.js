@@ -60,13 +60,24 @@ const AddCourseForm = props => {
     event.preventDefault();
     const course = {
       id: 12,
-      rating: 0,
       title: values.courseTitle,
+      rating: 0,
       time: 3,
       description: values.courseDescription,
       imageUrl: '/images/products/product_1.png',
       totalDownloads: '0',
-      updatedAt: '27/03/2019'
+      updatedAt: '27/03/2019',
+      preparedBy: "",
+      teacher: "",
+      length: 0,
+      certificate: true,
+      icon: "",
+      enrolledStudents: 0,
+      categoryId: "",
+      objectives: [
+        ""
+      ],
+      videos: []
     }
 
     props.addCourse(course);
