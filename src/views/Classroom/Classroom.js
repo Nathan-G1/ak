@@ -74,6 +74,7 @@ const Classroom = props => {
     for (var i = 0; i < courseVideos.length; i++) {
       if (courseVideos[i].order == (currentLecture.order + 1)) {
         setCurrentLecture(courseVideos[i]);
+        props.getVideo(courseVideos[i].id);
         if (i == (courseVideos.length - 1)) {
           setIsLastLecture(true);
           setIsFirstLecture(false);
@@ -88,8 +89,8 @@ const Classroom = props => {
   const handlePrev = () => {
     for (var i = 0; i < courseVideos.length; i++) {
       if (courseVideos[i].order == (currentLecture.order - 1)) {
-        console.log(currentLecture.title);
         setCurrentLecture(courseVideos[i]);
+        props.getVideo(courseVideos[i].id);
         if (i == 0) {
           setIsFirstLecture(true);
           setIsLastLecture(false);

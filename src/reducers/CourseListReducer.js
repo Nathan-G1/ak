@@ -32,7 +32,20 @@ const initialState = {
       objectives: [
         ""
       ],
-      videos: []
+      videos: [
+        {
+          id: 1,
+          title: 'create repository',
+          video: 'https://youtu.be/juxyvqiOMfY',
+          order: 1
+        },
+        {
+          id: 2,
+          title: 'cloning a repository',
+          video: 'https://www.youtube.com/watch?v=p8N0xN0ihMA',
+          order: 2
+        },
+      ]
     },
     {
       id: 2,
@@ -64,7 +77,20 @@ const initialState = {
       objectives: [
         ""
       ],
-      videos: []
+      videos: [
+        {
+          id: 1,
+          title: 'create repository',
+          video: 'https://youtu.be/juxyvqiOMfY',
+          order: 1
+        },
+        {
+          id: 2,
+          title: 'cloning a repository',
+          video: 'https://www.youtube.com/watch?v=p8N0xN0ihMA',
+          order: 2
+        },
+      ]
     },
     {
       id: 3,
@@ -96,7 +122,20 @@ const initialState = {
       objectives: [
         ""
       ],
-      videos: []
+      videos: [
+        {
+          id: 1,
+          title: 'create repository',
+          video: 'https://youtu.be/juxyvqiOMfY',
+          order: 1
+        },
+        {
+          id: 2,
+          title: 'cloning a repository',
+          video: 'https://www.youtube.com/watch?v=p8N0xN0ihMA',
+          order: 2
+        },
+      ]
     },
     {
       id: 4,
@@ -128,7 +167,20 @@ const initialState = {
       objectives: [
         ""
       ],
-      videos: []
+      videos: [
+        {
+          id: 1,
+          title: 'create repository',
+          video: 'https://youtu.be/juxyvqiOMfY',
+          order: 1
+        },
+        {
+          id: 2,
+          title: 'cloning a repository',
+          video: 'https://www.youtube.com/watch?v=p8N0xN0ihMA',
+          order: 2
+        },
+      ]
     },
     {
       id: 5,
@@ -160,7 +212,20 @@ const initialState = {
       objectives: [
         ""
       ],
-      videos: []
+      videos: [
+        {
+          id: 1,
+          title: 'create repository',
+          video: 'https://youtu.be/juxyvqiOMfY',
+          order: 1
+        },
+        {
+          id: 2,
+          title: 'cloning a repository',
+          video: 'https://www.youtube.com/watch?v=p8N0xN0ihMA',
+          order: 2
+        },
+      ]
     },
     {
       id: 6,
@@ -192,7 +257,20 @@ const initialState = {
       objectives: [
         ""
       ],
-      videos: []
+      videos: [
+        {
+          id: 1,
+          title: 'create repository',
+          video: 'https://youtu.be/juxyvqiOMfY',
+          order: 1
+        },
+        {
+          id: 2,
+          title: 'cloning a repository',
+          video: 'https://www.youtube.com/watch?v=p8N0xN0ihMA',
+          order: 2
+        },
+      ]
     }
   ],
 

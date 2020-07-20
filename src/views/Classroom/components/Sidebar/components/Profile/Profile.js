@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/styles';
 import { 
   Avatar,
@@ -60,14 +61,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Profile = props => {
-  const { className, ...rest } = props;
+  const { className, currentCourse, ...rest } = props;
   const [open, setOpen] = React.useState(false);
 
   const classes = useStyles();
 
   const course = {
-    name: 'Github',
-    avatar: '/images/products/product_5.png',
+    name: currentCourse.title,
+    avatar: currentCourse.imageUrl,
     // rating: 5
   };
 
@@ -150,4 +151,8 @@ Profile.propTypes = {
   className: PropTypes.string
 };
 
-export default Profile;
+const mapStateToProps = state => ({
+  currentCourse: state.currentCourse.course
+});
+
+export default connect(mapStateToProps)(Profile);
