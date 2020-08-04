@@ -317,6 +317,14 @@ const SignIn = props => {
                   value={formState.values.password || ''}
                   variant="outlined"
                 />
+                {
+                  props.isAuthenticationFailed && 
+                  <Typography
+                    color="error"
+                  >
+                    Invalid login or password. Please try again.
+                  </Typography>
+                }
                 <Button
                   className={classes.signInButton}
                   color="primary"
@@ -360,7 +368,8 @@ SignIn.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  isAuthenticating: state.auth.isAuthenticating
+  isAuthenticating: state.auth.isAuthenticating,
+  isAuthenticationFailed: state.auth.isAuthenticationFailed
 });
 
 export default connect(mapStateToProps, { handleSignin })(withRouter(SignIn));
