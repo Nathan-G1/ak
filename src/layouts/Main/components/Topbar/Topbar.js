@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Topbar = props => {
-  const { className, onSidebarOpen,handleSignout, ...rest } = props;
+  const { className, onSidebarOpen, handleSignout, currentuser, ...rest } = props;
 
   const classes = useStyles();
 
@@ -57,10 +57,10 @@ const Topbar = props => {
         <Hidden mdDown>
           <Avatar
             className={classes.small}
-            src="/images/avatars/avatar_1.png" />
+            src={currentuser.avatar} />
           <Typography
             className={classes.nameTxt}
-          >James</Typography>
+          >{currentuser.name}</Typography>
           <IconButton color="inherit">
             <Badge
               badgeContent={notifications.length}
@@ -99,7 +99,8 @@ Topbar.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    auth: state.auth
+    auth: state.auth,
+    currentuser: state.comments.currentUser
   }
 };
 
