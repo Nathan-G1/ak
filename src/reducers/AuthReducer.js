@@ -5,6 +5,7 @@ const initialState = {
     userId: null,
     isAuthenticating: false,
     isAuthenticated: false,
+    isAuthenticationFailed: false,
     statusText: null,
 }
 
@@ -41,6 +42,11 @@ export default function (state = initialState, action) {
         //     window.location.replace('/dashboard');
 
         case 'SIGN_IN_FAIL':
+            return {
+                ...state,
+                isAuthenticationFailed: true,
+                isAuthenticating: false
+            }
         case 'SIGN_UP_FAIL':
             return {
                 ...state,
