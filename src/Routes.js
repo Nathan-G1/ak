@@ -16,6 +16,7 @@ import {
   Icons as IconsView,
   Classroom as Classroom,
   CourseDetail as CourseDetailView,
+  CourseProfile as CourseProfileView,
   Account as AccountView,
   Settings as SettingsView,
   SignUp as SignUpView,
@@ -87,6 +88,12 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/course-detail"
+      />
+      <RouteWithLayout
+        component={requireAuth(CourseProfileView)}
+        exact
+        layout={MainLayout}
+        path="/course-profile"
       />
       <RouteWithLayout
         component={SignUpView}
