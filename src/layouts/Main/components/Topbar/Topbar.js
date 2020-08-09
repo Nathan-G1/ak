@@ -60,7 +60,7 @@ const Topbar = props => {
             src={currentuser.avatar} />
           <Typography
             className={classes.nameTxt}
-          >{currentuser.name}</Typography>
+          >{currentuser.firstName}</Typography>
           <IconButton color="inherit">
             <Badge
               badgeContent={notifications.length}
@@ -100,7 +100,7 @@ Topbar.propTypes = {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
-    currentuser: state.comments.currentUser
+    currentuser: state.currentUser.user
   }
 };
 

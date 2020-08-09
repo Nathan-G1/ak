@@ -5,6 +5,7 @@ import validate from 'validate.js';
 import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
+
 import { handleSignin } from '../../actions/authAction';
 import {
   Grid,
@@ -130,7 +131,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SignIn = props => {
-  const { history } = props;
+  const { history, isAuthenticated, ...rest } = props;
 
   const classes = useStyles();
   
@@ -151,6 +152,8 @@ const SignIn = props => {
       isValid: errors ? false : true,
       errors: errors || {}
     }));
+
+
   }, [formState.values]);
 
   const handleBack = () => {
@@ -369,7 +372,8 @@ SignIn.propTypes = {
 
 const mapStateToProps = state => ({
   isAuthenticating: state.auth.isAuthenticating,
-  isAuthenticationFailed: state.auth.isAuthenticationFailed
+  isAuthenticationFailed: state.auth.isAuthenticationFailed,
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 export default connect(mapStateToProps, { handleSignin })(withRouter(SignIn));

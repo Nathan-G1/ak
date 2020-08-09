@@ -80,7 +80,7 @@ const ProductCard = props => {
           <img
             alt="Product"
             className={classes.image}
-            src={course.imageUrl}
+            src={course.icon}
           />
         </div>
         <Typography
@@ -118,7 +118,7 @@ const ProductCard = props => {
               display="inline"
               variant="body2"
             >
-              {course.time}hr to Complete
+              2hr to Complete
             </Typography>
           </Grid>
           <Grid

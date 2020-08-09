@@ -57,7 +57,7 @@ const CommentForm = props => {
     event.preventDefault();
     const comment = {
       id: 43,
-      userName: props.currentuser.name,
+      userName: props.currentuser.firstName,
       avatar: props.currentuser.avatar,
       comment: values.qna,
       likes: 0,
@@ -153,7 +153,7 @@ CommentForm.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  currentuser: state.comments.currentUser
+  currentuser: state.currentUser.user
 });
 
 

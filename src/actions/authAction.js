@@ -1,11 +1,14 @@
 import axios from 'axios';
 import { push, replace } from 'react-router-redux';
-import { SIGN_UP,
-         SIGN_IN_REQUEST,
-         SIGN_IN_SUCCESS,
-         SIGN_IN_FAIL,
-         SIGN_OUT,
-         SIGN_UP_FAIL } from './types';
+import { handleSetUser } from './userAction';
+import {
+    SIGN_UP,
+    SIGN_IN_REQUEST,
+    SIGN_IN_SUCCESS,
+    SIGN_IN_FAIL,
+    SIGN_OUT,
+    SIGN_UP_FAIL
+} from './types';
 
 export const handleSignup = (userData) => (dispatch, getState) => {
     // dispatch({
@@ -18,7 +21,6 @@ export const handleSignup = (userData) => (dispatch, getState) => {
                 type: SIGN_UP,
                 payload: res.data
             });
-
             // dispatch(push('/dashboard'));
         }).catch(err => {
             dispatch({
@@ -38,9 +40,9 @@ export const handleSignin = (userData) => (dispatch, getState) => {
             dispatch({
                 type: SIGN_IN_SUCCESS,
                 payload: res.data,
+                state: getState()
             });
-
-            // dispatch(push('/dashboard'));
+            // dispatch(handleSetUser(res.data.userId));
         }).catch(err => {
             dispatch({
                 type: SIGN_IN_FAIL
@@ -60,13 +62,16 @@ export const tokenConfig = getState => {
 
     const config = {
         headers: {
-            "Content-type": "application/json"
+            "Content-type": "application/json",
+            'Accept': 'application/json'
         }
     };
 
     if (token) {
-        config.headers['x-auth-token'] = token;
+        // config.headers['X-USER-token'] = `Bearer ${token}`;
+        config.headers['Authorization'] = `Bearer ${token}`;
     }
+    
 
     return config;
 }

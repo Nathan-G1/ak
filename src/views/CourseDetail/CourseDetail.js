@@ -105,7 +105,7 @@ const CourseDetail = (props) => {
           <Avatar
             alt="course"
             className={classes.avatar}
-            src={values.imageUrl}
+            src={values.icon}
           />
 
           <Typography

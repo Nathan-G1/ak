@@ -4,6 +4,7 @@ import { IconButton, Grid, Typography } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { connect } from 'react-redux';
+import { handleSetUser } from '../../actions/userAction'; 
 
 import { Classroom } from '../';
 import { ProductsToolbar, ProductCard } from './components';
@@ -33,6 +34,7 @@ const ProductList = (props) => {
     if(props.isCourseUpdated){
       setProducts(props.courseList)
     }
+    props.handleSetUser(props.userId);
   })
 
   return (
@@ -75,7 +77,9 @@ const ProductList = (props) => {
 
 const mapStateToProps = state => ({
   courseList: state.courseList.courses,
-  isCourseUpdated: state.courseList.isCourseUpdated
+  isCourseUpdated: state.courseList.isCourseUpdated,
+  userId: state.auth.userId,
+  // isUserLoaded: state.currentUser.isUserFetched,
 });
 
-export default connect(mapStateToProps)(ProductList);
+export default connect(mapStateToProps, { handleSetUser })(ProductList);

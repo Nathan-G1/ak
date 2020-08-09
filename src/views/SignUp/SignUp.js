@@ -197,12 +197,14 @@ const SignUp = props => {
       userType: "student",
       firstName: formState.values.firstName,
       lastName: formState.values.lastName,
+      avatar: "/images/user.png",
       phoneNumber: "",
       password: formState.values.password,
       realm: "",
       username: "",
       email: formState.values.email,
-      emailVerified: true
+      emailVerified: true,
+      courseId: ""
     })
 
 

@@ -59,35 +59,38 @@ const AddCourseForm = props => {
   const handleSubmit = event => {
     event.preventDefault();
     const course = {
-      id: 12,
-      title: values.courseTitle,
-      rating: 0,
-      time: 3,
-      description: values.courseDescription,
-      imageUrl: '/images/products/product_1.png',
-      totalDownloads: '0',
-      updatedAt: '27/03/2019',
-      preparedBy: "",
-      instructorPhoto: '/images/avatars/avatar_11.png',
-      instructorName: 'Abebe',
-      whatToLearn: [
-        'printing and typesetting',
-        'There are many variations',
-        'web page editors now',
-        'The point of using Lorem'
-      ],
-      about: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.',
-      requirements: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which  Lorem Ipsum available, but the majority have suffered alteration in some form, by injected hu',
-      teacher: "",
-      length: 0,
-      certificate: true,
-      icon: "",
-      enrolledStudents: 0,
-      categoryId: "",
-      objectives: [
-        ""
-      ],
-      videos: []
+      
+        title: values.courseTitle,
+        preparedBy: "",
+        teacher: "Abebe",
+        // instructorPhoto: '/images/avatars/avatar_11.png',
+        // instructorName: 'Abebe',
+        length: 0,
+        // time: 3, not in the model
+        certificate: true,
+        videos: [
+          ""
+        ],
+        publishedDate: "2020-08-07T15:48:33.322Z",
+        icon: '/images/products/product_1.png',
+        enrolledStudents: 0,
+        description: values.courseDescription,
+        categoryId: "",
+        rating: 0,
+        totalDownloads: 0,
+        updatedAt: "2020-08-07T15:48:33.322Z",
+        whatToLearn: [
+          ""
+        ],
+        about: "",
+        requirements: [
+          ""
+        ],
+        objectives: [
+          ""
+        ],
+        id: "string"
+      
     }
 
     props.addCourse(course);
@@ -103,16 +106,16 @@ const AddCourseForm = props => {
 
   const categories = [
     {
-      value: 'Introduction',
-      label: 'Introduction'
+      value: 'academic',
+      label: 'Academic'
     },
     {
-      value: 'new-york',
-      label: 'New York'
+      value: 'college',
+      label: 'College'
     },
     {
-      value: 'san-francisco',
-      label: 'San Francisco'
+      value: 'general',
+      label: 'General'
     }
   ];
 

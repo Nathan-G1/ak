@@ -2,7 +2,7 @@ import { push, replace } from 'react-router-redux';
 
 const initialState = {
     token: localStorage.getItem('token'),
-    userId: null,
+    userId: localStorage.getItem('userId'),
     isAuthenticating: false,
     isAuthenticated: false,
     isAuthenticationFailed: false,
@@ -27,7 +27,13 @@ export default function (state = initialState, action) {
         case 'SIGN_IN_SUCCESS':
             {
                 localStorage.setItem('token', action.payload.id);
-                window.location.replace('/courses');
+                localStorage.setItem('userId', action.payload.userId);
+
+                // if(action.state.currentUser.isUserFetched){
+                    window.location.replace('/courses');
+                // }
+
+                
                 return {
                     ...state,
                     token: action.payload.id,
@@ -54,9 +60,11 @@ export default function (state = initialState, action) {
             }
         case 'SIGN_OUT':
             localStorage.removeItem('token');
+            localStorage.removeItem('userId');
             return {
                 ...state,
                 token: null,
+                userId: null,
                 isAuthenticated: false,
                 isAuthenticating: false,
             };

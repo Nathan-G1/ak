@@ -7,3 +7,5 @@ export const SIGN_OUT = 'SIGN_OUT';
 
 export const GET_VIDEO = 'GET_VIDEO';
 
+export const SET_USER = 'SET_USER';
+
