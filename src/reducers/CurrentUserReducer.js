@@ -1,7 +1,7 @@
 const initialState = {
     user: {
         userType: "student",
-        firstName: "",
+        firstName: "James",
         lastName: "Michael",
         avatar: "",
         phoneNumber: "",
@@ -23,6 +23,11 @@ export default function (state = initialState, action) {
                 ...state,
                 user: action.payload,
                 isUserFetched: true
+            };
+        case 'persist/REHYDRATE':
+            return {
+                ...state,
+                user: action.payload.currentUser.user
             };
 
         default:

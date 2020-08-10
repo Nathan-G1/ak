@@ -65,7 +65,7 @@ const Topbar = (props, { isAuthenticated = props.token }) => {
                 src={currentuser.avatar} />
               <Typography
                 className={classes.nameTxt}
-              >{currentuser.name}</Typography>
+              >{currentuser.firstName}</Typography>
               <IconButton color="inherit">
                 <Badge
                   badgeContent={notifications.length}
