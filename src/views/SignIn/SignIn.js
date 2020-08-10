@@ -2,14 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
+import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/styles';
+import { connect } from 'react-redux';
+
+import { handleSignin } from '../../actions/authAction';
 import {
   Grid,
   Button,
   IconButton,
   TextField,
   Link,
-  Typography
+  Typography,
+  LinearProgress
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
@@ -126,9 +131,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SignIn = props => {
-  const { history } = props;
+  const { history, isAuthenticated, ...rest } = props;
 
   const classes = useStyles();
+  
+  const navHistory = useHistory();
 
   const [formState, setFormState] = useState({
     isValid: false,
@@ -145,6 +152,8 @@ const SignIn = props => {
       isValid: errors ? false : true,
       errors: errors || {}
     }));
+
+
   }, [formState.values]);
 
   const handleBack = () => {
@@ -172,13 +181,23 @@ const SignIn = props => {
 
   const handleSignIn = event => {
     event.preventDefault();
-    history.push('/');
+    const loginData = JSON.stringify(formState.values);
+    props.handleSignin(loginData);
+    // history.push('/dashboard');
+    // navHistory.push('/dashboard');
   };
 
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
 
   return (
+    <React.Fragment>
+    <div>
+      {
+        props.isAuthenticating && 
+        <LinearProgress/>
+      }
+    </div>
     <div className={classes.root}>
       <Grid
         className={classes.grid}
@@ -301,6 +320,14 @@ const SignIn = props => {
                   value={formState.values.password || ''}
                   variant="outlined"
                 />
+                {
+                  props.isAuthenticationFailed && 
+                  <Typography
+                    color="error"
+                  >
+                    Invalid login or password. Please try again.
+                  </Typography>
+                }
                 <Button
                   className={classes.signInButton}
                   color="primary"
@@ -309,6 +336,10 @@ const SignIn = props => {
                   size="large"
                   type="submit"
                   variant="contained"
+                  //Demo
+                  // onClick={()=>{
+                  //   navHistory.push("/courses");
+                  // }}
                 >
                   Sign in now
                 </Button>
@@ -331,6 +362,7 @@ const SignIn = props => {
         </Grid>
       </Grid>
     </div>
+    </React.Fragment>
   );
 };
 
@@ -338,4 +370,10 @@ SignIn.propTypes = {
   history: PropTypes.object
 };
 
-export default withRouter(SignIn);
+const mapStateToProps = state => ({
+  isAuthenticating: state.auth.isAuthenticating,
+  isAuthenticationFailed: state.auth.isAuthenticationFailed,
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { handleSignin })(withRouter(SignIn));

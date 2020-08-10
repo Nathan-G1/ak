@@ -3,10 +3,12 @@ import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { AppBar, Toolbar, Badge, Hidden, IconButton } from '@material-ui/core';
+import { AppBar, Toolbar, Badge, Hidden, IconButton, Avatar, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
+import { connect } from 'react-redux';
+import { handleSignout } from '../../../../actions/authAction';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -17,15 +19,27 @@ const useStyles = makeStyles(theme => ({
   },
   signOutButton: {
     marginLeft: theme.spacing(1)
+  },
+  small: {
+    width: theme.spacing(4),
+    height: theme.spacing(4)
+  },
+  nameTxt: {
+    color: 'white',
+    paddingLeft: theme.spacing(1)
   }
 }));
 
 const Topbar = props => {
-  const { className, onSidebarOpen, ...rest } = props;
+  const { className, onSidebarOpen, handleSignout, currentuser, ...rest } = props;
 
   const classes = useStyles();
 
   const [notifications] = useState([]);
+
+  const handleSignOut = () => {
+    props.handleSignout();
+  }
 
   return (
     <AppBar
@@ -41,6 +55,12 @@ const Topbar = props => {
         </RouterLink>
         <div className={classes.flexGrow} />
         <Hidden mdDown>
+          <Avatar
+            className={classes.small}
+            src={currentuser.avatar} />
+          <Typography
+            className={classes.nameTxt}
+          >{currentuser.firstName}</Typography>
           <IconButton color="inherit">
             <Badge
               badgeContent={notifications.length}
@@ -53,6 +73,7 @@ const Topbar = props => {
           <IconButton
             className={classes.signOutButton}
             color="inherit"
+            onClick={handleSignOut}
           >
             <InputIcon />
           </IconButton>
@@ -65,6 +86,7 @@ const Topbar = props => {
             <MenuIcon />
           </IconButton>
         </Hidden>
+
       </Toolbar>
     </AppBar>
   );
@@ -75,4 +97,11 @@ Topbar.propTypes = {
   onSidebarOpen: PropTypes.func
 };
 
-export default Topbar;
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+    currentuser: state.currentUser.user
+  }
+};
+
+export default connect(mapStateToProps, { handleSignout })(Topbar);

@@ -1,6 +1,6 @@
 /* eslint-disable react/no-multi-comp */
 /* eslint-disable react/display-name */
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { NavLink as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
@@ -52,6 +52,9 @@ const CustomRouterLink = forwardRef((props, ref) => (
 const SidebarNav = props => {
   const { pages, className, ...rest } = props;
 
+  // get user and set it here
+  const [ userStatus, setUserStatus ] = useState('admin');
+
   const classes = useStyles();
 
   return (
@@ -60,6 +63,7 @@ const SidebarNav = props => {
       className={clsx(classes.root, className)}
     >
       {pages.map(page => (
+        userStatus == page.user &&
         <ListItem
           className={classes.item}
           disableGutters

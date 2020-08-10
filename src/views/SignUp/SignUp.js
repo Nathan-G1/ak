@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
+import { useHistory } from "react-router-dom";
+import { connect } from 'react-redux';
+import { handleSignup } from '../../actions/authAction';
 import { makeStyles } from '@material-ui/styles';
 import {
   Grid,
@@ -11,6 +14,7 @@ import {
   Link,
   FormHelperText,
   Checkbox,
+  MenuItem,
   Typography
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -144,6 +148,8 @@ const SignUp = props => {
   const { history } = props;
 
   const classes = useStyles();
+  
+  const navHistory = useHistory();
 
   const [formState, setFormState] = useState({
     isValid: false,
@@ -187,6 +193,22 @@ const SignUp = props => {
 
   const handleSignUp = event => {
     event.preventDefault();
+    const user = JSON.stringify({
+      userType: "student",
+      firstName: formState.values.firstName,
+      lastName: formState.values.lastName,
+      avatar: "/images/user.png",
+      phoneNumber: "",
+      password: formState.values.password,
+      realm: "",
+      username: "",
+      email: formState.values.email,
+      emailVerified: true,
+      courseId: ""
+    })
+
+
+    props.handleSignup(user);
     history.push('/');
   };
 
@@ -236,11 +258,11 @@ const SignUp = props => {
           xs={12}
         >
           <div className={classes.content}>
-            <div className={classes.contentHeader}>
+            {/* <div className={classes.contentHeader}>
               <IconButton onClick={handleBack}>
                 <ArrowBackIcon />
               </IconButton>
-            </div>
+            </div> */}
             <div className={classes.contentBody}>
               <form
                 className={classes.form}
@@ -286,6 +308,7 @@ const SignUp = props => {
                   value={formState.values.lastName || ''}
                   variant="outlined"
                 />
+
                 <TextField
                   className={classes.textField}
                   error={hasError('email')}
@@ -352,6 +375,11 @@ const SignUp = props => {
                   size="large"
                   type="submit"
                   variant="contained"
+                  // // Demo
+                  // onClick={()=>{
+                  //     navHistory.push("/courses");
+                  //   }
+                  // }
                 >
                   Sign up now
                 </Button>
@@ -377,8 +405,12 @@ const SignUp = props => {
   );
 };
 
+const mapStateToProps = state => ({
+  
+});
+
 SignUp.propTypes = {
   history: PropTypes.object
 };
 
-export default withRouter(SignUp);
+export default connect(mapStateToProps, {handleSignup}) (withRouter(SignUp));
