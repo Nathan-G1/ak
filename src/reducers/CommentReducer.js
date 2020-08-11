@@ -98,11 +98,6 @@ const initialState = {
         }
     ],
 
-    currentUser: {
-        name: 'Girma',
-        avatar: '/images/avatars/avatar_7.png'
-    },
-
     isCommentAdded: false,
 
 };

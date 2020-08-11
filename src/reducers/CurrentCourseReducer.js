@@ -1,16 +1,24 @@
 const initialState = {
   course: {
-      id: 56,
-      title: 'Biology in Amharic',
-      rating: 5,
-      time: 8,
-      description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. \nLorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has ',
-      imageUrl: '/images/products/product_5.png',
-      totalDownloads: '835',
-      updatedAt: '27/03/2019',
+      title: 'Business English',
       preparedBy: "",
+      teacher: "Abebe",
       instructorPhoto: '/images/avatars/avatar_11.png',
       instructorName: 'Abebe',
+      length: 0,
+      // time: 3, not in the model
+      certificate: true,
+      videos: [
+        
+      ],
+      publishedDate: "2020-08-07T15:48:33.322Z",
+      icon: '/images/products/product_5.png',
+      enrolledStudents: 0,
+      description: "is a web-based hosting service for version control o",
+      categoryId: "",
+      rating: 5,
+      totalDownloads: 22,
+      updatedAt: "2020-08-07T15:48:33.322Z",
       whatToLearn: [
         'printing and typesetting',
         'There are many variations',
@@ -18,62 +26,47 @@ const initialState = {
         'The point of using Lorem'
       ],
       about: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.',
-      requirements: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which  Lorem Ipsum available, but the majority have suffered alteration in some form, by injected hu',
-      teacher: "",
-      length: 0,
-      certificate: true,
-      icon: "",
-      enrolledStudents: 0,
-      categoryId: "",
+      requirements: [
+        ""
+      ],
       objectives: [
         ""
       ],
-      videos: [
-        {
-          id: 1,
-          title: 'create repository',
-          video: 'https://youtu.be/juxyvqiOMfY',
-          order: 1
-        },
-        {
-          id: 2,
-          title: 'cloning a repository',
-          video: 'https://www.youtube.com/watch?v=p8N0xN0ihMA',
-          order: 2
-        },
-        {
-          id: 3,
-          title: 'push and pull',
-          video: 'https://www.youtube.com/watch?v=c2Kf-rXI_pk',
-          order: 3
-        },
-        {
-          id: 4,
-          title: 'rebasing and stashing',
-          video: 'https://www.youtube.com/watch?v=GbECT1J9bXg',
-          order: 4
-        },
-        {
-          id: 5,
-          title: 'create branch',
-          video: 'https://www.youtube.com/watch?v=VGosZWBTF7A',
-          order: 5
-        },
-        {
-          id: 6,
-          title: 'delete branch',
-          video: 'https://www.youtube.com/watch?v=gDqGSmTPtOQ',
-          order: 6
-        },
-        {
-          id: 7,
-          title: 'delete repository',
-          video: 'https://www.youtube.com/watch?v=5dZ_lvDgevk',
-          order: 7
-        }
-    
-      ]
+      id: "5"
     },
+
+    lectureVideos: [
+      {
+        url: 'https://youtu.be/juxyvqiOMfY',
+        title: 'create repository',
+        description: "application",
+        courseId: "5f3176854262d10017f033b9",
+        videoLength: 0,
+        materials: "",
+        part: 1,
+        id: "",
+      },
+      {
+        url: 'https://www.youtube.com/watch?v=p8N0xN0ihMA',
+        title: 'cloning a repository',
+        description: "application",
+        courseId: "5f3176854262d10017f033b9",
+        videoLength: 0,
+        materials: "",
+        part: 2,
+        id: "",
+      },
+      {
+        url: 'https://www.youtube.com/watch?v=c2Kf-rXI_pk',
+        title: 'push and pull',
+        description: "application",
+        courseId: "5f3176854262d10017f033b9",
+        videoLength: 0,
+        materials: "",
+        part: 3,
+        id: "",
+      }
+    ]
   
 }
 
@@ -91,6 +84,12 @@ export default function (state = initialState, action) {
         ...state,
         course: action.state.courseList.courses.filter((c) => c.id === action.id)[0],
       };
+
+    // case 'persist/REHYDRATE':
+    //   return {
+    //       ...state,
+    //       course: action.payload.currentCourse.course
+    //   };
     default:
       return state;
   }

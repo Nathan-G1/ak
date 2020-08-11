@@ -6,29 +6,17 @@ const initialState = {
       title: "Biology in Amharic",
       preparedBy: "",
       teacher: "Abebe",
-      // instructorPhoto: '/images/avatars/avatar_11.png',
-      // instructorName: 'Abebe',
+      instructorPhoto: '/images/avatars/avatar_11.png',
+      instructorName: 'Abebe',
       length: 0,
       // time: 3, not in the model
       certificate: true,
       videos: [
-        // tobe eliminated
-        {
-          id: 1,
-          title: 'create repository',
-          video: 'https://youtu.be/juxyvqiOMfY',
-          order: 1
-        },
-        {
-          id: 2,
-          title: 'cloning a repository',
-          video: 'https://www.youtube.com/watch?v=p8N0xN0ihMA',
-          order: 2
-        },
+        
       ],
       publishedDate: "2020-08-07T15:48:33.322Z",
       icon: '/images/products/product_1.png',
-      enrolledStudents: 0,
+      enrolledStudents: 1222,
       description: "is a web-based hosting service for version control o",
       categoryId: "",
       rating: 0,
@@ -44,31 +32,19 @@ const initialState = {
       objectives: [
         ""
       ],
-      id: "1"
+      id: 1
     },
     {
       title: 'Customers or Buyers Expressions',
       preparedBy: "",
-      teacher: "Abebe",
-      // instructorPhoto: '/images/avatars/avatar_11.png',
-      // instructorName: 'Abebe',
+      teacher: "Girma",
+      instructorPhoto: '/images/avatars/avatar_11.png',
+      instructorName: 'Abebe',
       length: 0,
       // time: 3, not in the model
       certificate: true,
       videos: [
-        // tobe eliminated
-        {
-          id: 1,
-          title: 'create repository',
-          video: 'https://youtu.be/juxyvqiOMfY',
-          order: 1
-        },
-        {
-          id: 2,
-          title: 'cloning a repository',
-          video: 'https://www.youtube.com/watch?v=p8N0xN0ihMA',
-          order: 2
-        },
+        
       ],
       publishedDate: "2020-08-07T15:48:33.322Z",
       icon: '/images/products/product_2.png',
@@ -88,31 +64,19 @@ const initialState = {
       objectives: [
         ""
       ],
-      id: "2"
+      id: 2
     },
     {
       title: 'English for Beginners',
       preparedBy: "",
-      teacher: "Abebe",
-      // instructorPhoto: '/images/avatars/avatar_11.png',
-      // instructorName: 'Abebe',
+      teacher: "Fekede",
+      instructorPhoto: '/images/avatars/avatar_11.png',
+      instructorName: 'Abebe',
       length: 0,
       // time: 3, not in the model
       certificate: true,
       videos: [
-        // tobe eliminated
-        {
-          id: 1,
-          title: 'create repository',
-          video: 'https://youtu.be/juxyvqiOMfY',
-          order: 1
-        },
-        {
-          id: 2,
-          title: 'cloning a repository',
-          video: 'https://www.youtube.com/watch?v=p8N0xN0ihMA',
-          order: 2
-        },
+        
       ],
       publishedDate: "2020-08-07T15:48:33.322Z",
       icon: '/images/products/product_3.png',
@@ -132,31 +96,19 @@ const initialState = {
       objectives: [
         ""
       ],
-      id: "3"
+      id: 3
     },
     {
       title: 'Chemistry in Amharic',
       preparedBy: "",
-      teacher: "Abebe",
-      // instructorPhoto: '/images/avatars/avatar_11.png',
-      // instructorName: 'Abebe',
+      teacher: "Trusew",
+      instructorPhoto: '/images/avatars/avatar_11.png',
+      instructorName: 'Abebe',
       length: 0,
       // time: 3, not in the model
       certificate: true,
       videos: [
-        // tobe eliminated
-        {
-          id: 1,
-          title: 'create repository',
-          video: 'https://youtu.be/juxyvqiOMfY',
-          order: 1
-        },
-        {
-          id: 2,
-          title: 'cloning a repository',
-          video: 'https://www.youtube.com/watch?v=p8N0xN0ihMA',
-          order: 2
-        },
+        
       ],
       publishedDate: "2020-08-07T15:48:33.322Z",
       icon: '/images/products/product_4.png',
@@ -176,31 +128,19 @@ const initialState = {
       objectives: [
         ""
       ],
-      id: "4"
+      id: 4
     },
     {
       title: 'Business English',
       preparedBy: "",
       teacher: "Abebe",
-      // instructorPhoto: '/images/avatars/avatar_11.png',
-      // instructorName: 'Abebe',
+      instructorPhoto: '/images/avatars/avatar_11.png',
+      instructorName: 'Abebe',
       length: 0,
       // time: 3, not in the model
       certificate: true,
       videos: [
-        // tobe eliminated
-        {
-          id: 1,
-          title: 'create repository',
-          video: 'https://youtu.be/juxyvqiOMfY',
-          order: 1
-        },
-        {
-          id: 2,
-          title: 'cloning a repository',
-          video: 'https://www.youtube.com/watch?v=p8N0xN0ihMA',
-          order: 2
-        },
+        
       ],
       publishedDate: "2020-08-07T15:48:33.322Z",
       icon: '/images/products/product_5.png',
@@ -220,31 +160,19 @@ const initialState = {
       objectives: [
         ""
       ],
-      id: "5"
+      id: 5
     },
     {
       title: 'Maths in Amharic',
       preparedBy: "",
       teacher: "Abebe",
-      // instructorPhoto: '/images/avatars/avatar_11.png',
-      // instructorName: 'Abebe',
+      instructorPhoto: '/images/avatars/avatar_11.png',
+      instructorName: 'Abebe',
       length: 0,
       // time: 3, not in the model
       certificate: true,
       videos: [
-        // tobe eliminated
-        {
-          id: 1,
-          title: 'create repository',
-          video: 'https://youtu.be/juxyvqiOMfY',
-          order: 1
-        },
-        {
-          id: 2,
-          title: 'cloning a repository',
-          video: 'https://www.youtube.com/watch?v=p8N0xN0ihMA',
-          order: 2
-        },
+        
       ],
       publishedDate: "2020-08-07T15:48:33.322Z",
       icon: '/images/products/product_6.png',
@@ -264,7 +192,7 @@ const initialState = {
       objectives: [
         ""
       ],
-      id: "6"
+      id: 6
     }
   ],
 

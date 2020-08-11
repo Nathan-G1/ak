@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
 import { WhatToLearn, About, PaymentForm, Requirements, CourseContent, Review } from './components';
@@ -80,6 +80,10 @@ const CourseDetail = (props) => {
   const [open, setOpen] = React.useState(false);
 
   const [values, setValues] = useState(selectedCourse);
+
+  useEffect(() => {
+    setValues(selectedCourse);
+  })
 
   const getRatingStars = () => {
     var rate = [];

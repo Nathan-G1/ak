@@ -1,9 +1,13 @@
 const initialState = {
     video: {
-        id: '',
+        url: '',
         title: '',
-        video: '',
-        order: ''
+        description: '',
+        courseId: '',
+        videoLength: '',
+        materials: '',
+        part: '', 
+        id: '',
     },
     isFetched: false,
 }
@@ -19,7 +23,7 @@ export default function (state = initialState, action) {
         case 'GET_VIDEO':
             return {
                 ...state,
-                video: action.state.currentCourse.course.videos.filter((v) => v.id === action.id)[0],
+                video: action.state.currentCourse.lectureVideos.filter((v) => v.id === action.id)[0],
             }
 
         default:

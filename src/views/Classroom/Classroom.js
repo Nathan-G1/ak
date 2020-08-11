@@ -72,7 +72,7 @@ const Classroom = props => {
 
   const handleNext = () => {
     for (var i = 0; i < courseVideos.length; i++) {
-      if (courseVideos[i].order == (currentLecture.order + 1)) {
+      if (courseVideos[i].part == (currentLecture.part + 1)) {
         setCurrentLecture(courseVideos[i]);
         props.getVideo(courseVideos[i].id);
         if (i == (courseVideos.length - 1)) {
@@ -88,7 +88,7 @@ const Classroom = props => {
 
   const handlePrev = () => {
     for (var i = 0; i < courseVideos.length; i++) {
-      if (courseVideos[i].order == (currentLecture.order - 1)) {
+      if (courseVideos[i].part == (currentLecture.part - 1)) {
         setCurrentLecture(courseVideos[i]);
         props.getVideo(courseVideos[i].id);
         if (i == 0) {
@@ -191,7 +191,7 @@ const Classroom = props => {
 
 function mapStateToProps(state) {
   return {
-    courseVideosState: state.currentCourse.course.videos,
+    courseVideosState: state.currentCourse.lectureVideos,
     selectedVideoState: state.selectedVideo.video,
   }
 };
