@@ -25,11 +25,13 @@ export default function (state = initialState, action) {
                 isUserFetched: true
             };
         case 'persist/REHYDRATE':
-            return {
-                ...state,
-                user: action.payload.currentUser.user,
-                isUserFetched: action.payload.currentUser.isUserFetched,
-            };
+            if(action.payload.currentUser){
+                return {
+                    ...state,
+                    user: action.payload.currentUser.user,
+                    isUserFetched: action.payload.currentUser.isUserFetched,
+                };
+            }
 
         default:
             return state;

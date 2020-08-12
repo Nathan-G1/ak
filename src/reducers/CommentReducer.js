@@ -49,10 +49,12 @@ export default function (state = initialState, action) {
             };
 
         case 'persist/REHYDRATE':
-            return {
-                ...state,
-                comments: action.payload.comments.comments,
-            };
+            if(action.payload.comments){
+                return {
+                    ...state,
+                    comments: action.payload.comments.comments,
+                };
+            }
 
         case 'ADD_COMMENT':
             // console.log(action.commentContent)
