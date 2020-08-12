@@ -148,7 +148,7 @@ const CourseDetail = (props) => {
             <Typography
               className={classes.subtitle}
             >
-              {values.instructorName}
+              {values.preparedBy}
             </Typography>
 
           </Grid>

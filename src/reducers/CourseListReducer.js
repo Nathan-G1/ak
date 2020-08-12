@@ -4,10 +4,8 @@ const initialState = {
   courses: [
     {
       title: "Biology in Amharic",
-      preparedBy: "",
-      teacher: "Abebe",
+      preparedBy: "Abebe",
       instructorPhoto: '/images/avatars/avatar_11.png',
-      instructorName: 'Abebe',
       length: 0,
       // time: 3, not in the model
       certificate: true,
@@ -36,10 +34,8 @@ const initialState = {
     },
     {
       title: 'Customers or Buyers Expressions',
-      preparedBy: "",
-      teacher: "Girma",
+      preparedBy: "Girma",
       instructorPhoto: '/images/avatars/avatar_11.png',
-      instructorName: 'Abebe',
       length: 0,
       // time: 3, not in the model
       certificate: true,
@@ -68,10 +64,8 @@ const initialState = {
     },
     {
       title: 'English for Beginners',
-      preparedBy: "",
-      teacher: "Fekede",
+      preparedBy: "Fekede",
       instructorPhoto: '/images/avatars/avatar_11.png',
-      instructorName: 'Abebe',
       length: 0,
       // time: 3, not in the model
       certificate: true,
@@ -100,10 +94,8 @@ const initialState = {
     },
     {
       title: 'Chemistry in Amharic',
-      preparedBy: "",
-      teacher: "Trusew",
+      preparedBy: "Trusew",
       instructorPhoto: '/images/avatars/avatar_11.png',
-      instructorName: 'Abebe',
       length: 0,
       // time: 3, not in the model
       certificate: true,
@@ -132,10 +124,8 @@ const initialState = {
     },
     {
       title: 'Business English',
-      preparedBy: "",
-      teacher: "Abebe",
+      preparedBy: "Abebe",
       instructorPhoto: '/images/avatars/avatar_11.png',
-      instructorName: 'Abebe',
       length: 0,
       // time: 3, not in the model
       certificate: true,
@@ -164,10 +154,8 @@ const initialState = {
     },
     {
       title: 'Maths in Amharic',
-      preparedBy: "",
-      teacher: "Abebe",
+      preparedBy: "Abebe",
       instructorPhoto: '/images/avatars/avatar_11.png',
-      instructorName: 'Abebe',
       length: 0,
       // time: 3, not in the model
       certificate: true,

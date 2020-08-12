@@ -56,32 +56,35 @@ const CommentForm = props => {
   const handleSubmit = event => {
     event.preventDefault();
     const comment = {
-      id: 43,
+      text: values.qna,
       userName: props.currentuser.firstName,
       avatar: props.currentuser.avatar,
-      comment: values.qna,
       likes: 0,
       dislikes: 0,
       replies: [
 
-      ]
+      ],
+      id: 43,
+      commentId: "",
+      videoId: "",
+      courseId: ""
     };
 
-    if(isTheFormForReply){
+    if (isTheFormForReply) {
       props.addReply(props.commentid, comment);
-    }else{
+    } else {
       props.addComment(comment);
     }
-    
+
     setValues(values => ({
       ...values,
       qna: ''
     }));
 
-    if(props.setistheformvisible){
+    if (props.setistheformvisible) {
       props.setistheformvisible();
     }
-    
+
   }
   return (
     <form
@@ -102,7 +105,7 @@ const CommentForm = props => {
                 <React.Fragment>
                   <TextField
                     fullWidth
-                    label={isTheFormForReply ? 'Reply...' :'Question...' }
+                    label={isTheFormForReply ? 'Reply...' : 'Question...'}
                     margin="dense"
                     name="qna"
                     required
@@ -131,14 +134,14 @@ const CommentForm = props => {
                 }}
               >
                 Cancel
-                </Button>
+              </Button>
               <Button
                 variant="outlined"
                 size="small"
                 type="submit"
               >
-                {isTheFormForReply ? 'Reply' :'Ask' }
-                </Button>
+                {isTheFormForReply ? 'Reply' : 'Ask'}
+              </Button>
             </Grid>
           }
 

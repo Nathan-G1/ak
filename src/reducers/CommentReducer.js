@@ -2,100 +2,36 @@ const initialState = {
 
     comments: [
         {
-            id: 1,
-            userName: 'Abebe',
-            avatar: '/images/avatars/avatar_11.png',
-            comment: 'I like it . this is so helpful. Thanks ',
+            text: "Awesome Lecture",
+            userName: "Ermias",
+            avatar: "/images/avatars/avatar_3.png",
             likes: 12,
             dislikes: 1,
             replies: [
-                {
-                    id: 2,
-                    userName: 'Abebe',
-                    avatar: '/images/avatars/avatar_11.png',
-                    comment: 'I like it . this is so helpful. Thanks ',
-                    likes: 12,
-                    dislikes: 1,
-                    replies: [
-
-                    ]
-                },
-            ]
+              "string"
+            ],
+            id: "5f325263c1e3d500174c2e2d",
+            commentId: "",
+            videoId: "5f3178044262d10017f033ba",
+            courseId: "5f3176854262d10017f033b9"
         },
+    ],
+
+    selectedCommentReplies: [
         {
-            id: 3,
-            userName: 'Abebe',
-            avatar: '/images/avatars/avatar_1.png',
-            comment: 'I like it . this is so helpful. Thanks ',
-            likes: 12,
-            dislikes: 1,
+            text: "great",
+            userName: "Nathan",
+            avatar: "/images/avatars/avatar_3.png",
+            like: 12,
+            dislike: 1,
             replies: [
-                {
-                    id: 4,
-                    userName: 'Abebe',
-                    avatar: '/images/avatars/avatar_2.png',
-                    comment: 'I like it . this is so helpful. Thanks ',
-                    likes: 12,
-                    dislikes: 1,
-                    replies: [
-
-                    ]
-                },
-            ]
-        },
-        {
-            id: 5,
-            userName: 'Abebe',
-            avatar: '/images/avatars/avatar_3.png',
-            comment: 'I like it . this is so helpful. Thanks ',
-            likes: 12,
-            dislikes: 1,
-            replies: [
-                {
-                    id: 6,
-                    userName: 'Abebe',
-                    avatar: '/images/avatars/avatar_4.png',
-                    comment: 'I like it . this is so helpful. Thanks ',
-                    likes: 12,
-                    dislikes: 1,
-                    replies: [
-
-                    ]
-                },
-            ]
-        },
-        {
-            id: 7,
-            userName: 'Abebe',
-            avatar: '/images/avatars/avatar_5.png',
-            comment: 'I like it . this is so helpful. Thanks ',
-            likes: 12,
-            dislikes: 1,
-            replies: [
-                {
-                    id: 8,
-                    userName: 'Abebe',
-                    avatar: '/images/avatars/avatar_6.png',
-                    comment: 'I like it . this is so helpful. Thanks ',
-                    likes: 12,
-                    dislikes: 1,
-                    replies: [
-
-                    ]
-                },
-                {
-                    id: 9,
-                    userName: 'Abebe',
-                    avatar: '/images/avatars/avatar_7.png',
-                    comment: 'I like it . this is so helpful. Thanks ',
-                    likes: 12,
-                    dislikes: 1,
-                    replies: [
-
-                    ]
-                },
-            ]
-        }
+              "string"
+            ],
+            id: "5f325b13e4f2b700179f5ded",
+            commentId: "5f325263c1e3d500174c2e2d",
+            videoId: "string",
+            courseId: "string"
+          }
     ],
 
     isCommentAdded: false,
@@ -125,20 +61,26 @@ export default function (state = initialState, action) {
                 isCommentAdded: !state.isCommentAdded
             }
 
+        // case 'ADD_REPLY':
+        //     // Fix this part
+        //     var comments = state.comments.map((c) => {
+        //         if (c.id == action.commentId) {
+        //             c.replies = c.replies.concat(action.payload)
+        //             return c ;
+        //         } else {
+        //             return c;
+        //         }
+        //     });
+        //     return {
+        //         ...state,
+        //         // comments: state.comments.filter(c => c.id === action.commentId)[0].replies.concat(action.payload)
+        //         comments: comments
+        //     }
+
         case 'ADD_REPLY':
-            // Fix this part
-            var comments = state.comments.map((c) => {
-                if (c.id == action.commentId) {
-                    c.replies = c.replies.concat(action.payload)
-                    return c ;
-                } else {
-                    return c;
-                }
-            });
-            return {
+            return{
                 ...state,
-                // comments: state.comments.filter(c => c.id === action.commentId)[0].replies.concat(action.payload)
-                comments: comments
+                selectedCommentReplies: action.payload
             }
         default:
             return state;

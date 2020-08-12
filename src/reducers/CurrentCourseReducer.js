@@ -1,10 +1,8 @@
 const initialState = {
   course: {
       title: 'Business English',
-      preparedBy: "",
-      teacher: "Abebe",
+      preparedBy: "Abebe",
       instructorPhoto: '/images/avatars/avatar_11.png',
-      instructorName: 'Abebe',
       length: 0,
       // time: 3, not in the model
       certificate: true,
@@ -85,11 +83,11 @@ export default function (state = initialState, action) {
         course: action.state.courseList.courses.filter((c) => c.id === action.id)[0],
       };
 
-    // case 'persist/REHYDRATE':
-    //   return {
-    //       ...state,
-    //       course: action.payload.currentCourse.course
-    //   };
+    case 'persist/REHYDRATE':
+      return {
+          ...state,
+          course: action.payload.currentCourse.course
+      };
     default:
       return state;
   }
