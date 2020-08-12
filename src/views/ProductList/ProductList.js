@@ -28,11 +28,15 @@ const ProductList = (props) => {
   const classes = useStyles();
 
   const [products, setProducts] = useState(props.courseList);
-  const [userRole, setUserRole] = useState("Teacher");
+  const [userRole, setUserRole] = useState(props.userType);
 
   useEffect(() => {
     if(props.isCourseUpdated){
       setProducts(props.courseList)
+    }
+
+    if(props.isUserFetched){
+      setUserRole(props.userType)
     }
     props.handleSetUser(props.userId);
   })
@@ -79,6 +83,8 @@ const mapStateToProps = state => ({
   courseList: state.courseList.courses,
   isCourseUpdated: state.courseList.isCourseUpdated,
   userId: state.auth.userId,
+  userType: state.currentUser.user.userType,
+  isUserFetched: state.currentUser.isUserFetched
   // isUserLoaded: state.currentUser.isUserFetched,
 });
 
