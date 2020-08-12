@@ -1,30 +1,35 @@
 import axios from 'axios';
 import { tokenConfig } from './authAction';
 
-export const getComments = (videoId) => (dispatch, getState) => {
-    dispatch({
-        type: 'GET_COMMENTS',
-        id: videoId,
-        // state: getState()
-    });
-}
-
-//demo
 // export const getComments = (videoId) => (dispatch, getState) => {
-
-//     axios.get("https://apiak.herokuapp.com/api/AkUsers/comments", {
-//         "videoId": videoId
-//     }).then(res => {
-//         dispatch({
-//             type: 'GET_COMMENTS',
-//             id: videoId,
-//             commentList: res.data
-//             // state: getState()
-//         });
-//     }).catch(err => {
-
-//     })
+//     dispatch({
+//         type: 'GET_COMMENTS',
+//         id: videoId,
+//         // state: getState()
+//     });
 // }
+
+//add videoId here
+export const getComments = () => (dispatch, getState) => {
+
+    axios.get("https://apiak.herokuapp.com/api/comments", {
+        // "videoId": videoId
+        // videoId : "5f3178044262d10017f033ba",
+        access_token: getState().auth.token
+    }).then(res => {
+        dispatch({
+            type: 'GET_COMMENTS',
+            // id: videoId,
+            commentList: res.data.filter((comment) => {
+                return comment.videoId == "5f3178044262d10017f033ba";
+              })
+        });
+    }).catch(err => {
+        dispatch({
+            type: 'COMMENT_NOT_FOUND',
+        })
+    })
+}
 
 export const getCourseReview = (courseId) => (dispatch, getState) => {
     dispatch({
@@ -59,17 +64,22 @@ export const addReply = (commentId, commentContent) => (dispatch, getState) => {
 }
 
 //matched with the api except the filter property
-// export const getCommentReplies = (commentId) => (dispatch, getState) => {
-//     axios.get("https://apiak.herokuapp.com/api/AkUsers/comments", {
-//         "commentId": commentId
-//     }).then(res => {
-//         dispatch({
-//             type: 'GET_REPLIES',
-//             id: videoId,
-//             commentReplies: res.data
-//             // state: getState()
-//         });
-//     }).catch(err => {
-
-//     })
-// }
+export const getCommentReplies = (commentId) => (dispatch, getState) => {
+    axios.get("https://apiak.herokuapp.com/api/comments", {
+        // "commentId": commentId
+        access_token: getState().auth.token
+    }).then(res => {
+        const replies = res.data.filter((reply) => {
+            return reply.commentId == commentId;                
+          })
+        dispatch({
+            type: 'GET_REPLIES',
+            commentReplies: replies
+            
+        });
+    }).catch(err => {
+        dispatch({
+            type: 'REPLY_NOT_FOUND'
+        })
+    })
+}

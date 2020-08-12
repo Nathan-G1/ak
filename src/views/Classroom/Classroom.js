@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import { connect } from 'react-redux';
-import { getVideo } from '../../actions/courseVideoAction'
+import { getVideo } from '../../actions/courseVideoAction';
+import { getComments } from '../../actions/commentAction';
 import {
   Grid,
   useMediaQuery,
@@ -53,6 +54,7 @@ const Classroom = props => {
     if(isVideoChange){
       setCurrentLecture(props.selectedVideoState);
     }
+    props.getComments();
   })
 
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -196,4 +198,4 @@ function mapStateToProps(state) {
   }
 };
 
-export default connect(mapStateToProps, { getVideo })(Classroom);
+export default connect(mapStateToProps, { getVideo, getComments })(Classroom);

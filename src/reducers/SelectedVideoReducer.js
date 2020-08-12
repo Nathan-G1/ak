@@ -1,4 +1,5 @@
 const initialState = {
+    // load courses part one video here
     video: {
         url: '',
         title: '',

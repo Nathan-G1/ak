@@ -8,6 +8,7 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import { CommentForm } from '../';
 import { connect } from 'react-redux';
+import { getCommentReplies } from '../../../../../../actions/commentAction';
 import {
   List,
   ListItem,
@@ -46,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CommentItem = props => {
-  const { className, comment ,currentuser, incomingCommentReplies, ...rest } = props;
+  const { className, comment ,currentuser, incomingCommentReplies, getCommentReplies, ...rest } = props;
   const [isRepliesVisibile, setIsRepliesVisible] = useState(false);
   const [isLikeClicked, setIsLikeClicked] = useState(false);
   const [isCommentFormVisible, setIsCommentFormVisible] = useState(false);
@@ -54,8 +55,14 @@ const CommentItem = props => {
 
   const classes = useStyles();
 
-  const viewReplies = () => {
+  useEffect(() => {
+    setCommentReplies(incomingCommentReplies);
+    // getCommentReplies();
+  })
+
+  const viewReplies = (commentId) => {
     // alert(commentReplies.length);
+    getCommentReplies(commentId);
     setIsRepliesVisible(!isRepliesVisibile);
   }
 
@@ -157,7 +164,7 @@ const CommentItem = props => {
             <Button
               size="small"
               className={isRepliesVisibile ? classes.clickedViewReply : classes.notActiveViewReply}
-              onClick={viewReplies}
+              onClick={() => {viewReplies(comment.id)}}
             >
                 {
                   isRepliesVisibile ? (
@@ -216,4 +223,4 @@ const mapStateToProps = state => ({
   incomingCommentReplies: state.comments.selectedCommentReplies,
 });
 
-export default connect(mapStateToProps)(CommentItem);
+export default connect(mapStateToProps, { getCommentReplies })(CommentItem);

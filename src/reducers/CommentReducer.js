@@ -8,7 +8,7 @@ const initialState = {
             likes: 12,
             dislikes: 1,
             replies: [
-              "string"
+                "string"
             ],
             id: "5f325263c1e3d500174c2e2d",
             commentId: "",
@@ -25,13 +25,13 @@ const initialState = {
             like: 12,
             dislike: 1,
             replies: [
-              "string"
+                "string"
             ],
             id: "5f325b13e4f2b700179f5ded",
             commentId: "5f325263c1e3d500174c2e2d",
             videoId: "string",
             courseId: "string"
-          }
+        }
     ],
 
     isCommentAdded: false,
@@ -43,8 +43,15 @@ export default function (state = initialState, action) {
         case 'GET_COMMENTS':
             return {
                 ...state,
-                comments: [...state.comments]
-                // value: action.payload
+                // comments: [...state.comments]
+                comments: action.commentList,
+                isCommentAdded: true
+            };
+
+        case 'persist/REHYDRATE':
+            return {
+                ...state,
+                comments: action.payload.comments.comments,
             };
 
         case 'ADD_COMMENT':
@@ -78,9 +85,16 @@ export default function (state = initialState, action) {
         //     }
 
         case 'ADD_REPLY':
-            return{
+            return {
                 ...state,
                 selectedCommentReplies: action.payload
+            }
+
+        case 'GET_REPLIES':
+            return {
+                ...state,
+                selectedCommentReplies: action.commentReplies,
+                isCommentAdded: true
             }
         default:
             return state;
