@@ -2,6 +2,8 @@
 
 ## Getting started
 
+### Setup remote db
+
 * cd into the new folder `npm i` install dependencies
 * `npm start` starts the server
 
