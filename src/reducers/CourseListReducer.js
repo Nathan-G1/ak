@@ -10,7 +10,7 @@ const initialState = {
       // time: 3, not in the model
       certificate: true,
       videos: [
-        
+
       ],
       publishedDate: "2020-08-07T15:48:33.322Z",
       icon: '/images/products/product_1.png',
@@ -40,7 +40,7 @@ const initialState = {
       // time: 3, not in the model
       certificate: true,
       videos: [
-        
+
       ],
       publishedDate: "2020-08-07T15:48:33.322Z",
       icon: '/images/products/product_2.png',
@@ -70,7 +70,7 @@ const initialState = {
       // time: 3, not in the model
       certificate: true,
       videos: [
-        
+
       ],
       publishedDate: "2020-08-07T15:48:33.322Z",
       icon: '/images/products/product_3.png',
@@ -90,97 +90,7 @@ const initialState = {
       objectives: [
         ""
       ],
-      id: 3
-    },
-    {
-      title: 'Chemistry in Amharic',
-      preparedBy: "Trusew",
-      instructorPhoto: '/images/avatars/avatar_11.png',
-      length: 0,
-      // time: 3, not in the model
-      certificate: true,
-      videos: [
-        
-      ],
-      publishedDate: "2020-08-07T15:48:33.322Z",
-      icon: '/images/products/product_4.png',
-      enrolledStudents: 0,
-      description: "is a web-based hosting service for version control o",
-      categoryId: "",
-      rating: 0,
-      totalDownloads: 0,
-      updatedAt: "2020-08-07T15:48:33.322Z",
-      whatToLearn: [
-        ""
-      ],
-      about: "",
-      requirements: [
-        ""
-      ],
-      objectives: [
-        ""
-      ],
-      id: 4
-    },
-    {
-      title: 'Business English',
-      preparedBy: "Abebe",
-      instructorPhoto: '/images/avatars/avatar_11.png',
-      length: 0,
-      // time: 3, not in the model
-      certificate: true,
-      videos: [
-        
-      ],
-      publishedDate: "2020-08-07T15:48:33.322Z",
-      icon: '/images/products/product_5.png',
-      enrolledStudents: 0,
-      description: "is a web-based hosting service for version control o",
-      categoryId: "",
-      rating: 0,
-      totalDownloads: 0,
-      updatedAt: "2020-08-07T15:48:33.322Z",
-      whatToLearn: [
-        ""
-      ],
-      about: "",
-      requirements: [
-        ""
-      ],
-      objectives: [
-        ""
-      ],
-      id: 5
-    },
-    {
-      title: 'Maths in Amharic',
-      preparedBy: "Abebe",
-      instructorPhoto: '/images/avatars/avatar_11.png',
-      length: 0,
-      // time: 3, not in the model
-      certificate: true,
-      videos: [
-        
-      ],
-      publishedDate: "2020-08-07T15:48:33.322Z",
-      icon: '/images/products/product_6.png',
-      enrolledStudents: 0,
-      description: "",
-      categoryId: "",
-      rating: 0,
-      totalDownloads: 0,
-      updatedAt: "2020-08-07T15:48:33.322Z",
-      whatToLearn: [
-        ""
-      ],
-      about: "",
-      requirements: [
-        ""
-      ],
-      objectives: [
-        ""
-      ],
-      id: 6
+      id: "5f3176854262d10017f033b9"
     }
   ],
 
@@ -189,12 +99,33 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    // case 'GET_COMMENTS':
-    //     return {
-    //         ...state,
-    //         comments: [...state.comments]
-    //         // value: action.payload
-    //     };
+    case 'GET_COURSES':
+      return {
+        ...state,
+        courses: action.courseList,
+        isCourseUpdated: true
+      }
+
+    case 'persist/REHYDRATE':
+      if (action.payload.courseList) {
+        return {
+          ...state,
+          courses: action.payload.courseList.courses,
+          // isCourseUpdated: action.payload.courseList.isCourseUpdated,
+        };
+      }
+
+    // case 'COURSE_FETCHED':
+    //   return{
+    //     ...state,
+    //     isCourseUpdated: false
+    //   }
+
+    case 'SIGN_OUT':
+      return{
+        ...state,
+        isCourseUpdated: false
+      }
     case 'GET_COURSE':
       return {
         ...state,
