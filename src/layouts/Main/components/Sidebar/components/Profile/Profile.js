@@ -26,6 +26,7 @@ const Profile = props => {
   const { user, className, ...rest } = props;
 
   const classes = useStyles();
+  // avatar use default if no avatar is saved in image server
   user.avatar = '/images/avatars/avatar_11.png';
 
   return (
