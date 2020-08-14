@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { List, ListItem, Button, colors } from '@material-ui/core';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -50,7 +51,7 @@ const CustomRouterLink = forwardRef((props, ref) => (
 ));
 
 const SidebarNav = props => {
-  const { pages, className, ...rest } = props;
+  const { user, pages, className, ...rest } = props;
 
   // get user and set it here
   const [ userStatus, setUserStatus ] = useState('admin');
@@ -63,7 +64,7 @@ const SidebarNav = props => {
       className={clsx(classes.root, className)}
     >
       {pages.map(page => (
-        userStatus == page.user &&
+        page.user.includes(user.userType.toLocaleLowerCase()) &&
         <ListItem
           className={classes.item}
           disableGutters
@@ -89,4 +90,10 @@ SidebarNav.propTypes = {
   pages: PropTypes.array.isRequired
 };
 
-export default SidebarNav;
+function mapStateToProps(state) {
+  return {
+      user : state.currentUser.user
+  }
+}
+
+export default connect(mapStateToProps, {})(SidebarNav);
