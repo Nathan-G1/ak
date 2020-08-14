@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import { Button } from '@material-ui/core';
-
+import { connect } from 'react-redux';
 import { SearchInput } from 'components';
+import { handleSetUsers } from '../../../../actions/userListAction';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -28,11 +29,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+
 const UsersToolbar = props => {
-  const { className, ...rest } = props;
+
+  const { fun, handleSetUsers, className, ...rest } = props;
 
   const classes = useStyles();
 
+  function getUsers() {
+    handleSetUsers();
+  }
   return (
     <div
       {...rest}
@@ -40,19 +46,19 @@ const UsersToolbar = props => {
     >
       <div className={classes.row}>
         <span className={classes.spacer} />
-        <Button className={classes.importButton}>Import</Button>
-        <Button className={classes.exportButton}>Export</Button>
+        <Button className={classes.importButton} onClick={getUsers}>Students</Button>
+        <Button className={classes.exportButton}>Teachers</Button>
         <Button
           color="primary"
           variant="contained"
         >
-          Add user
+          Add Teacher
         </Button>
       </div>
       <div className={classes.row}>
         <SearchInput
           className={classes.searchInput}
-          placeholder="Search user"
+          placeholder="Search user..."
         />
       </div>
     </div>
@@ -63,4 +69,10 @@ UsersToolbar.propTypes = {
   className: PropTypes.string
 };
 
-export default UsersToolbar;
+function mapStateToProps(state) {
+  return {
+      user: state.currentUser.user
+  }
+}
+
+export default connect(mapStateToProps, {handleSetUsers})(UsersToolbar);
