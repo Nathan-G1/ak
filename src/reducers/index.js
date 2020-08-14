@@ -5,6 +5,7 @@ import commentReducer from './CommentReducer';
 import currentVideo from './SelectedVideoReducer';
 import currentUser from './CurrentUserReducer';
 import courseList from './CourseListReducer';
+import UsersList from './UserListReducer';
 
 export default combineReducers({
     auth: AuthReducer,
@@ -12,6 +13,7 @@ export default combineReducers({
     comments: commentReducer,
     selectedVideo: currentVideo,
     courseList: courseList,
-    currentUser: currentUser
+    currentUser: currentUser,
+    usersList: UsersList
 });
 
