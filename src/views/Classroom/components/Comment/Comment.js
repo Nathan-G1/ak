@@ -53,7 +53,7 @@ const Comment = props => {
     //   // props.updateComments();
     }
 
-    props.getCommentReplies();
+    // props.getCommentReplies();
   })
 
   const handleLikeCount = (id) => {

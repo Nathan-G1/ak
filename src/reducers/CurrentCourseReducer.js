@@ -80,8 +80,15 @@ export default function (state = initialState, action) {
     case 'GET_COURSE':
       return {
         ...state,
-        course: action.state.courseList.courses.filter((c) => c.id === action.id)[0],
+        // course: action.state.courseList.courses.filter((c) => c.id === action.id)[0],
+        course: action.course[0]
       };
+
+    case 'GET_LECTURE_VIDS':
+      return {
+        ...state,
+        lectureVideos: action.lectureVid
+      }
 
     case 'persist/REHYDRATE':
       if (action.payload.currentCourse) {

@@ -10,9 +10,9 @@ import { tokenConfig } from './authAction';
 // }
 
 //add videoId here
-export const getComments = () => (dispatch, getState) => {
-
-    axios.get("https://apiak.herokuapp.com/api/comments", {
+export const getComments = (videoId) => (dispatch, getState) => {
+    // 5f3178044262d10017f033ba
+    axios.get(`https://apiak.herokuapp.com/api/videos/${videoId}/comments`, {
         // "videoId": videoId
         // videoId : "5f3178044262d10017f033ba",
         access_token: getState().auth.token
@@ -20,9 +20,11 @@ export const getComments = () => (dispatch, getState) => {
         dispatch({
             type: 'GET_COMMENTS',
             // id: videoId,
-            commentList: res.data.filter((comment) => {
-                return comment.videoId == "5f3178044262d10017f033ba";
-              })
+            // commentList: res.data.filter((comment) => {
+            //     return comment.videoId == "5f3178044262d10017f033ba";
+            //   })
+            commentList: res.data
+
         });
     }).catch(err => {
         dispatch({
@@ -65,17 +67,16 @@ export const addReply = (commentId, commentContent) => (dispatch, getState) => {
 
 //matched with the api except the filter property
 export const getCommentReplies = (commentId) => (dispatch, getState) => {
-    axios.get("https://apiak.herokuapp.com/api/comments", {
+    axios.get(`https://apiak.herokuapp.com/api/comments/${commentId}/comments`, {
         // "commentId": commentId
         access_token: getState().auth.token
     }).then(res => {
-        const replies = res.data.filter((reply) => {
-            return reply.commentId == commentId;                
-          })
+        // const replies = res.data.filter((reply) => {
+        //     return reply.commentId == commentId;                
+        //   })
         dispatch({
             type: 'GET_REPLIES',
-            commentReplies: replies
-            
+            commentReplies: res.data
         });
     }).catch(err => {
         dispatch({

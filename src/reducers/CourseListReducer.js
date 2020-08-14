@@ -126,11 +126,11 @@ export default function (state = initialState, action) {
         ...state,
         isCourseUpdated: false
       }
-    case 'GET_COURSE':
-      return {
-        ...state,
-        course: action.state.currentCourse.course.videos.filter((v) => v.id === action.id)[0],
-      }
+    // case 'GET_COURSE':
+    //   return {
+    //     ...state,
+    //     course: action.state.currentCourse.course.videos.filter((v) => v.id === action.id)[0],
+    //   }
     case 'ADD_COURSE':
       return {
         ...state,
