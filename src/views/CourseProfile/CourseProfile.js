@@ -95,24 +95,9 @@ const CourseProfile = (props) => {
   const [open, setOpen] = React.useState(false);
 
   // const [values, setValues] = useState(selectedCourse);
+  
 
-  const [values, setValues] = useState({
-    name: 'History',
-    description: 'Ethiopian History',
-    objectives: '',
-    courseObjectives: [
-      'Learn the anicient history of Ethiopia'
-    ],
-    requirement: '',
-    about: '',
-    state: 'Addis Ababa',
-    addedVideo: '',
-    courseImage: '/images/products/product_5.png',
-    courseLectures: [
-      'Et',
-    ],
-    courseId: ''
-  });
+  const [values, setValues] = useState(selectedCourse);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -160,7 +145,7 @@ const CourseProfile = (props) => {
         ...values,
         objectives: ''
       })
-      values.courseObjectives.push(values.objectives);
+      values.whatToLearn.push(values.objectives);
     }
 
     const handleOpen = () => {
@@ -214,7 +199,7 @@ const CourseProfile = (props) => {
               >
                 <Avatar
                   className={classes.avatar}
-                  src={values.courseImage}
+                  src={values.icon}
                 />
                 <Button
                   className={classes.uploadButton}
@@ -232,13 +217,13 @@ const CourseProfile = (props) => {
               >
                 <TextField
                   fullWidth
-                  helperText="Please specify the name"
-                  label="Name"
+                  helperText="Please specify the title"
+                  label="Title"
                   margin="dense"
-                  name="name"
+                  name="title"
                   onChange={handleChange}
                   required
-                  value={values.name}
+                  value={values.title}
                   variant="outlined"
                 />
               </Grid>
@@ -251,13 +236,13 @@ const CourseProfile = (props) => {
                   fullWidth
                   label="Select Category"
                   margin="dense"
-                  name="state"
+                  name="categoryId"
                   onChange={handleChange}
                   required
                   select
                   // eslint-disable-next-line react/jsx-sort-props
                   SelectProps={{ native: true }}
-                  value={values.state}
+                  value={values.categoryId}
                   variant="outlined"
                 >
                   {categories.map(option => (
@@ -299,7 +284,7 @@ const CourseProfile = (props) => {
                   <Typography>
                     {
                       <List>
-                        {(values.courseObjectives).map((v, index) => {
+                        {(values.whatToLearn).map((v, index) => {
                           return <ListItem key={index}>{v}</ListItem>
                         })}
 
@@ -337,10 +322,10 @@ const CourseProfile = (props) => {
                   rows='3'
                   label="Requirement"
                   margin="dense"
-                  name="requirement"
+                  name="requirements"
                   required
                   onChange={handleChange}
-                  value={values.requirement}
+                  value={values.requirements}
                   variant="outlined"
                 />
               </Grid>
@@ -378,7 +363,7 @@ const CourseProfile = (props) => {
                   <Typography>
                     {
                       <List>
-                        {(values.courseLectures).map((v, index) => {
+                        {(values.videos).map((v, index) => {
                           return <ListItem key={index}>{v}</ListItem>
                         })}
 
