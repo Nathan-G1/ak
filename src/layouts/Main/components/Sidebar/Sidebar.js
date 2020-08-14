@@ -44,7 +44,7 @@ const Sidebar = props => {
 
   const pages = [
     {
-      user: 'admin',
+      user: ['admin', 'student'],
       title: 'Dashboard',
       href: '/dashboard',
       icon: <DashboardIcon />
@@ -56,37 +56,25 @@ const Sidebar = props => {
       icon: <PeopleIcon />
     },
     {
-      user: 'admin',
+      user: ['student', 'teacher'],
       title: 'Courses',
       href: '/courses',
       icon: <ShoppingBasketIcon />
     },
     {
-      user: 'admin',
-      title: 'Authentication',
-      href: '/sign-in',
-      icon: <LockOpenIcon />
-    },
-    {
-      user: 'admin',
-      title: 'Typography',
-      href: '/typography',
-      icon: <TextFieldsIcon />
-    },
-    {
-      user: 'admin',
+      user: ['student'],
       title: 'Cetrtificates',
       href: '/certificates',
       icon: <ImageIcon />
     },
     {
-      user: 'admin',
+      user: ['admin', 'teacher', 'student'],
       title: 'Account',
       href: '/account',
       icon: <AccountBoxIcon />
     },
     {
-      user: 'admin',
+      user: ['admin', 'teacher', 'student'],
       title: 'Settings',
       href: '/settings',
       icon: <SettingsIcon />
