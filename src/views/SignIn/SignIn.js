@@ -373,7 +373,8 @@ SignIn.propTypes = {
 const mapStateToProps = state => ({
   isAuthenticating: state.auth.isAuthenticating,
   isAuthenticationFailed: state.auth.isAuthenticationFailed,
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  userId: state.auth.userId
 });
 
 export default connect(mapStateToProps, { handleSignin })(withRouter(SignIn));

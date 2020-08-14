@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
 import { WhatToLearn, About, PaymentForm, Requirements, CourseContent, Review } from './components';
@@ -81,6 +81,10 @@ const CourseDetail = (props) => {
 
   const [values, setValues] = useState(selectedCourse);
 
+  useEffect(() => {
+    setValues(selectedCourse);
+  })
+
   const getRatingStars = () => {
     var rate = [];
     for (var i = 0; i < values.rating; i++) {
@@ -144,7 +148,7 @@ const CourseDetail = (props) => {
             <Typography
               className={classes.subtitle}
             >
-              {values.instructorName}
+              {values.preparedBy}
             </Typography>
 
           </Grid>

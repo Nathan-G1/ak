@@ -5,6 +5,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { connect } from 'react-redux';
 import { handleSetUser } from '../../actions/userAction'; 
+import { getCourses } from '../../actions/courseAction'; 
 
 import { Classroom } from '../';
 import { ProductsToolbar, ProductCard } from './components';
@@ -28,13 +29,30 @@ const ProductList = (props) => {
   const classes = useStyles();
 
   const [products, setProducts] = useState(props.courseList);
-  const [userRole, setUserRole] = useState("Teacher");
+  const [userRole, setUserRole] = useState(props.userType);
 
+  props.handleSetUser(props.userId);
+  
+  props.getCourses();
+
+  // window.document.onload(() => props.checkCoursesArrival());
+  
   useEffect(() => {
     if(props.isCourseUpdated){
       setProducts(props.courseList)
     }
-    props.handleSetUser(props.userId);
+
+    // alert("this is from useEffect");
+    
+    if(props.isUserFetched){
+      setUserRole(props.userType)
+    }
+
+    // if(props.isAuthenticated){
+    //   props.handleSetUser(props.userId);
+    //   alert("user fetched");
+    // }
+
   })
 
   return (
@@ -79,7 +97,11 @@ const mapStateToProps = state => ({
   courseList: state.courseList.courses,
   isCourseUpdated: state.courseList.isCourseUpdated,
   userId: state.auth.userId,
+  userType: state.currentUser.user.userType,
+  isUserFetched: state.currentUser.isUserFetched,
+  isAuthenticated: state.auth.isAuthenticated,
+
   // isUserLoaded: state.currentUser.isUserFetched,
 });
 
-export default connect(mapStateToProps, { handleSetUser })(ProductList);
+export default connect(mapStateToProps, { handleSetUser, getCourses })(ProductList);
