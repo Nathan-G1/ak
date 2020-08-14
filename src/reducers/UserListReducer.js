@@ -3,7 +3,7 @@ import uuid from 'uuid/v1';
 const initialState = {
     users: [
         {
-            "userType": "Admin",
+            "userType": "Stundet",
             "firstName": "ALulkaj",
             "lastName": "Kemachew",
             "avatar": "/images/user.png",
