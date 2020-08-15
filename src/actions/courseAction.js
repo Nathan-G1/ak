@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getVideo } from './courseVideoAction';
 
 export const getCourse = (courseId) => (dispatch, getState) => {
     // dispatch({
@@ -38,12 +39,16 @@ export const getCourseVideos = (courseId) => (dispatch, getState) => {
             access_token: getState().auth.token
         }
     }).then(res => {
+        const lectureVideoList = res.data.filter((video) => {
+            return video.courseId == courseId;
+        })
+
         dispatch({
             type: 'GET_LECTURE_VIDS',
-            lectureVid: res.data.filter((video) => {
-                return video.courseId == courseId;
-            })
+            lectureVid: lectureVideoList
         });
+
+        dispatch(getVideo(lectureVideoList[0].id));
 
     }).catch(err => {
         dispatch({

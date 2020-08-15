@@ -48,10 +48,10 @@ const Comment = props => {
   const [comments, setComments] = useState(incomingComments);
 
   useEffect(() => {
-    if(isCommentAdded){
+    // if(isCommentAdded){
       setComments(incomingComments);
     //   // props.updateComments();
-    }
+    // }
 
     // props.getCommentReplies();
   })

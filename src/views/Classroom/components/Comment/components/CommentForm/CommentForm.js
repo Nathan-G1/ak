@@ -33,7 +33,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const CommentForm = props => {
-  const { className, currentuser, ...rest } = props;
+  const { className, currentuser, videoId, ...rest } = props;
 
   const classes = useStyles();
 
@@ -64,16 +64,15 @@ const CommentForm = props => {
       replies: [
 
       ],
-      id: 43,
       commentId: "",
-      videoId: "",
+      videoId: videoId,
       courseId: ""
     };
 
     if (isTheFormForReply) {
       props.addReply(props.commentid, comment);
     } else {
-      props.addComment(comment);
+      props.addComment(JSON.stringify(comment));
     }
 
     setValues(values => ({
@@ -156,7 +155,8 @@ CommentForm.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  currentuser: state.currentUser.user
+  currentuser: state.currentUser.user,
+  videoId: state.selectedVideo.video.id
 });
 
 
