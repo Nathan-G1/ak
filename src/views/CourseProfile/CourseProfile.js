@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
 import clsx from 'clsx';
@@ -88,7 +88,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const CourseProfile = (props) => {
-  const { className, selectedCourse, ...rest } = props;
+  const { className, dispatch, staticContext, selectedCourse, ...rest } = props;
+
+  useEffect(() => {
+    setValues(selectedCourse);
+  })
 
   const classes = useStyles();
 
@@ -281,7 +285,7 @@ const CourseProfile = (props) => {
               >
                 <Card>
                   {/* <CardContent> */}
-                  <Typography>
+                  <Typography component={'span'}>
                     {
                       <List>
                         {(values.whatToLearn).map((v, index) => {
@@ -360,7 +364,7 @@ const CourseProfile = (props) => {
                   // title="Course"
                   />
                   <Divider />
-                  <Typography>
+                  <Typography component={'span'}>
                     {
                       <List>
                         {(values.videos).map((v, index) => {
