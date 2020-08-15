@@ -42,10 +42,6 @@ export const getCourseReview = (courseId) => (dispatch, getState) => {
 }
 
 export const addComment = (commentContent) => (dispatch, getState) => {
-    // dispatch({
-    //     type: 'ADD_COMMENT',
-    //     payload: commentContent, // includes videoId, userId, commentText,...
-    // });
 
     axios.post(`https://apiak.herokuapp.com/api/comments?access_token=${getState().auth.token}`, 
         commentContent,
@@ -74,12 +70,30 @@ export const updateComments = () => (dispatch, getState) => {
 
 
 export const addReply = (commentId, commentContent) => (dispatch, getState) => {
-    dispatch({
-        type: 'ADD_REPLY',
-        commentId: commentId,
-        payload: commentContent, // includes videoId, userId, commentText,...
-        // state: getState()
-    });
+    // dispatch({
+    //     type: 'ADD_REPLY',
+    //     commentId: commentId,
+    //     payload: commentContent, // includes videoId, userId, commentText,...
+    //     // state: getState()
+    // });
+
+    axios.post(`https://apiak.herokuapp.com/api/comments/${commentId}/comments?access_token=${getState().auth.token}`, 
+        commentContent,
+        tokenConfig(getState)
+    ).then(res => {
+        dispatch({
+            type: 'ADD_REPLY',
+            // id: videoId,
+            // commentList: res.data.filter((comment) => {
+            //     return comment.videoId == "5f3178044262d10017f033ba";
+            //   })
+            payload: res.data
+        });
+    }).catch(err => {
+        dispatch({
+            type: 'REPLY_NOT_ADDED',
+        })
+    })
 }
 
 //matched with the api except the filter property

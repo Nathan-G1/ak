@@ -89,7 +89,7 @@ export default function (state = initialState, action) {
         case 'ADD_REPLY':
             return {
                 ...state,
-                selectedCommentReplies: action.payload
+                selectedCommentReplies: state.selectedCommentReplies.concat(action.payload)
             }
 
         case 'GET_REPLIES':
