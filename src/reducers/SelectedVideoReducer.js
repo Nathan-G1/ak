@@ -26,7 +26,11 @@ export default function (state = initialState, action) {
                 ...state,
                 video: action.state.currentCourse.lectureVideos.filter((v) => v.id === action.id)[0],
             }
-
+        case 'GET_LECTURE_VIDS':
+            return {
+                ...state,
+                video: action.lectureVid[0]
+            }
         default:
             return state;
     }
