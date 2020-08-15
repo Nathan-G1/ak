@@ -31,6 +31,16 @@ export default function (state = initialState, action) {
                 ...state,
                 video: action.lectureVid[0]
             }
+
+        case 'persist/REHYDRATE':
+            if (action.payload.selectedVideo) {
+                return {
+                    ...state,
+                    video: action.payload.selectedVideo.video
+                };
+            }else{
+                return state;
+            }
         default:
             return state;
     }

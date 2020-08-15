@@ -94,7 +94,8 @@ export default function (state = initialState, action) {
       if (action.payload.currentCourse) {
         return {
           ...state,
-          course: action.payload.currentCourse.course
+          course: action.payload.currentCourse.course,
+          lectureVideos: action.payload.currentCourse.lectureVideos
         };
       }else{
         return state;

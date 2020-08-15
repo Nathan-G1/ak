@@ -51,9 +51,9 @@ const Classroom = props => {
   });
 
   useEffect(() => {
-    if(isVideoChange){
+    // if(isVideoChange){
       setCurrentLecture(props.selectedVideoState);
-    }
+    // }
     props.getComments();
   })
 
