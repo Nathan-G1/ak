@@ -83,7 +83,8 @@ const CourseDetail = (props) => {
 
   useEffect(() => {
     setValues(selectedCourse);
-  })
+    // alert(selectedCourse.title)
+  }, [selectedCourse])
 
   const getRatingStars = () => {
     var rate = [];

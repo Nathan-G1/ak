@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { handleSetUser } from '../../actions/userAction'; 
 import { getCourses } from '../../actions/courseAction'; 
 
-import { Classroom } from '../';
 import { ProductsToolbar, ProductCard } from './components';
 
 const useStyles = makeStyles(theme => ({
@@ -31,7 +30,7 @@ const ProductList = (props) => {
   const [products, setProducts] = useState(props.courseList);
   const [userRole, setUserRole] = useState(props.userType);
 
-  props.handleSetUser(props.userId);
+  
   
   props.getCourses();
 
@@ -52,8 +51,9 @@ const ProductList = (props) => {
     //   props.handleSetUser(props.userId);
     //   alert("user fetched");
     // }
+    props.handleSetUser(props.userId);
 
-  })
+  }, [props.courseList, props.userType])
 
   return (
     <div className={classes.root}>
@@ -65,7 +65,7 @@ const ProductList = (props) => {
           container
           spacing={3}
         >
-          {products.map(product => (
+          {products.map((product, i) => (
             <Grid
               item
               key={product.id}
@@ -75,6 +75,7 @@ const ProductList = (props) => {
             >
               <ProductCard 
                 course={product}
+                key={i}
               />
             </Grid>
           ))}

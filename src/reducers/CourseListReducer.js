@@ -120,7 +120,7 @@ export default function (state = initialState, action) {
     //     ...state,
     //     isCourseUpdated: false
     //   }
-
+    case 'UPDATE_COURSE':
     case 'SIGN_OUT':
       return{
         ...state,

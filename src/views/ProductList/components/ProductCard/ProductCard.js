@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ProductCard = props => {
-  const { className, course, getCourse, ...rest } = props;
+  const { className, course, getCourse, userType, ...rest } = props;
 
   const history = useHistory();
 
@@ -68,10 +68,15 @@ const ProductCard = props => {
       {...rest}
       className={clsx(classes.root, className)}
       onClick={()=>{
-        // add conditional state here
-        // for teacher and student
-        getCourse(course.id);
-        history.push("/course-detail");
+        
+        if(userType.toLowerCase() == 'student'){
+          getCourse(course.id);
+          history.push("/course-detail");
+        }else if(userType.toLowerCase() == 'teacher'){
+          getCourse(course.id);
+          history.push("/course-profile");
+        }
+        
       }}
       
     >
@@ -146,6 +151,7 @@ ProductCard.propTypes = {
 
 function mapStateToProps(state) {
   return {
+    userType: state.currentUser.user.userType,
   }
 };
 

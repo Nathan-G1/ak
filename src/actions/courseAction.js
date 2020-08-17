@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getVideo } from './courseVideoAction';
+import { tokenConfig } from './authAction';
 
 export const getCourse = (courseId) => (dispatch, getState) => {
     // dispatch({
@@ -69,8 +70,9 @@ export const getCourses = () => (dispatch, getState) => {
                 type: 'GET_COURSES',
                 courseList: res.data
             });
-        }
 
+            
+        }
 
     }).catch(err => {
         dispatch({
@@ -96,3 +98,48 @@ export const addCourse = (courseInfo) => (dispatch, getState) => {
         // state: getState()
     });
 }
+
+export const addCourseVideo = (courseId, videoInfo) => (dispatch, getState) => {
+    // dispatch({
+    //     type: 'ADD_COURSE_VIDEO',
+    //     payload: videoInfo, //includes userId, and course fields
+    //     // state: getState()
+    // });
+
+    axios.post(`https://apiak.herokuapp.com/api/videos?access_token=${getState().auth.token}`, 
+        videoInfo,
+        tokenConfig(getState)
+    ).then(res => {
+        dispatch({
+            type: 'ADD_COURSE_VIDEO',
+            payload: res.data
+        });
+    }).catch(err => {
+        dispatch({
+            type: 'VIDEO_NOT_ADDED',
+        })
+    })
+}
+
+
+export const updateCourse = (courseId, courseInfo) => (dispatch, getState) => {
+
+    axios.put(`https://apiak.herokuapp.com/api/courses/${courseId}?access_token=${getState().auth.token}`, 
+        courseInfo,
+        tokenConfig(getState)
+    ).then(res => {
+        dispatch({
+            type: 'UPDATE_COURSE',
+            payload: res.data
+        });
+        
+        dispatch(getCourses());
+    }).catch(err => {
+        dispatch({
+            type: 'UPDATE_FAILED',
+        })
+    })
+
+    
+}
+

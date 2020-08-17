@@ -64,7 +64,9 @@ const initialState = {
       part: 3,
       id: "",
     }
-  ]
+  ],
+
+  isCourseFetched: false
 
 }
 
@@ -81,13 +83,34 @@ export default function (state = initialState, action) {
       return {
         ...state,
         // course: action.state.courseList.courses.filter((c) => c.id === action.id)[0],
-        course: action.course[0]
+        course: action.course[0],
+        // isCourseFetched: true
       };
+
+    // case 'GET_COURSES':
+    //   return{
+    //     ...state,
+    //     // course: action.state.courseList.courses.filter((c) => c.id === action.id)[0],
+    //     // course: action.courseList,
+    //     isCourseFetched: false
+    //   }
 
     case 'GET_LECTURE_VIDS':
       return {
         ...state,
         lectureVideos: action.lectureVid
+      }
+
+    case 'ADD_COURSE_VIDEO':
+      return {
+        ...state,
+        lectureVideos: state.lectureVideos.concat(action.payload)
+      }
+
+    case 'UPDATE_COURSE':
+      return{
+        ...state,
+        course: action.payload
       }
 
     case 'persist/REHYDRATE':

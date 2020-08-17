@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
-// import { addVideo } from '../../../../actions/courseAction';
-import { addCourse } from '../../../../actions/courseAction';
+import { addCourseVideo } from '../../../../actions/courseAction';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import {
@@ -41,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AddVideoForm = props => {
-  const { className, handleClose, ...rest } = props;
+  const { className, handleClose, courseId, addCourseVideo, ...rest } = props;
   const [isVideoAdded, setIsVideoAdded] = useState(false);
 
   // useEffect(() => {
@@ -61,15 +60,15 @@ const AddVideoForm = props => {
     const video = {
       url: values.videoLink,
       title: values.videoTitle,
-      description: "",
-      courseId: values.courseId,
+      description: values.videoTitle,
+      courseId: courseId,
       videoLength: 0,
       materials: "",
       part: values.part,
     }
 
     //props.addVideo(video);
-    props.addCourse(video);
+    addCourseVideo(courseId, video);
     setIsVideoAdded(true);
   }
 
@@ -79,21 +78,6 @@ const AddVideoForm = props => {
       [event.target.name]: event.target.value
     });
   };
-
-  const categories = [
-    {
-      value: 'Introduction',
-      label: 'Introduction'
-    },
-    {
-      value: 'new-york',
-      label: 'New York'
-    },
-    {
-      value: 'san-francisco',
-      label: 'San Francisco'
-    }
-  ];
 
   return (
     <Card
@@ -123,7 +107,7 @@ const AddVideoForm = props => {
             >
               <TextField
                 fullWidth
-                helperText="Please specify the course title"
+                helperText="Please specify the video title"
                 label="Video title"
                 margin="dense"
                 name="videoTitle"
@@ -160,7 +144,7 @@ const AddVideoForm = props => {
                 fullWidth
                 label="Part"
                 margin="dense"
-                name="videoTitle"
+                name="part"
                 onChange={handleChange}
                 required
                 value={values.part}
@@ -191,7 +175,7 @@ AddVideoForm.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  // get current course id
+  courseId: state.currentCourse.course.id
 });
 
-export default connect(mapStateToProps, { addCourse /* addVideo */ })(AddVideoForm);
+export default connect(mapStateToProps, { addCourseVideo})(AddVideoForm);
