@@ -92,11 +92,29 @@ export const getCourses = () => (dispatch, getState) => {
 // }
 
 export const addCourse = (courseInfo) => (dispatch, getState) => {
-    dispatch({
-        type: 'ADD_COURSE',
-        payload: courseInfo, //includes userId, and course fields
-        // state: getState()
-    });
+    // dispatch({
+    //     type: 'ADD_COURSE',
+    //     payload: courseInfo, //includes userId, and course fields
+    //     // state: getState()
+    // });
+
+    axios.post(`https://apiak.herokuapp.com/api/courses?access_token=${getState().auth.token}`, 
+        courseInfo,
+        tokenConfig(getState)
+    ).then(res => {
+        dispatch({
+            type: 'ADD_COURSE',
+            // id: videoId,
+            // commentList: res.data.filter((comment) => {
+            //     return comment.videoId == "5f3178044262d10017f033ba";
+            //   })
+            payload: res.data
+        });
+    }).catch(err => {
+        dispatch({
+            type: 'COURSE_NOT_ADDED',
+        })
+    })
 }
 
 export const addCourseVideo = (courseId, videoInfo) => (dispatch, getState) => {
