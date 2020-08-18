@@ -181,7 +181,9 @@ const CourseDetail = (props) => {
           >
             <Fade in={open}>
               <div className={classes.paper}>
-                <PaymentForm />
+                <PaymentForm 
+                  handleClose={handleClose}
+                />
               </div>
             </Fade>
           </Modal>
