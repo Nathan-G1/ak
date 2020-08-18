@@ -22,7 +22,8 @@ import {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: theme.spacing(4)
+    padding: theme.spacing(4),
+    backgroundImage: `url(${'/images/courseImgs/courseImg_1.jpg'})`
   },
   iframe: {
     width: '100%',
@@ -105,12 +106,15 @@ const CourseDetail = (props) => {
 
   return (
     <React.Fragment>
-      <Card className={classes.root}>
+      <Card 
+        className={classes.root}
+        // style={{backgroundImage: `url(${values.icon})`}}
+      >
         <CardContent>
           <Avatar
             alt="course"
             className={classes.avatar}
-            src={values.icon}
+            src={values.icon} // this is going to be removed 
           />
 
           <Typography
