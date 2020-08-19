@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/styles';
+import { connect } from 'react-redux';
+import { sendRequest } from '../../../../actions/courseRequestAction';
+
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { ImageIcon } from '@material-ui/icons/Lock';
@@ -43,7 +46,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PaymentForm = props => {
-  const { className, handleClose, ...rest } = props;
+  const { className,
+    handleClose,
+    userId,
+    courseId,
+    sendRequest, ...rest } = props;
 
   const classes = useStyles();
 
@@ -61,18 +68,21 @@ const PaymentForm = props => {
     event.preventDefault();
 
     var today = new Date();
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    
+    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+
     const requestData = {
-      studentId: '',
-      courseId: '',
-      phoneNumber: '',
+      studentId: userId,
+      courseId: courseId,
+      phoneNumber: values.phoneNumber,
       receiptImage: '',
-      requestDate: `${date}`
+      requestDate: `${date}`,
+      coursePrice: 0,   // tobe fetched from current course 
     }
 
-    // props.sendRequest(requestData);
-      
+    // console.log(requestData);
+    sendRequest(requestData);
+    handleClose();
+    
   }
 
   const handleChange = event => {
@@ -91,118 +101,6 @@ const PaymentForm = props => {
         subheader="The information can be edited later"
         title="Payment Method"
       />
-      {/* <form
-        autoComplete="off"
-        noValidate
-      >
-        <CardHeader
-          subheader="The information can be edited later"
-          title="Payment Method"
-        />
-        <Divider />
-        <CardContent>
-          <Grid
-            container
-            spacing={3}
-          >
-            
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-                <TextField
-                  fullWidth
-                  helperText="Please specify the course title"
-                  label="Name on Card"
-                  margin="dense"
-                  name="nameOnCard"
-                  onChange={handleChange}
-                  required
-                  value={values.nameOnCard}
-                  variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Card Number"
-                margin="dense"
-                name="cardNumber"
-                onChange={handleChange}
-                required
-                // eslint-disable-next-line react/jsx-sort-props
-                SelectProps={{ native: true }}
-                value={values.cardNumber}
-                variant="outlined"
-              >
-              </TextField>
-
-              
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Expiration"
-                margin="dense"
-                name="Expiration"
-                onChange={handleChange}
-                required
-                value={values.Expiration}
-                variant="outlined"
-              />
-              
-            </Grid>
-            <Grid
-              item
-              md={12}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Subscription"
-                margin="dense"
-                name="Subscription"
-                select
-                onChange={handleChange}
-                required
-                value={values.Subscription}
-                variant="outlined"
-              >
-                {categories.map(option => (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                  >
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
-            </Grid>
-          </Grid>
-        </CardContent>
-        <Divider />
-        <CardActions>
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={()=>{
-                history.push("/classroom");
-              }}
-          >
-            <LockIcon/>
-            Pay
-          </Button>
-        </CardActions>
-      </form> */}
       <Divider />
       <CardContent>
         <Typography variant="body1" gutterBottom >
@@ -216,7 +114,7 @@ const PaymentForm = props => {
           >
             <ListItemAvatar>
               <Avatar src='/images/products/cbe.jpg'>
-                <ImageIcon />
+                
               </Avatar>
             </ListItemAvatar>
             <ListItemText
@@ -230,7 +128,7 @@ const PaymentForm = props => {
           >
             <ListItemAvatar>
               <Avatar src='/images/products/cbebirr.png'>
-                <ImageIcon />
+                
               </Avatar>
             </ListItemAvatar>
             <ListItemText
@@ -238,39 +136,40 @@ const PaymentForm = props => {
               secondary="transfer to this phone number using your cbe birr wallet and send us your phone number" />
           </ListItem>
         </List>
-        {option ?
-          <form
-            autoComplete="off"
-            noValidate
-            onSubmit={handleSubmit}
-          >
+
+        <form
+          autoComplete="off"
+          noValidate
+          onSubmit={handleSubmit}
+        >
+          {option ?
             <TextField
               fullWidth
               label="Phone Number"
               margin="dense"
               name="phoneNumber"
               onChange={handleChange}
+              type="text"
               required
               // eslint-disable-next-line react/jsx-sort-props
-              SelectProps={{ native: true }}
+              // SelectProps={{ native: true }}
               value={values.phoneNumber}
               variant="outlined"
-            >
+            />
 
-            </TextField>
-          </form>
-          : <Button>
-            select image
-        </Button>
-        }
-
+           : 
+            <Button>
+              select image
+            </Button>
+          }
+        </form>
       </CardContent>
       <CardActions>
         <Button
           color="primary"
           variant="contained"
           type='submit'
-          onClick={() => handleClose()}
+          onClick={handleSubmit}
           size="small"
         >
           Request Access
@@ -284,4 +183,11 @@ PaymentForm.propTypes = {
   className: PropTypes.string
 };
 
-export default PaymentForm;
+const mapStateToProps = state => ({
+
+    userId: state.currentUser.user.id,
+    courseId: state.currentCourse.course.id
+  });
+  
+
+export default connect(mapStateToProps, { sendRequest })(PaymentForm);

@@ -1,6 +1,7 @@
-import React, { useState , useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
+import { closeSuccessMsg } from '../../actions/courseRequestAction';
 import { WhatToLearn, About, PaymentForm, Requirements, CourseContent, Review } from './components';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -60,6 +61,15 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  paperForScssMod: {
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: '1%',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    width: 400,
+    height: 260
+  },
+
   paper: {
     backgroundColor: theme.palette.background.paper,
     borderRadius: '1%',
@@ -74,18 +84,27 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const CourseDetail = (props) => {
-  const { className, selectedCourse, ...rest} = props;
+  const { className,
+    selectedCourse,
+    isRequestDelivered,
+    closeSuccessMsg, ...rest } = props;
 
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
+
+  const [openSuccessModal, setOpenSuccessModal] = React.useState(false);
+
 
   const [values, setValues] = useState(selectedCourse);
 
   useEffect(() => {
     setValues(selectedCourse);
     // alert(selectedCourse.title)
-  }, [selectedCourse])
+    if (isRequestDelivered) {
+      handleOpenForScssMod();
+    }
+  }, [selectedCourse, isRequestDelivered])
 
   const getRatingStars = () => {
     var rate = [];
@@ -95,6 +114,8 @@ const CourseDetail = (props) => {
     return rate;
   }
 
+
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -103,12 +124,20 @@ const CourseDetail = (props) => {
     setOpen(false);
   };
 
+  const handleOpenForScssMod = () => {
+    setOpenSuccessModal(true);
+  };
+
+  const handleCloseForScssMod = () => {
+    closeSuccessMsg();
+    setOpenSuccessModal(false);
+  };
 
   return (
     <React.Fragment>
-      <Card 
+      <Card
         className={classes.root}
-        // style={{backgroundImage: `url(${values.icon})`}}
+      // style={{backgroundImage: `url(${values.icon})`}}
       >
         <CardContent>
           <Avatar
@@ -185,7 +214,7 @@ const CourseDetail = (props) => {
           >
             <Fade in={open}>
               <div className={classes.paper}>
-                <PaymentForm 
+                <PaymentForm
                   handleClose={handleClose}
                 />
               </div>
@@ -195,7 +224,47 @@ const CourseDetail = (props) => {
             className={classes.enrolledStd}
           >
             <b>2332</b> already enrolled
-        </Typography>
+          </Typography>
+          <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            className={classes.modal}
+            open={openSuccessModal}
+            onClose={handleCloseForScssMod}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+              timeout: 500,
+            }}
+          >
+            <Fade in={openSuccessModal}>
+              <div className={classes.paperForScssMod}>
+                <Card>
+                  <CardHeader
+                    subheader=""
+                    title="Request sent"
+                  />
+                  <Divider />
+                  <CardContent>
+                    <Typography variant="body1" gutterBottom >
+                      Your request has successfully delivered. you will be approved
+                      soon after checking the validity of your payment information. stay tunned!!
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      size="small"
+                      onClick={() => handleCloseForScssMod()}
+                    >
+                      Close
+                    </Button>
+                  </CardActions>
+                </Card>
+              </div>
+            </Fade>
+          </Modal>
 
         </CardContent>
       </Card>
@@ -268,7 +337,8 @@ const CourseDetail = (props) => {
 function mapStateToProps(state) {
   return {
     selectedCourse: state.currentCourse.course,
+    isRequestDelivered: state.courseRequests.isRequestDelivered
   }
 };
 
-export default connect(mapStateToProps)(CourseDetail);
+export default connect(mapStateToProps, { closeSuccessMsg })(CourseDetail);
