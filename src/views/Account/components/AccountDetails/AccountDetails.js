@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { updateUser } from '../../../../actions/userAction';
 import { makeStyles } from '@material-ui/styles';
 import {
   Card,
@@ -18,25 +20,59 @@ const useStyles = makeStyles(() => ({
 }));
 
 const AccountDetails = props => {
-  const { className, ...rest } = props;
+  const { className, user, updateUser, ...rest } = props;
 
   const classes = useStyles();
 
+  const [currentUser, setCurrentUser] = useState(user);
+
   const [values, setValues] = useState({
-    firstName: 'Roman',
-    lastName: 'Getnet',
-    email: 'roman.get@gmail.com',
-    phone: '',
+    firstName: `${currentUser.firstName}`,
+    lastName: `${currentUser.lastName}`,
+    email: `${currentUser.email}`,
+    phone: `${currentUser.phoneNumber}`,
     state: 'Addis Ababa',
     country: 'ET'
   });
 
+  useEffect(() => {
+    setCurrentUser(user);
+    setValues({
+      firstName: `${user.firstName}`,
+      lastName: `${user.lastName}`,
+      email: `${user.email}`,
+      phone: `${user.phoneNumber}`,
+      state: 'Addis Ababa',
+      country: 'ET'
+    })
+  }, [user])
+
   const handleChange = event => {
+    event.persist();
     setValues({
       ...values,
       [event.target.name]: event.target.value
     });
   };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    var localUser = {
+      userType: user.userType,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      avatar: "/images/user.png",
+      phoneNumber: values.phone,
+      realm: user.realm,
+      username: user.username,
+      email: values.email, // shouldn't be editable
+      emailVerified: user.emailVerified,
+      id: user.id,
+      courseId: user.courseId
+    }
+
+    updateUser(localUser, user.id);
+  }
 
   const states = [
     {
@@ -61,6 +97,7 @@ const AccountDetails = props => {
       <form
         autoComplete="off"
         noValidate
+        onSubmit={handleSubmit}
       >
         <CardHeader
           subheader="The information can be edited"
@@ -188,6 +225,7 @@ const AccountDetails = props => {
           <Button
             color="primary"
             variant="contained"
+            type="submit"
           >
             Save details
           </Button>
@@ -201,4 +239,9 @@ AccountDetails.propTypes = {
   className: PropTypes.string
 };
 
-export default AccountDetails;
+const mapStateToProps = state => ({
+  user: state.currentUser.user,
+});
+
+
+export default connect(mapStateToProps, { updateUser })(AccountDetails);
