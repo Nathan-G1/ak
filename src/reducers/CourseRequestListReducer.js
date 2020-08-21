@@ -8,10 +8,11 @@ const initialState = {
             requestDate: "2020-08-19T19:22:33.994Z",
             coursePrice: 0,
             id: "string"
-        },
+        }
     ],
 
-    isRequestDelivered: false
+    isRequestDelivered: false,
+    isRequestlistUpdated: false,
 }
 
 export default function (state = initialState, action) {
@@ -19,14 +20,15 @@ export default function (state = initialState, action) {
         case 'GET_COURSE_REQUESTS':
             return {
                 ...state,
-                requests: action.payload
+                requests: action.payload,
+                isRequestlistUpdated: true
             }
 
             
         case 'REQUEST_ADDED':
             return {
                 ...state,
-                requests: action.payload,
+                // requests: action.payload,
                 isRequestDelivered: true
             }
         case 'CLOSE_SCSS_MSG':
@@ -36,10 +38,10 @@ export default function (state = initialState, action) {
             }
 
         case 'persist/REHYDRATE':
-            if (action.payload.courseRequestList) {
+            if (action.payload.courseRequests) {
                 return {
                     ...state,
-                    requests: action.payload.courseRequestList.requests,
+                    requests: action.payload.courseRequests.requests,
                     // isCourseUpdated: action.payload.courseList.isCourseUpdated,
                 };
             }

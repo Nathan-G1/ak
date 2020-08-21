@@ -11,9 +11,26 @@ export const sendRequest = (requestInfo) => (dispatch, getState) => {
             type: 'REQUEST_ADDED',
             payload: res.data
         });
+        dispatch(getRequests); // make a condition for this
     }).catch(err => {
         dispatch({
             type: 'REQUEST_NOT_SENT',
+        })
+    })
+}
+
+export const getRequests = () => (dispatch, getState) => {
+
+    axios.get(`https://apiak.herokuapp.com/api/courseRequests?access_token=${getState().auth.token}`, 
+        tokenConfig(getState)
+    ).then(res => {
+        dispatch({
+            type: 'GET_COURSE_REQUESTS',
+            payload: res.data
+        });
+    }).catch(err => {
+        dispatch({
+            type: 'REQUEST_NOT_FOUND',
         })
     })
 }

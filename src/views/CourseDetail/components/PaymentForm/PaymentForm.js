@@ -48,8 +48,8 @@ const useStyles = makeStyles((theme) => ({
 const PaymentForm = props => {
   const { className,
     handleClose,
-    userId,
-    courseId,
+    user,
+    course,
     sendRequest, ...rest } = props;
 
   const classes = useStyles();
@@ -71,18 +71,23 @@ const PaymentForm = props => {
     var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
     const requestData = {
-      studentId: userId,
-      courseId: courseId,
+      studentId: user.id,
+      studentFirstName: user.firstName,
+      studentLastName: user.lastName,
+      studentImage: user.avatar,
+      courseTitle: course.title,
+      courseId: course.id,
       phoneNumber: values.phoneNumber,
       receiptImage: '',
       requestDate: `${date}`,
+      isApproved: false,
       coursePrice: 0,   // tobe fetched from current course 
     }
 
     // console.log(requestData);
     sendRequest(requestData);
     handleClose();
-    
+
   }
 
   const handleChange = event => {
@@ -114,7 +119,7 @@ const PaymentForm = props => {
           >
             <ListItemAvatar>
               <Avatar src='/images/products/cbe.jpg'>
-                
+
               </Avatar>
             </ListItemAvatar>
             <ListItemText
@@ -128,7 +133,7 @@ const PaymentForm = props => {
           >
             <ListItemAvatar>
               <Avatar src='/images/products/cbebirr.png'>
-                
+
               </Avatar>
             </ListItemAvatar>
             <ListItemText
@@ -157,7 +162,7 @@ const PaymentForm = props => {
               variant="outlined"
             />
 
-           : 
+            :
             <Button>
               select image
             </Button>
@@ -185,9 +190,9 @@ PaymentForm.propTypes = {
 
 const mapStateToProps = state => ({
 
-    userId: state.currentUser.user.id,
-    courseId: state.currentCourse.course.id
-  });
-  
+  user: state.currentUser.user,
+  course: state.currentCourse.course
+});
+
 
 export default connect(mapStateToProps, { sendRequest })(PaymentForm);

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getVideo } from './courseVideoAction';
+import { getRequests } from './courseRequestAction'
 import { tokenConfig } from './authAction';
 
 export const getCourse = (courseId) => (dispatch, getState) => {
@@ -71,7 +72,7 @@ export const getCourses = () => (dispatch, getState) => {
                 courseList: res.data
             });
 
-            
+            dispatch(getRequests());
         }
 
     }).catch(err => {
@@ -161,3 +162,24 @@ export const updateCourse = (courseId, courseInfo) => (dispatch, getState) => {
     
 }
 
+
+export const approveUserRequest = (courseId, studentId) => (dispatch, getState) => {
+
+    axios.post(`https://apiak.herokuapp.com/api/courses/${studentId}/akUsers?access_token=${getState().auth.token}`, 
+        
+        tokenConfig(getState)
+    ).then(res => {
+        dispatch({
+            type: 'REQUEST_APPROVED',
+            payload: res.data
+        });
+        
+        // dispatch(getCourses());
+    }).catch(err => {
+        dispatch({
+            type: 'APPROVING_FAILED',
+        })
+    })
+
+    
+}
