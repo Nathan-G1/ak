@@ -277,7 +277,7 @@ const CourseDetail = (props) => {
           >
             WHAT YOU WILL LEARN
             <WhatToLearn
-              lists={values.whatToLearn}
+              lists={values.objectives}
             />
           </Typography>
         </CardContent>

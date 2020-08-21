@@ -81,13 +81,10 @@ const AddCourseForm = props => {
       rating: 2,
       totalDownloads: 0,
       updatedAt: `${date}`,
-
-      whatToLearn: [
-        ""
-      ],
       about: '',
-      requirements: [''],
-
+      isFree: true,
+      courseFee: 0,
+      requirements: '',
       objectives: [
         ''
       ]
