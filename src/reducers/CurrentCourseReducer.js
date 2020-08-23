@@ -89,6 +89,11 @@ export default function (state = initialState, action) {
     //     // course: action.courseList,
     //     isCourseFetched: false
     //   }
+    case "LOAD_COURSE":
+      return {
+        ...state,
+        isCourseFetched: action.payload
+      }
 
     case 'GET_LECTURE_VIDS':
       return {

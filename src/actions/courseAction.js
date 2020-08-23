@@ -4,11 +4,7 @@ import { getRequests } from './courseRequestAction'
 import { tokenConfig } from './authAction';
 
 export const getCourse = (courseId) => (dispatch, getState) => {
-    // dispatch({
-    //     type: 'GET_COURSE',
-    //     id: courseId,
-    //     state: getState()
-    // });
+    dispatch(getCourseLoading(true));
 
     axios.get("https://apiak.herokuapp.com/api/courses", {
         params: {
@@ -22,7 +18,7 @@ export const getCourse = (courseId) => (dispatch, getState) => {
                 return course.id == courseId;
               })
         });
-
+        dispatch(getCourseLoading(false));
         dispatch(getCourseVideos(courseId));
 
     }).catch(err => {
@@ -83,14 +79,12 @@ export const getCourses = () => (dispatch, getState) => {
 
 }
 
-// export const checkCoursesArrival = () => (dispatch, getState) => {
-//     if(getState().courseList.isCourseUpdated){
-//         dispatch({
-//             type: 'COURSE_FETCHED',
-//         });
-        
-//     }
-// }
+export const getCourseLoading = (isLoading) => (dispatch, getState) => {
+        dispatch({
+            type: 'LOAD_COURSE',
+            payload: isLoading
+        });
+}
 
 export const addCourse = (courseInfo) => (dispatch, getState) => {
     // dispatch({
