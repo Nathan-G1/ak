@@ -66,6 +66,11 @@ export default function (state = initialState, action) {
         isCourseUpdated: true
       }
 
+    case "LOAD_COURSE_LIST":
+      return {
+        ...state,
+        isCourseUpdated: action.payload
+      }
     case 'persist/REHYDRATE':
       if (action.payload.courseList) {
         return {

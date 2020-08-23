@@ -56,6 +56,7 @@ export const getCourseVideos = (courseId) => (dispatch, getState) => {
 }
 
 export const getCourses = () => (dispatch, getState) => {
+
     axios.get("https://apiak.herokuapp.com/api/courses", {
         params: {
             // "videoId": videoId
@@ -68,6 +69,7 @@ export const getCourses = () => (dispatch, getState) => {
                 courseList: res.data
             });
 
+            dispatch(getCourseListLoading(true));
             dispatch(getRequests());
         }
 
@@ -77,6 +79,13 @@ export const getCourses = () => (dispatch, getState) => {
         })
     })
 
+}
+
+export const getCourseListLoading = (isLoading) => (dispatch, getState) => {
+    dispatch({
+        type: 'LOAD_COURSE_LIST',
+        payload: isLoading
+    });
 }
 
 export const getCourseLoading = (isLoading) => (dispatch, getState) => {
