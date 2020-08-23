@@ -38,6 +38,17 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center'
   },
 
+  spinner: {
+    position: "absolute",
+    height: "100px",
+    width: "100px",
+    top: "50%",
+    left: "50%",
+    marginLeft: "-50px",
+    marginTop: "-50px",
+    backgroundSize: "100%"
+  },
+
   uploadButton: {
     marginRight: theme.spacing(2)
   },
@@ -184,7 +195,7 @@ const CourseProfile = (props) => {
 
 
   return (
-    // !props.isCourseChanged ? <CircularProgress color="secondary" /> : 
+    props.isCourseLoaded ? <CircularProgress className={classes.spinner}/> : 
     <Card
       {...rest}
       className={clsx(classes.root, className)}
@@ -454,7 +465,7 @@ function mapStateToProps(state) {
   return {
     selectedCourse: state.currentCourse.course,
     courseVideoList: state.currentCourse.lectureVideos,
-    isCourseChanged: state.currentCourse.isCourseFetched,
+    isCourseLoaded: state.currentCourse.isCourseFetched,
     user: state.currentUser.user
   }
 };
