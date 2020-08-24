@@ -15,7 +15,7 @@ import {
   Divider,
   Grid,
   Button,
-  TextField,
+  CircularProgress,
   Typography,
   Avatar,
 } from '@material-ui/core';
@@ -25,6 +25,16 @@ const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(4),
     backgroundImage: `url(${'/images/courseImgs/courseImg_1.jpg'})`
+  },
+  spinner: {
+    position: "absolute",
+    height: "100px",
+    width: "100px",
+    top: "50%",
+    left: "50%",
+    marginLeft: "-50px",
+    marginTop: "-50px",
+    backgroundSize: "100%"
   },
   iframe: {
     width: '100%',
@@ -134,6 +144,9 @@ const CourseDetail = (props) => {
   };
 
   return (
+    props.isCourseLoaded ? <CircularProgress
+      className={classes.spinner}
+    /> :
     <React.Fragment>
       <Card
         className={classes.root}
@@ -277,7 +290,7 @@ const CourseDetail = (props) => {
           >
             WHAT YOU WILL LEARN
             <WhatToLearn
-              lists={values.whatToLearn}
+              lists={values.objectives}
             />
           </Typography>
         </CardContent>
@@ -337,6 +350,7 @@ const CourseDetail = (props) => {
 function mapStateToProps(state) {
   return {
     selectedCourse: state.currentCourse.course,
+    isCourseLoaded: state.currentCourse.isCourseFetched,
     isRequestDelivered: state.courseRequests.isRequestDelivered
   }
 };

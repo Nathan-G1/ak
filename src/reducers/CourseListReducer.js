@@ -20,47 +20,12 @@ const initialState = {
       rating: 0,
       totalDownloads: 0,
       updatedAt: "2020-08-07T15:48:33.322Z",
-      whatToLearn: [
-        ""
-      ],
       about: "",
-      requirements: [
-        ""
-      ],
+      requirements: '',
       objectives: [
         ""
       ],
-      id: 1
-    },
-    {
-      title: 'Customers or Buyers Expressions',
-      preparedBy: "Girma",
-      instructorPhoto: '/images/avatars/avatar_11.png',
-      length: 0,
-      // time: 3, not in the model
-      certificate: true,
-      videos: [
-
-      ],
-      publishedDate: "2020-08-07T15:48:33.322Z",
-      icon: '/images/products/product_2.png',
-      enrolledStudents: 0,
-      description: "is a web-based hosting service for version control o",
-      categoryId: "",
-      rating: 0,
-      totalDownloads: 0,
-      updatedAt: "2020-08-07T15:48:33.322Z",
-      whatToLearn: [
-        ""
-      ],
-      about: "",
-      requirements: [
-        ""
-      ],
-      objectives: [
-        ""
-      ],
-      id: 2
+      id: ''
     },
     {
       title: 'English for Beginners',
@@ -80,13 +45,8 @@ const initialState = {
       rating: 0,
       totalDownloads: 0,
       updatedAt: "2020-08-07T15:48:33.322Z",
-      whatToLearn: [
-        ""
-      ],
       about: "",
-      requirements: [
-        ""
-      ],
+      requirements: "",
       objectives: [
         ""
       ],
@@ -106,6 +66,11 @@ export default function (state = initialState, action) {
         isCourseUpdated: true
       }
 
+    case "LOAD_COURSE_LIST":
+      return {
+        ...state,
+        isCourseUpdated: action.payload
+      }
     case 'persist/REHYDRATE':
       if (action.payload.courseList) {
         return {

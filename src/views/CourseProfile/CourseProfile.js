@@ -38,6 +38,17 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center'
   },
 
+  spinner: {
+    position: "absolute",
+    height: "100px",
+    width: "100px",
+    top: "50%",
+    left: "50%",
+    marginLeft: "-50px",
+    marginTop: "-50px",
+    backgroundSize: "100%"
+  },
+
   uploadButton: {
     marginRight: theme.spacing(2)
   },
@@ -80,14 +91,11 @@ const CourseProfile = (props) => {
       icon: `${course.icon}`,
       description: `${course.description}`,
       categoryId: `${course.categoryId}`,
-      whatToLearn: [
-        // course.whatToLearn[0] ? course.whatToLearn[0] : '' 
-      ],
+      objective: '',
       about: `${course.about}`,
-      requirements: [
-        "`${course.requirements[0]}`"
-      ],
-      objectives: ''
+      requirements: `${course.requirements}`,
+      objectives: [],
+      objective: ''
     }
   );
 
@@ -98,15 +106,10 @@ const CourseProfile = (props) => {
       icon: `${selectedCourse.icon}`,
       description: `${selectedCourse.description}`,
       categoryId: `${selectedCourse.categoryId}`,
-      // whatToLearn: [
-      //   // course.whatToLearn[0] ? course.whatToLearn[0] : '' 
-      // ],
-      whatToLearn: selectedCourse.whatToLearn,
       about: `${selectedCourse.about}`,
-      requirements: [
-        `${selectedCourse.requirements[0]}`
-      ],
-      objectives: ''
+      requirements: `${selectedCourse.requirements}`,
+      objectives: selectedCourse.objectives,
+      objective: ''
     })
     // if(!props.isCourseFetched){
     //   setCourse(selectedCourse);
@@ -137,10 +140,10 @@ const CourseProfile = (props) => {
       rating: selectedCourse.rating,
       totalDownloads: selectedCourse.totalDownloads,
       updatedAt: selectedCourse.updatedAt,
-
-      whatToLearn: values.whatToLearn,
       about: values.about,
-      requirements: [values.requirements[0]],
+      isFree: true,
+      courseFee: 0,
+      requirements: values.requirements,
 
       objectives: selectedCourse.objectives,
       id: selectedCourse.id
@@ -162,9 +165,9 @@ const CourseProfile = (props) => {
   const handleAddObjectives = event => {
     setValues({
       ...values,
-      objectives: ''
+      objective: ''
     })
-    values.whatToLearn.push(values.objectives);
+    values.objectives.push(values.objective);
   }
 
   const handleOpen = () => {
@@ -192,7 +195,7 @@ const CourseProfile = (props) => {
 
 
   return (
-    // !props.isCourseChanged ? <CircularProgress color="secondary" /> : 
+    props.isCourseLoaded ? <CircularProgress className={classes.spinner}/> : 
     <Card
       {...rest}
       className={clsx(classes.root, className)}
@@ -309,7 +312,7 @@ const CourseProfile = (props) => {
                 <Typography component={'span'}>
                   {
                     <List>
-                      {(selectedCourse.whatToLearn).map((v, index) => {
+                      {(selectedCourse.objectives).map((v, index) => {
                         return <ListItem key={index}>{v}</ListItem>
                       })}
 
@@ -321,10 +324,10 @@ const CourseProfile = (props) => {
               <TextField
                 fullWidth
                 margin="dense"
-                name="objectives"
+                name="objective"
                 onChange={handleChange}
                 required
-                value={values.objectives}
+                value={values.objective}
                 // defaultValue={selectedCourse.objectives}
                 // ref={input => values.objectives = input}
                 variant="outlined"
@@ -352,7 +355,7 @@ const CourseProfile = (props) => {
                 name="requirements"
                 required
                 onChange={handleChange}
-                value={values.requirements[0]}
+                value={values.requirements}
                 // defaultValue={selectedCourse.requirements}
                 // ref={input => values.requirements = input}
                 variant="outlined"
@@ -462,7 +465,7 @@ function mapStateToProps(state) {
   return {
     selectedCourse: state.currentCourse.course,
     courseVideoList: state.currentCourse.lectureVideos,
-    isCourseChanged: state.currentCourse.isCourseFetched,
+    isCourseLoaded: state.currentCourse.isCourseFetched,
     user: state.currentUser.user
   }
 };

@@ -33,6 +33,13 @@ export default function (state = initialState, action) {
                 };
             }
 
+        case 'UPDATE_USER':
+            return {
+                ...state,
+                user: action.payload,
+                // isUserFetched: true
+            };
+
         default:
             return state;
     }

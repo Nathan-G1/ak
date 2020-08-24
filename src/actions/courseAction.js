@@ -1,13 +1,10 @@
 import axios from 'axios';
 import { getVideo } from './courseVideoAction';
+import { getRequests } from './courseRequestAction'
 import { tokenConfig } from './authAction';
 
 export const getCourse = (courseId) => (dispatch, getState) => {
-    // dispatch({
-    //     type: 'GET_COURSE',
-    //     id: courseId,
-    //     state: getState()
-    // });
+    dispatch(getCourseLoading(true));
 
     axios.get("https://apiak.herokuapp.com/api/courses", {
         params: {
@@ -21,7 +18,7 @@ export const getCourse = (courseId) => (dispatch, getState) => {
                 return course.id == courseId;
               })
         });
-
+        dispatch(getCourseLoading(false));
         dispatch(getCourseVideos(courseId));
 
     }).catch(err => {
@@ -59,6 +56,7 @@ export const getCourseVideos = (courseId) => (dispatch, getState) => {
 }
 
 export const getCourses = () => (dispatch, getState) => {
+
     axios.get("https://apiak.herokuapp.com/api/courses", {
         params: {
             // "videoId": videoId
@@ -71,7 +69,8 @@ export const getCourses = () => (dispatch, getState) => {
                 courseList: res.data
             });
 
-            
+            dispatch(getCourseListLoading(true));
+            dispatch(getRequests());
         }
 
     }).catch(err => {
@@ -82,14 +81,19 @@ export const getCourses = () => (dispatch, getState) => {
 
 }
 
-// export const checkCoursesArrival = () => (dispatch, getState) => {
-//     if(getState().courseList.isCourseUpdated){
-//         dispatch({
-//             type: 'COURSE_FETCHED',
-//         });
-        
-//     }
-// }
+export const getCourseListLoading = (isLoading) => (dispatch, getState) => {
+    dispatch({
+        type: 'LOAD_COURSE_LIST',
+        payload: isLoading
+    });
+}
+
+export const getCourseLoading = (isLoading) => (dispatch, getState) => {
+        dispatch({
+            type: 'LOAD_COURSE',
+            payload: isLoading
+        });
+}
 
 export const addCourse = (courseInfo) => (dispatch, getState) => {
     // dispatch({
@@ -161,3 +165,24 @@ export const updateCourse = (courseId, courseInfo) => (dispatch, getState) => {
     
 }
 
+
+export const approveUserRequest = (courseId, studentId) => (dispatch, getState) => {
+
+    axios.post(`https://apiak.herokuapp.com/api/courses/${studentId}/akUsers?access_token=${getState().auth.token}`, 
+        
+        tokenConfig(getState)
+    ).then(res => {
+        dispatch({
+            type: 'REQUEST_APPROVED',
+            payload: res.data
+        });
+        
+        // dispatch(getCourses());
+    }).catch(err => {
+        dispatch({
+            type: 'APPROVING_FAILED',
+        })
+    })
+
+    
+}
