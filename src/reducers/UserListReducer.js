@@ -26,6 +26,12 @@ export default function (state = initialState, action) {
                 users: action.payload,
                 isUsersFetched: true
             }
+        case 'FETCH_USERS_FOR_ADMIN':
+            return {
+                ...state,
+                users: action.payload,
+                isUsersFetched: true
+            }
         case 'persist/REHYDRATE':
             if (action.payload.usersList) {
                 return {
