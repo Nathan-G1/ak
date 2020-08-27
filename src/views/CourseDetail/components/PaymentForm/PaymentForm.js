@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
-import { sendRequest } from '../../../../actions/courseRequestAction';
+import { sendRequest, sendReceiptPicture } from '../../../../actions/courseRequestAction';
 
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
@@ -24,7 +24,8 @@ import {
   Button,
   Input,
   Avatar,
-  ListItem
+  ListItem,
+  CardMedia
 } from '@material-ui/core';
 import ReactPlayer from 'react-player'
 
@@ -39,6 +40,10 @@ const useStyles = makeStyles((theme) => ({
     width: 60,
     flexShrink: 0,
     flexGrow: 0
+  },
+  image: {
+    width: 180,
+    height: 120,
   },
   uploadButton: {
     marginRight: theme.spacing(2)
@@ -78,7 +83,7 @@ const PaymentForm = props => {
       courseTitle: course.title,
       courseId: course.id,
       phoneNumber: values.phoneNumber,
-      receiptImage: '',
+      receiptImage: props.currentRequestImage,
       requestDate: `${date}`,
       isApproved: false,
       coursePrice: 0,   // tobe fetched from current course 
@@ -96,6 +101,23 @@ const PaymentForm = props => {
       [event.target.name]: event.target.value
     });
   };
+
+  const [isImageSelected, setIsImageSelected] = useState(false);
+
+  const handleCapture = ({ target }) => {
+      const fileReader = new FileReader();
+      const name = 'images';
+
+      fileReader.readAsDataURL(target.files[0]);
+      fileReader.onload = (e) => {
+              // setImage(e.target.result);
+              props.sendReceiptPicture(target.files[0]);
+              setIsImageSelected(true);
+      };
+      
+      
+  };
+
 
   return (
     <Card
@@ -163,9 +185,53 @@ const PaymentForm = props => {
             />
 
             :
-            <Button>
-              select image
-            </Button>
+            <React.Fragment>
+              <Grid
+                container
+                spacing={1}
+              >
+                <Grid
+                  item
+                  md={12}
+                  xs={12}
+                >
+                  <input
+                    color="primary"
+                    accept="image/*"
+                    type="file"
+                    onChange={handleCapture}
+                    id="icon-button-file"
+                    style={{ display: 'none', }}
+                  />
+                  <label htmlFor="icon-button-file">
+                    <Button
+                      variant="text"
+                      component="span"
+                      className={classes.button}
+                      size="large"
+                      color="primary"
+                      size="small"
+                      // onClick={uploadImage}
+                    >
+                      {/* <ImageIcon className={classes.extendedIcon} /> */}
+                      select image
+                    </Button>
+                  </label>
+                </Grid>
+                <Grid
+                  item
+                  md={12}
+                  xs={12}
+                >
+                  {isImageSelected ?
+                  <CardMedia
+                    className={classes.image}
+                    image={`https://samvisionapi.herokuapp.com/images/${props.currentRequestImage}`}
+                  /> : ''
+                  }
+                </Grid>
+              </Grid>
+            </React.Fragment>
           }
         </form>
       </CardContent>
@@ -191,8 +257,9 @@ PaymentForm.propTypes = {
 const mapStateToProps = state => ({
 
   user: state.currentUser.user,
-  course: state.currentCourse.course
+  course: state.currentCourse.course,
+  currentRequestImage: state.courseRequests.currentRequestImage
 });
 
 
-export default connect(mapStateToProps, { sendRequest })(PaymentForm);
+export default connect(mapStateToProps, { sendRequest, sendReceiptPicture })(PaymentForm);

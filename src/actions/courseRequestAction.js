@@ -41,3 +41,26 @@ export const closeSuccessMsg = () => (dispatch, getState) => {
         type: 'CLOSE_SCSS_MSG'
     });
 }
+
+export const sendReceiptPicture = (image) => (dispatch, getState) => {
+    let formData = new FormData();
+    formData.append('image', image);
+
+    axios.post('https://samvisionapi.herokuapp.com/images/upload', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    }).then(res => {
+        // console.log(res.data.name)
+
+        dispatch({
+            type: 'RECEIPT_IMAGE_UPLOADED',
+            payload: res
+        });
+
+    }).catch(err => {
+        dispatch({
+            type: 'RECEIPT_IMAGE_UPLOADING_FAILED'
+        });
+    })
+}

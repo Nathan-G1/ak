@@ -13,6 +13,7 @@ const initialState = {
 
     isRequestDelivered: false,
     isRequestlistUpdated: false,
+    currentRequestImage: ''
 }
 
 export default function (state = initialState, action) {
@@ -24,7 +25,12 @@ export default function (state = initialState, action) {
                 isRequestlistUpdated: true
             }
 
-            
+        case 'RECEIPT_IMAGE_UPLOADED':
+            return {
+                ...state,
+                currentRequestImage: action.payload.data.name
+            }    
+
         case 'REQUEST_ADDED':
             return {
                 ...state,
