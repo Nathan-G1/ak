@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import moment from 'moment';
+import { connect } from 'react-redux';
+import { updateUser, uploadProfileImage } from '../../../../actions/userAction';
 import { makeStyles } from '@material-ui/styles';
 import {
   Card,
@@ -11,7 +13,8 @@ import {
   Typography,
   Divider,
   Button,
-  LinearProgress
+  LinearProgress,
+  CircularProgress,
 } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
@@ -35,17 +38,47 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const AccountProfile = props => {
-  const { className, ...rest } = props;
+  const { className, updateUser, uploadProfileImage, ...rest } = props;
 
   const classes = useStyles();
 
-  const user = {
-    name: 'Roman Getnent',
-    city: 'Addis Ababa',
-    country: 'ETHIPIA',
-    timezone: 'GTM-3',
-    avatar: '/images/avatars/avatar_11.png'
+  const [user, setUser] = useState(props.user);
+
+  const [isImageUploaded, setIsImageUploaded] = useState(false);
+
+  useEffect(() => {
+    setUser(props.user);
+    setIsImageUploaded(false);
+  });
+
+ 
+
+  const handleCapture = ({ target }) => {
+      const fileReader = new FileReader();
+      // const name = 'images';
+      var localUser = {
+        userType: props.user.userType,
+        firstName: props.user.firstName,
+        lastName: props.user.lastName,
+        avatar: props.userImage,
+        phoneNumber: props.user.phoneNumber,
+        password: props.userPassword,
+        realm: props.user.realm,
+        username: props.user.username,
+        email: props.user.email, // shouldn't be editable
+        emailVerified: props.user.emailVerified,
+        id: props.user.id,
+        courseId: props.user.courseId
+      }
+
+      fileReader.readAsDataURL(target.files[0]);
+      fileReader.onload = (e) => {
+              // updateUser(localUser, props.user.id);
+              uploadProfileImage(target.files[0], localUser);
+              setIsImageUploaded(true);
+      };
   };
+
 
   return (
     <Card
@@ -59,26 +92,27 @@ const AccountProfile = props => {
               gutterBottom
               variant="h2"
             >
-              Roman Getnet
+              {user.firstName} {user.lastName} 
             </Typography>
             <Typography
               className={classes.locationText}
               color="textSecondary"
               variant="body1"
             >
-              {user.city}, {user.country}
+              Addis Ababa, Ethiopia
             </Typography>
-            <Typography
+            {/* <Typography
               className={classes.dateText}
               color="textSecondary"
               variant="body1"
             >
               {moment().format('hh:mm A')} ({user.timezone})
-            </Typography>
+            </Typography> */}
           </div>
           <Avatar
             className={classes.avatar}
-            src={user.avatar}
+            // src={props.isImageLoaded ? `https://samvisionapi.herokuapp.com/images/${props.userImage}` : `https://samvisionapi.herokuapp.com/images/${props.user.avatar}` }
+            src = {`https://samvisionapi.herokuapp.com/images/${props.user.avatar}`}
           />
         </div>
         <div className={classes.progress}>
@@ -88,16 +122,31 @@ const AccountProfile = props => {
             variant="determinate"
           />
         </div>
+        <input
+          color="primary"
+          accept="image/*"
+          type="file"
+          onChange={handleCapture}
+          id="icon-button-file"
+          style={{ display: 'none', }}
+        />
       </CardContent>
       <Divider />
       <CardActions>
-        <Button
-          className={classes.uploadButton}
-          color="primary"
-          variant="text"
-        >
-          Upload picture
-        </Button>
+        <label htmlFor="icon-button-file">
+          <Button
+            variant="text"
+            component="span"
+            className={classes.uploadButton}
+            size="large"
+            color="primary"
+            size="small"
+            // onClick={uploadImage}
+          >
+            {/* <ImageIcon className={classes.extendedIcon} /> */}
+            Change
+          </Button>
+        </label>
         <Button variant="text">Remove picture</Button>
       </CardActions>
     </Card>
@@ -108,4 +157,13 @@ AccountProfile.propTypes = {
   className: PropTypes.string
 };
 
-export default AccountProfile;
+function mapStateToProps(state) {
+  return {
+    user: state.currentUser.user,
+    userImage: state.currentUser.userImage,
+    userPassword: state.currentUser.userPassword,
+    isImageLoaded: state.currentUser.isImageLoaded
+  }
+};
+
+export default  connect(mapStateToProps, { updateUser, uploadProfileImage })(AccountProfile);

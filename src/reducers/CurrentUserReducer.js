@@ -13,7 +13,10 @@ const initialState = {
         courseId: ""
       },
 
-    isUserFetched: false
+    isUserFetched: false,
+    userImage: '',
+    isImageLoaded: false,
+    userPassword: ''
 }
 
 export default function (state = initialState, action) {
@@ -24,13 +27,26 @@ export default function (state = initialState, action) {
                 user: action.payload,
                 isUserFetched: true
             };
+
+        case 'SET_PASSWORD':
+            return{
+                ...state,
+                userPassword: action.payload,
+            }
         case 'persist/REHYDRATE':
             if(action.payload.currentUser){
                 return {
                     ...state,
                     user: action.payload.currentUser.user,
+                    userPassword: action.payload.currentUser.userPassword,
                     isUserFetched: action.payload.currentUser.isUserFetched,
                 };
+            }
+
+        case 'PROFILE_IMAGE_UPLOADED':
+            return {
+                ...state, 
+                userImage: action.payload
             }
 
         case 'UPDATE_USER':
@@ -39,6 +55,12 @@ export default function (state = initialState, action) {
                 user: action.payload,
                 // isUserFetched: true
             };
+
+        case 'UPDATE_IMAGE_LOADING':
+            return {
+                ...state,
+                isImageLoaded: action.isLoading
+            }
 
         default:
             return state;
