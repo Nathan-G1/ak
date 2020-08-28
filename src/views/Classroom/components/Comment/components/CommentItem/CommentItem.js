@@ -129,8 +129,17 @@ const CommentItem = props => {
                         >
                             {comment.userName}
                         </Typography> */}
-            {comment.text}<br />
-            <IconButton 
+            {comment.text}
+            <Button
+              size="small"
+              onClick={() => {
+                changeFormVisibility();
+              }}
+            >
+              Reply
+            </Button>
+            <br />
+            {/* <IconButton 
               onClick={handleLikeCount}
             >
               <ThumbUpIcon />
@@ -141,15 +150,7 @@ const CommentItem = props => {
             >
               <ThumbDownAltIcon />
               <Typography>{comment.dislikes}</Typography>
-            </IconButton>
-            <Button
-              size="small"
-              onClick={() => {
-                changeFormVisibility();
-              }}
-            >
-              Reply
-            </Button>
+            </IconButton> */}
             <br />
             {
               isCommentFormVisible && 
