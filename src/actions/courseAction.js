@@ -211,17 +211,19 @@ export const uploadImage = (image) => (dispatch, getState) => {
     })
 }
 
-// export const setImage = (imageName) => (dispatch, getState) => {
-//     axios.get(`https://samvisionapi.herokuapp.com/images/${imageName}`, {}
-//     ).then(res => {
-//         dispatch({
-//             type: 'GET_IMAGE_DATA',
-//             payload: res.data
-//         });
-//     }).catch(err => {
-//         // console.log(imageName);
-//         dispatch({
-//             type: 'IMAGE_DATA_NOT_FOUND'
-//         })
-//     })
-// }
+export const fetchCourseWithCategory = (category) => (dispatch, getState) => {
+    axios.get(`https://apiak.herokuapp.com/api/courses?access_token=${getState().auth.token}&filter[where][categoryId]=${category}`,
+        tokenConfig(getState)
+    )
+        .then(res => {
+            dispatch({
+                type: 'COURSE_LOADED_WITH_CATEGORY',
+                courseList: res.data
+            });
+        }).catch(err => {
+            dispatch({
+                type: 'GET_COURSE_CATEGORY_FAILED'
+            });
+        })
+
+}

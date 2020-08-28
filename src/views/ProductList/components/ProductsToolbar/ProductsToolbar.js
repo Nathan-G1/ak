@@ -6,7 +6,9 @@ import { Button, Card } from '@material-ui/core';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import { AddCourseForm } from '../../components'
+import { AddCourseForm } from '../../components';
+import { connect } from 'react-redux';
+import { fetchCourseWithCategory } from '../../../../actions/courseAction';
 
 import { SearchInput, } from 'components';
 
@@ -46,7 +48,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ProductsToolbar = props => {
-  const { className,userRole, ...rest } = props;
+  const { className, userRole, fetchCourseWithCategory, ...rest } = props;
   const [open, setOpen] = React.useState(false);
 
   const classes = useStyles();
@@ -102,6 +104,9 @@ const ProductsToolbar = props => {
           className={classes.searchInput}
           placeholder="Search courses"
         />
+        <Button onClick={() => fetchCourseWithCategory("5f392e604ecbb20017ced43a")}>General</Button>
+        <Button onClick={() => fetchCourseWithCategory("5f3175834262d10017f033b8")}>Academic</Button>
+        <Button onClick={() => fetchCourseWithCategory("5f392e474ecbb20017ced439")}>College</Button>
       </div>
     </div>
   );
@@ -111,4 +116,13 @@ ProductsToolbar.propTypes = {
   className: PropTypes.string
 };
 
-export default ProductsToolbar;
+function mapStateToProps(state) {
+  return {
+    selectedCourse: state.currentCourse.course,
+    courseImage: state.currentCourse.courseImage,
+    courseVideoList: state.currentCourse.lectureVideos,
+    isCourseLoaded: state.currentCourse.isCourseFetched,
+    user: state.currentUser.user
+  }
+};
+export default connect(mapStateToProps , { fetchCourseWithCategory })(ProductsToolbar);

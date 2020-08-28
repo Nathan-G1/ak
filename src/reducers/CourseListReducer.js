@@ -66,6 +66,12 @@ export default function (state = initialState, action) {
         isCourseUpdated: true
       }
 
+    case 'COURSE_LOADED_WITH_CATEGORY':
+      return {
+        ...state,
+        courses: action.courseList
+      }
+
     case "LOAD_COURSE_LIST":
       return {
         ...state,
