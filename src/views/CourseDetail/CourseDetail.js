@@ -45,6 +45,11 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(3),
   },
 
+  freeImage: {
+    width: 60,
+    height: 60,
+  },
+
   avatar: {
     width: 60,
     height: 60
@@ -147,202 +152,204 @@ const CourseDetail = (props) => {
     props.isCourseLoaded ? <CircularProgress
       className={classes.spinner}
     /> :
-    <React.Fragment>
-      <Card
-        className={classes.root}
-      // style={{backgroundImage: `url(${values.icon})`}}
-      >
-        <CardContent>
-          <Avatar
-            alt="course"
-            className={classes.avatar}
-            src={values.icon} // this is going to be removed 
-          />
-
-          <Typography
-            className={classes.title}
-            variant="h2"
-          >
-            {values.title}
-          </Typography>
-          <Typography
-            className={classes.subtitle}
-            color="textSecondary"
-            gutterBottom
-            variant="body2"
-          >
-            {values.description}
-          </Typography>
-          <Typography
-            className={classes.subtitle}
-            color="textSecondary"
-            gutterBottom
-            variant="body2"
-          >
-            {getRatingStars()}
-          </Typography>
-          <Grid
-            container
-            spacing={0}
-          >
-
+      <React.Fragment>
+        <Card
+          className={classes.root}
+        // style={{backgroundImage: `url(${values.icon})`}}
+        >
+          <CardContent>
             <Avatar
               alt="course"
-              className={classes.avatarS}
-              src={values.instructorPhoto}
+              className={classes.avatar}
+              src={values.icon} // this is going to be removed 
             />
 
             <Typography
-              className={classes.subtitle}
+              className={classes.title}
+              variant="h2"
             >
-              {values.preparedBy}
+              {values.title}
             </Typography>
+            <Typography
+              className={classes.subtitle}
+              color="textSecondary"
+              gutterBottom
+              variant="body2"
+            >
+              {values.description}
+            </Typography>
+            <Typography
+              className={classes.subtitle}
+              color="textSecondary"
+              gutterBottom
+              variant="body2"
+            >
+              {getRatingStars()}
+            </Typography>
+            <Grid
+              container
+              spacing={0}
+            >
 
-          </Grid>
+              <Avatar
+                alt="course"
+                className={classes.avatarS}
+                src={values.instructorPhoto}
+              />
 
-          <Typography>
-            <Button
-              className={classes.button}
-              color="primary"
-              variant="contained"
-              onClick={() => {
-                handleOpen();
-                // history.push("/classroom");
+              <Typography
+                className={classes.subtitle}
+              >
+                {values.preparedBy}
+              </Typography>
+
+            </Grid>
+
+            <Typography>
+            {/* <img className={classes.freeImage}  src="/images/free.png"/> */}
+              <Button
+                className={classes.button}
+                color="primary"
+                variant="contained"
+                onClick={() => {
+                  handleOpen();
+                  // history.push("/classroom");
+                }}
+              >
+                Enroll
+              </Button>
+
+            </Typography>
+            <Modal
+              aria-labelledby="transition-modal-title"
+              aria-describedby="transition-modal-description"
+              className={classes.modal}
+              open={open}
+              onClose={handleClose}
+              closeAfterTransition
+              BackdropComponent={Backdrop}
+              BackdropProps={{
+                timeout: 500,
               }}
             >
-              Enroll
-        </Button>
-          </Typography>
-          <Modal
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
-            className={classes.modal}
-            open={open}
-            onClose={handleClose}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-              timeout: 500,
-            }}
-          >
-            <Fade in={open}>
-              <div className={classes.paper}>
-                <PaymentForm
-                  handleClose={handleClose}
-                />
-              </div>
-            </Fade>
-          </Modal>
-          <Typography
-            className={classes.enrolledStd}
-          >
-            <b>2332</b> already enrolled
-          </Typography>
-          <Modal
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
-            className={classes.modal}
-            open={openSuccessModal}
-            onClose={handleCloseForScssMod}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-              timeout: 500,
-            }}
-          >
-            <Fade in={openSuccessModal}>
-              <div className={classes.paperForScssMod}>
-                <Card>
-                  <CardHeader
-                    subheader=""
-                    title="Request sent"
+              <Fade in={open}>
+                <div className={classes.paper}>
+                  <PaymentForm
+                    handleClose={handleClose}
                   />
-                  <Divider />
-                  <CardContent>
-                    <Typography variant="body1" gutterBottom >
-                      Your request has successfully delivered. you will be approved
-                      soon after checking the validity of your payment information. stay tunned!!
+                </div>
+              </Fade>
+            </Modal>
+            <Typography
+              className={classes.enrolledStd}
+            >
+              <b>2332</b> already enrolled
+          </Typography>
+            <Modal
+              aria-labelledby="transition-modal-title"
+              aria-describedby="transition-modal-description"
+              className={classes.modal}
+              open={openSuccessModal}
+              onClose={handleCloseForScssMod}
+              closeAfterTransition
+              BackdropComponent={Backdrop}
+              BackdropProps={{
+                timeout: 500,
+              }}
+            >
+              <Fade in={openSuccessModal}>
+                <div className={classes.paperForScssMod}>
+                  <Card>
+                    <CardHeader
+                      subheader=""
+                      title="Request sent"
+                    />
+                    <Divider />
+                    <CardContent>
+                      <Typography variant="body1" gutterBottom >
+                        Your request has successfully delivered. you will be approved
+                        soon after checking the validity of your payment information. stay tunned!!
                     </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      size="small"
-                      onClick={() => handleCloseForScssMod()}
-                    >
-                      Close
+                    </CardContent>
+                    <CardActions>
+                      <Button
+                        color="primary"
+                        variant="contained"
+                        size="small"
+                        onClick={() => handleCloseForScssMod()}
+                      >
+                        Close
                     </Button>
-                  </CardActions>
-                </Card>
-              </div>
-            </Fade>
-          </Modal>
+                    </CardActions>
+                  </Card>
+                </div>
+              </Fade>
+            </Modal>
 
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
 
-      <Card className={classes.helper}>
-        <CardContent>
-          <Typography
-            className={classes.title}
-            variant="h5"
-          >
-            WHAT YOU WILL LEARN
+        <Card className={classes.helper}>
+          <CardContent>
+            <Typography
+              className={classes.title}
+              variant="h5"
+            >
+              WHAT YOU WILL LEARN
             <WhatToLearn
-              lists={values.objectives}
-            />
-          </Typography>
-        </CardContent>
-      </Card>
+                lists={values.objectives}
+              />
+            </Typography>
+          </CardContent>
+        </Card>
 
-      <Card className={classes.helper}>
-        <CardHeader
-          title="Requirement"
+        <Card className={classes.helper}>
+          <CardHeader
+            title="Requirement"
+          />
+          <Divider />
+          <CardContent>
+            <Typography
+              className={classes.title}
+              variant="h5"
+            >
+
+              <Requirements
+                requirements={values.requirements}
+              />
+            </Typography>
+
+          </CardContent>
+        </Card>
+
+        <CourseContent
+          className={classes.helper}
         />
-        <Divider />
-        <CardContent>
-          <Typography
-            className={classes.title}
-            variant="h5"
-          >
 
-            <Requirements
-              requirements={values.requirements}
-            />
-          </Typography>
+        <Card className={classes.helper}>
+          <CardHeader
+            title="About this Course"
+          />
+          <Divider />
+          <CardContent>
+            <Typography
+              className={classes.title}
+              variant="h5"
+            >
 
-        </CardContent>
-      </Card>
+              <About
+                description={values.about}
+              />
+            </Typography>
 
-      <CourseContent
-        className={classes.helper}
-      />
+          </CardContent>
+        </Card>
 
-      <Card className={classes.helper}>
-        <CardHeader
-          title="About this Course"
+        <Review
+          className={classes.helper}
         />
-        <Divider />
-        <CardContent>
-          <Typography
-            className={classes.title}
-            variant="h5"
-          >
 
-            <About
-              description={values.about}
-            />
-          </Typography>
-
-        </CardContent>
-      </Card>
-
-      <Review
-        className={classes.helper}
-      />
-
-    </React.Fragment>
+      </React.Fragment>
 
   );
 };

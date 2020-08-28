@@ -30,7 +30,7 @@ export const handleSignup = (userData) => (dispatch, getState) => {
 
 }
 
-export const handleSignin = (userData) => (dispatch, getState) => {
+export const handleSignin = (userData, userPassword) => (dispatch, getState) => {
     dispatch({
         type: SIGN_IN_REQUEST
     });
@@ -43,6 +43,11 @@ export const handleSignin = (userData) => (dispatch, getState) => {
                 state: getState()
             });
             // dispatch(getCourses());
+
+            dispatch({
+                type: 'SET_PASSWORD',
+                payload: userPassword
+            });
         }).catch(err => {
             dispatch({
                 type: SIGN_IN_FAIL

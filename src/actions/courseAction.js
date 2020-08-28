@@ -1,4 +1,5 @@
 import axios from 'axios';
+import FormData from 'form-data'
 import { getVideo } from './courseVideoAction';
 import { getRequests } from './courseRequestAction'
 import { tokenConfig } from './authAction';
@@ -165,7 +166,7 @@ export const updateCourse = (courseId, courseInfo) => (dispatch, getState) => {
     
 }
 
-
+//not working
 export const approveUserRequest = (courseId, studentId) => (dispatch, getState) => {
 
     axios.post(`https://apiak.herokuapp.com/api/courses/${studentId}/akUsers?access_token=${getState().auth.token}`, 
@@ -186,3 +187,41 @@ export const approveUserRequest = (courseId, studentId) => (dispatch, getState) 
 
     
 }
+
+export const uploadImage = (image) => (dispatch, getState) => {
+    let formData = new FormData();
+    formData.append('image', image);
+
+    axios.post('https://samvisionapi.herokuapp.com/images/upload', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    }).then(res => {
+        // console.log(res.data.name)
+
+        dispatch({
+            type: 'IMAGE_UPLOADED',
+            payload: res
+        });
+
+    }).catch(err => {
+        dispatch({
+            type: 'IMAGE_UPLOADING_FAILED'
+        });
+    })
+}
+
+// export const setImage = (imageName) => (dispatch, getState) => {
+//     axios.get(`https://samvisionapi.herokuapp.com/images/${imageName}`, {}
+//     ).then(res => {
+//         dispatch({
+//             type: 'GET_IMAGE_DATA',
+//             payload: res.data
+//         });
+//     }).catch(err => {
+//         // console.log(imageName);
+//         dispatch({
+//             type: 'IMAGE_DATA_NOT_FOUND'
+//         })
+//     })
+// }

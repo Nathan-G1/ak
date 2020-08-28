@@ -5,9 +5,11 @@ import { NavLink as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { List, ListItem, Button, colors } from '@material-ui/core';
+import { List, ListItem, Button, colors, Hidden, Typography  } from '@material-ui/core';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { connect } from 'react-redux';
 import { handleSetUser } from '../../../../../../actions/userAction'; 
+import { handleSignout } from '../../../../../../actions/authAction';
 import {
   CircularProgress,
 } from '@material-ui/core';
@@ -65,6 +67,9 @@ const SidebarNav = props => {
   })
   // get user and set it here
   
+  const handleSignOut = () => {
+    props.handleSignout();
+  }
 
   const classes = useStyles();
 
@@ -92,6 +97,17 @@ const SidebarNav = props => {
           </Button>
         </ListItem>
       ))}
+      <ListItem
+        button
+        onClick={handleSignOut}
+      >
+        <Hidden
+          lgUp
+        >
+          <div><ExitToAppIcon/></div>
+            Logout
+        </Hidden>
+      </ListItem>
     </List>
   );
 };
@@ -109,4 +125,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {handleSetUser})(SidebarNav);
+export default connect(mapStateToProps, {handleSetUser, handleSignout})(SidebarNav);

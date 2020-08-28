@@ -9,7 +9,7 @@ import { approveUserRequest } from '../../../../actions/courseAction';
 import {
   Card,
   CardActions,
-  CardContent,
+  CardMedia,
   List,
   Divider,
   ListItem,
@@ -18,7 +18,8 @@ import {
   ListItemText,
   Collapse,
   Typography,
-  Button
+  Button,
+  Grid
 } from '@material-ui/core';
 
 import {
@@ -36,6 +37,10 @@ const useStyles = makeStyles(theme => ({
   nested: {
     paddingLeft: theme.spacing(4),
   },
+  requestImage: {
+    width: 250,
+    height: 180
+  }
 
 }));
 
@@ -62,7 +67,9 @@ const RequestItem = props => {
         onClick={handleClick}
       >
         <ListItemAvatar>
-          <Avatar src={request.studentImage}>
+          <Avatar 
+            src={`https://samvisionapi.herokuapp.com/images/${request.studentImage}`}
+          >
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary={request.studentFirstName + " " + request.studentLastName} />
@@ -72,31 +79,51 @@ const RequestItem = props => {
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        
-            <Typography variant="body1" gutterBottom >
-              Requested by : {request.studentFirstName}
-            </Typography>
-            <Typography variant="body1" gutterBottom >
-              Payment option : CBE birr wallet
-            </Typography>
-            <Typography variant="body1" gutterBottom >
-              Phone number : {request.phoneNumber}
-            </Typography>
-            <Typography variant="body1" gutterBottom >
-              Requested Course  : {request.courseTitle}
-            </Typography>
-            <Typography variant="body1" gutterBottom >
-              Expected payment : {request.coursePrice}
-            </Typography>
-            <Button
-              color="primary"
-              variant="contained"
-              type='submit'
-              onClick={handleApprove}
-              size="small"
+
+          <Grid
+            container
+          >
+            <Grid
+              item
+              md={6}
+              xs={12}
             >
-              Approve
-            </Button>
+                <Typography variant="body1" gutterBottom >
+                  Requested by : {request.studentFirstName}
+                </Typography>
+                <Typography variant="body1" gutterBottom >
+                  Payment option : CBE birr wallet
+                </Typography>
+                <Typography variant="body1" gutterBottom >
+                  Phone number : {request.phoneNumber}
+                </Typography>
+                <Typography variant="body1" gutterBottom >
+                  Requested Course  : {request.courseTitle}
+                </Typography>
+                <Typography variant="body1" gutterBottom >
+                  Expected payment : {request.coursePrice}
+                </Typography>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  type='submit'
+                  onClick={handleApprove}
+                  size="small"
+                >
+                  Approve
+                </Button>
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+                <CardMedia
+                  className={classes.requestImage}
+                  image={`https://samvisionapi.herokuapp.com/images/${request.receiptImage}`}
+                />
+            </Grid>
+          </Grid>
       </Collapse>
       <Divider/>
     </React.Fragment>

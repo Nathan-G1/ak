@@ -61,12 +61,13 @@ const initialState = {
     }
   ],
 
-  isCourseFetched: false
-
+  isCourseFetched: false,
+  courseImage : '',
 }
 
 
 export default function (state = initialState, action) {
+
   switch (action.type) {
     case 'GET_COURSE_VIDEOS':
       return {
@@ -112,6 +113,12 @@ export default function (state = initialState, action) {
         ...state,
         course: action.payload
       }
+
+    case 'IMAGE_UPLOADED':
+      return {
+        ...state,
+        courseImage: action.payload.data.name
+      };
 
     case 'persist/REHYDRATE':
       if (action.payload.currentCourse) {

@@ -8,13 +8,14 @@ import { AddVideoForm } from './components';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import StarIcon from '@material-ui/icons/Star';
-import { updateCourse } from '../../actions/courseAction';
+// import ImageIcon from '@material-ui/icons';
+import { updateCourse, uploadImage } from '../../actions/courseAction';
 import {
   Card,
   CardHeader,
   CardContent,
   CardActions,
+  CardMedia,
   Divider,
   Grid,
   Button,
@@ -55,11 +56,15 @@ const useStyles = makeStyles(theme => ({
 
   avatar: {
     marginRight: 'auto',
-    height: 80,
-    width: 80,
+    height: 150,
+    width: 300,
     flexShrink: 0,
     flexGrow: 0
   },
+
+  button: {
+    marginTop: theme.spacing(1)
+  }
   // paper: {
   //   backgroundColor: theme.palette.background.paper,
   //   borderRadius: '1%',
@@ -77,6 +82,7 @@ const CourseProfile = (props) => {
     selectedCourse,
     courseVideoList,
     updateCourse,
+    courseImage,
     user, ...rest } = props;
 
   const classes = useStyles();
@@ -88,7 +94,7 @@ const CourseProfile = (props) => {
   const [values, setValues] = useState(
     {
       title: `${course.title}`,
-      icon: `${course.icon}`,
+      icon: `${courseImage}`,
       description: `${course.description}`,
       categoryId: `${course.categoryId}`,
       objective: '',
@@ -103,7 +109,7 @@ const CourseProfile = (props) => {
     setCourse(selectedCourse);
     setValues({
       title: `${selectedCourse.title}`,
-      icon: `${selectedCourse.icon}`,
+      icon: `https://samvisionapi.herokuapp.com/images/${courseImage}`,
       description: `${selectedCourse.description}`,
       categoryId: `${selectedCourse.categoryId}`,
       about: `${selectedCourse.about}`,
@@ -133,7 +139,7 @@ const CourseProfile = (props) => {
       videos: selectedCourse.videos,
 
       publishedDate: selectedCourse.publishedDate,
-      icon: values.icon,
+      icon: courseImage,
       enrolledStudents: selectedCourse.enrolledStudents,
       description: values.description,
       categoryId: values.categoryId,
@@ -151,6 +157,7 @@ const CourseProfile = (props) => {
 
     // console.log(course);
     updateCourse(selectedCourse.id, course);
+    setImage(false);
     history.push("/courses");
   }
 
@@ -193,6 +200,28 @@ const CourseProfile = (props) => {
     }
   ];
 
+  //image input
+  const [image, setImage] = useState(false);
+
+  const handleCapture = ({ target }) => {
+      const fileReader = new FileReader();
+      const name = 'images';
+
+      fileReader.readAsDataURL(target.files[0]);
+      fileReader.onload = (e) => {
+              // setImage(e.target.result);
+              props.uploadImage(target.files[0]);
+              setImage(true);
+      };
+      
+      
+  };
+
+  // const uploadImage = ({image}) => {
+  //   console.log(image);
+    
+  // }
+
 
   return (
     props.isCourseLoaded ? <CircularProgress className={classes.spinner}/> : 
@@ -220,17 +249,44 @@ const CourseProfile = (props) => {
               md={12}
               xs={12}
             >
-              <Avatar
+              <CardMedia
                 className={classes.avatar}
-                src={selectedCourse.icon}
+                // src={selectedCourse.icon}
+                image={image ? `https://samvisionapi.herokuapp.com/images/${courseImage}` : `https://samvisionapi.herokuapp.com/images/${selectedCourse.icon}`}
               />
-              <Button
+
+              {/* <Fragment> */}
+                <input
+                  color="primary"
+                  accept="image/*"
+                  type="file"
+                  onChange={handleCapture}
+                  id="icon-button-file"
+                  style={{ display: 'none', }}
+                />
+                <label htmlFor="icon-button-file">
+                  <Button
+                    variant="contained"
+                    component="span"
+                    className={classes.button}
+                    size="large"
+                    color="primary"
+                    size="small"
+                    // onClick={uploadImage}
+                  >
+                    {/* <ImageIcon className={classes.extendedIcon} /> */}
+                    upload
+                  </Button>
+                </label>
+              {/* </Fragment> */}
+
+              {/* <Button
                 className={classes.uploadButton}
                 color="primary"
                 variant="text"
               >
                 Upload Image
-              </Button>
+              </Button> */}
             </Grid>
 
             <Grid
@@ -464,10 +520,11 @@ CourseProfile.propTypes = {
 function mapStateToProps(state) {
   return {
     selectedCourse: state.currentCourse.course,
+    courseImage: state.currentCourse.courseImage,
     courseVideoList: state.currentCourse.lectureVideos,
     isCourseLoaded: state.currentCourse.isCourseFetched,
     user: state.currentUser.user
   }
 };
 
-export default connect(mapStateToProps, { updateCourse })(CourseProfile);
+export default connect(mapStateToProps, { updateCourse, uploadImage })(CourseProfile);

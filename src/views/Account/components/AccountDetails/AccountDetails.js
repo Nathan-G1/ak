@@ -61,8 +61,9 @@ const AccountDetails = props => {
       userType: user.userType,
       firstName: values.firstName,
       lastName: values.lastName,
-      avatar: "/images/user.png",
+      avatar: user.avatar,
       phoneNumber: values.phone,
+      password: props.userPassword,
       realm: user.realm,
       username: user.username,
       email: values.email, // shouldn't be editable
@@ -241,6 +242,7 @@ AccountDetails.propTypes = {
 
 const mapStateToProps = state => ({
   user: state.currentUser.user,
+  userPassword: state.currentUser.userPassword,
 });
 
 
