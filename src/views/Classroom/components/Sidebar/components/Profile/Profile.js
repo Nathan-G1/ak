@@ -126,8 +126,8 @@ const Profile = props => {
           BackdropComponent={Backdrop}
           BackdropProps={{
             timeout: 500,
-          }}
-        >
+          }}>
+            
           <Fade in={open}
            >
             <Card className={classes.paper}> 
