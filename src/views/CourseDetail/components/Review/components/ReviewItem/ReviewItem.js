@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
-import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import { connect } from 'react-redux';
 import { CommentForm } from '..'
 import {
   List,
@@ -45,57 +42,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ReviewItem = props => {
-  const { className, comment ,currentuser, ...rest } = props;
-  const [isRepliesVisibile, setIsRepliesVisible] = useState(false);
-  const [isLikeClicked, setIsLikeClicked] = useState(false);
-  const [isCommentFormVisible, setIsCommentFormVisible] = useState(false);
-
+  const { className, review ,currentuser, courseReview, ...rest } = props;
+  
   const classes = useStyles();
-
-  const viewReplies = () => {
-    // console.log(currentComment.replies);
-    setIsRepliesVisible(!isRepliesVisibile);
-  }
-
-  const handleLikeCount = (e) => {
-    props.handleLikeCount(comment.id);
-    setIsLikeClicked(!isLikeClicked);
-  }
-
-  const handleDisLikeCount = (e) => {
-    props.handleDisLikeCount(comment.id);
-    setIsLikeClicked(!isLikeClicked);
-  }
-
-  const handleLikeCountForReplies = (id) => {
-    var i = 0;
-    for(var j = 0; j < comment.replies.length; j++){
-      if(id == comment.replies[j].id){
-        i = j
-      }
-    }
-
-    const items = comment.replies;
-    const item = items[i];
-    item.likes++;
-    items[i]=item;
-    comment.replies = items;
-  }
-
-  const handleDisLikeCountForReplies = (id) => {
-    var i = 0;
-    for(var j = 0; j < comment.replies.length; j++){
-      if(id == comment.replies[j].id){
-        i = j
-      }
-    }
-
-    const items = comment.replies;
-    const item = items[i];
-    item.dislikes++;
-    items[i]=item;
-    comment.replies = items;
-  }
 
   return (
     <React.Fragment>
@@ -103,21 +52,14 @@ const ReviewItem = props => {
         <Avatar
           alt="Remy Sharp"
           className={classes.avatar}
-          src={comment.avatar} />
+          src={review.avatar} />
       </ListItemAvatar>
       <ListItemText
-        primary={comment.userName}
+        primary={review.userName}
         secondary={
           <React.Fragment>
-            {/* <Typography
-                            component="span"
-                            variant="body2"
-                            className={classes.inline}
-                            color="textPrimary"
-                        >
-                            {comment.userName}
-                        </Typography> */}
-            {comment.comment}<br />
+            
+            {review.text}<br />
 
           </React.Fragment>
         }

@@ -29,36 +29,40 @@ const initialState = {
   },
 
   lectureVideos: [
-    {
-      url: 'https://youtu.be/juxyvqiOMfY',
-      title: 'create repository',
-      description: "application",
-      courseId: "5f3176854262d10017f033b9",
-      videoLength: 0,
-      materials: "",
-      part: 1,
-      id: "",
-    },
-    {
-      url: 'https://www.youtube.com/watch?v=p8N0xN0ihMA',
-      title: 'cloning a repository',
-      description: "application",
-      courseId: "5f3176854262d10017f033b9",
-      videoLength: 0,
-      materials: "",
-      part: 2,
-      id: "",
-    },
-    {
-      url: 'https://www.youtube.com/watch?v=c2Kf-rXI_pk',
-      title: 'push and pull',
-      description: "application",
-      courseId: "5f3176854262d10017f033b9",
-      videoLength: 0,
-      materials: "",
-      part: 3,
-      id: "",
-    }
+    // {
+    //   url: 'https://youtu.be/juxyvqiOMfY',
+    //   title: 'create repository',
+    //   description: "application",
+    //   courseId: "5f3176854262d10017f033b9",
+    //   videoLength: 0,
+    //   materials: "",
+    //   part: 1,
+    //   id: "",
+    // },
+    // {
+    //   url: 'https://www.youtube.com/watch?v=p8N0xN0ihMA',
+    //   title: 'cloning a repository',
+    //   description: "application",
+    //   courseId: "5f3176854262d10017f033b9",
+    //   videoLength: 0,
+    //   materials: "",
+    //   part: 2,
+    //   id: "",
+    // },
+    // {
+    //   url: 'https://www.youtube.com/watch?v=c2Kf-rXI_pk',
+    //   title: 'push and pull',
+    //   description: "application",
+    //   courseId: "5f3176854262d10017f033b9",
+    //   videoLength: 0,
+    //   materials: "",
+    //   part: 3,
+    //   id: "",
+    // }
+  ],
+
+  courseReview: [
+    
   ],
 
   isCourseFetched: false,
@@ -83,13 +87,18 @@ export default function (state = initialState, action) {
         // isCourseFetched: true
       };
 
-    // case 'GET_COURSES':
-    //   return{
-    //     ...state,
-    //     // course: action.state.courseList.courses.filter((c) => c.id === action.id)[0],
-    //     // course: action.courseList,
-    //     isCourseFetched: false
-    //   }
+    case 'GET_COURSE_REVIEW':
+      return {
+          ...state,
+          courseReview: action.reviewList,
+      };
+
+    case 'ADD_REVIEW':
+      return {
+        ...state,
+        courseReview: state.courseReview.concat(action.payload)
+      }
+
     case "LOAD_COURSE":
       return {
         ...state,
@@ -125,7 +134,8 @@ export default function (state = initialState, action) {
         return {
           ...state,
           course: action.payload.currentCourse.course,
-          lectureVideos: action.payload.currentCourse.lectureVideos
+          lectureVideos: action.payload.currentCourse.lectureVideos,
+          courseReview: action.payload.currentCourse.courseReview
         };
       }else{
         return state;

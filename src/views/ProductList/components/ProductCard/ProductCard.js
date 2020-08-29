@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
 import { getCourse } from '../../../../actions/courseAction';
+import { getCourseReview } from '../../../../actions/courseAction';
 import { makeStyles } from '@material-ui/styles';
 import {
   Card,
@@ -56,7 +57,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ProductCard = props => {
-  const { className, course, getCourse, userType, ...rest } = props;
+  const { className,
+          course,
+          getCourse, 
+          userType, 
+          getCourseReview, ...rest } = props;
 
   const history = useHistory();
 
@@ -78,6 +83,7 @@ const ProductCard = props => {
 
         if (userType.toLowerCase() == 'student') {
           getCourse(course.id);
+          getCourseReview(course.id);
           history.push("/course-detail");
         } else if (userType.toLowerCase() == 'teacher') {
           getCourse(course.id);
@@ -194,4 +200,4 @@ function mapStateToProps(state) {
 };
 
 
-export default connect(mapStateToProps, { getCourse })(ProductCard);
+export default connect(mapStateToProps, { getCourse, getCourseReview })(ProductCard);

@@ -227,3 +227,38 @@ export const fetchCourseWithCategory = (category) => (dispatch, getState) => {
         })
 
 }
+
+
+export const getCourseReview = (courseId) => (dispatch, getState) => {
+    axios.get(`https://apiak.herokuapp.com/api/courses/${courseId}/comments`, {
+        access_token: getState().auth.token
+    }).then(res => {
+        dispatch({
+            type: 'GET_COURSE_REVIEW',
+            reviewList: res.data
+
+        });
+    }).catch(err => {
+        dispatch({
+            type: 'COURSE_REVIEW_NOT_FOUND',
+        })
+    })
+}
+
+
+export const addReview = (commentContent) => (dispatch, getState) => {
+    console.log(commentContent);
+    axios.post(`https://apiak.herokuapp.com/api/comments?access_token=${getState().auth.token}`, 
+        commentContent,
+        tokenConfig(getState)
+    ).then(res => {
+        dispatch({
+            type: 'ADD_REVIEW',
+            payload: res.data
+        });
+    }).catch(err => {
+        dispatch({
+            type: 'REVIEW_NOT_ADDED',
+        })
+    })
+}
