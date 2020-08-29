@@ -19,8 +19,9 @@ export const getCourse = (courseId) => (dispatch, getState) => {
                 return course.id == courseId;
               })
         });
-        dispatch(getCourseLoading(false));
+        
         dispatch(getCourseVideos(courseId));
+        dispatch(getCourseLoading(false));
 
     }).catch(err => {
         dispatch({
@@ -144,6 +145,23 @@ export const addCourseVideo = (courseId, videoInfo) => (dispatch, getState) => {
     })
 }
 
+export const deleteCourseVideo = (videoId) => (dispatch, getState) => {
+
+    axios.delete(`https://apiak.herokuapp.com/api/videos/${videoId}?access_token=${getState().auth.token}`, 
+        tokenConfig(getState)
+    ).then(res => {
+        dispatch({
+            type: 'DELETE_COURSE_VIDEO',
+            payload: res.data //CHECKOUT WHAT IS COMING
+        });
+        dispatch(getCourse(getState().currentCourse.course.id));
+    }).catch(err => {
+        dispatch({
+            type: 'VIDEO_NOT_DELETED',
+        })
+    })
+}
+
 
 export const updateCourse = (courseId, courseInfo) => (dispatch, getState) => {
 
@@ -247,7 +265,6 @@ export const getCourseReview = (courseId) => (dispatch, getState) => {
 
 
 export const addReview = (commentContent) => (dispatch, getState) => {
-    console.log(commentContent);
     axios.post(`https://apiak.herokuapp.com/api/comments?access_token=${getState().auth.token}`, 
         commentContent,
         tokenConfig(getState)

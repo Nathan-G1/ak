@@ -29,36 +29,36 @@ const initialState = {
   },
 
   lectureVideos: [
-    // {
-    //   url: 'https://youtu.be/juxyvqiOMfY',
-    //   title: 'create repository',
-    //   description: "application",
-    //   courseId: "5f3176854262d10017f033b9",
-    //   videoLength: 0,
-    //   materials: "",
-    //   part: 1,
-    //   id: "",
-    // },
-    // {
-    //   url: 'https://www.youtube.com/watch?v=p8N0xN0ihMA',
-    //   title: 'cloning a repository',
-    //   description: "application",
-    //   courseId: "5f3176854262d10017f033b9",
-    //   videoLength: 0,
-    //   materials: "",
-    //   part: 2,
-    //   id: "",
-    // },
-    // {
-    //   url: 'https://www.youtube.com/watch?v=c2Kf-rXI_pk',
-    //   title: 'push and pull',
-    //   description: "application",
-    //   courseId: "5f3176854262d10017f033b9",
-    //   videoLength: 0,
-    //   materials: "",
-    //   part: 3,
-    //   id: "",
-    // }
+    {
+      url: 'https://youtu.be/juxyvqiOMfY',
+      title: 'create repository',
+      description: "application",
+      courseId: "5f3176854262d10017f033b9",
+      videoLength: 0,
+      materials: "",
+      part: 1,
+      id: "",
+    },
+    {
+      url: 'https://www.youtube.com/watch?v=p8N0xN0ihMA',
+      title: 'cloning a repository',
+      description: "application",
+      courseId: "5f3176854262d10017f033b9",
+      videoLength: 0,
+      materials: "",
+      part: 2,
+      id: "",
+    },
+    {
+      url: 'https://www.youtube.com/watch?v=c2Kf-rXI_pk',
+      title: 'push and pull',
+      description: "application",
+      courseId: "5f3176854262d10017f033b9",
+      videoLength: 0,
+      materials: "",
+      part: 3,
+      id: "",
+    }
   ],
 
   courseReview: [
@@ -112,6 +112,7 @@ export default function (state = initialState, action) {
       }
 
     case 'ADD_COURSE_VIDEO':
+      window.location.replace('/course-profile');
       return {
         ...state,
         lectureVideos: state.lectureVideos.concat(action.payload)

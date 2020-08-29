@@ -40,18 +40,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AddVideoForm = props => {
-  const { className, handleClose, courseId, addCourseVideo, ...rest } = props;
+  const { className, handleClose, courseId, addCourseVideo, courseLectures, ...rest } = props;
   const [isVideoAdded, setIsVideoAdded] = useState(false);
 
   // useEffect(() => {
   //   if(isCourseUpdated){}
   // })
   const classes = useStyles();
+  const nextPart = courseLectures.length + 1;
 
   const [values, setValues] = useState({
     videoTitle: 'chapter one',
     videoLink: 'http:/lecture1/d',
-    part: 0,
     courseId: ''
   });
 
@@ -64,7 +64,7 @@ const AddVideoForm = props => {
       courseId: courseId,
       videoLength: 0,
       materials: "",
-      part: values.part,
+      part: nextPart,
     }
 
     //props.addVideo(video);
@@ -135,22 +135,6 @@ const AddVideoForm = props => {
               />
 
             </Grid>
-            <Grid
-              item
-              md={12}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Part"
-                margin="dense"
-                name="part"
-                onChange={handleChange}
-                required
-                value={values.part}
-                variant="outlined"
-              />
-            </Grid>
 
           </Grid>
         </CardContent>
@@ -175,7 +159,8 @@ AddVideoForm.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  courseId: state.currentCourse.course.id
+  courseId: state.currentCourse.course.id,
+  courseLectures: state.currentCourse.lectureVideos
 });
 
 export default connect(mapStateToProps, { addCourseVideo})(AddVideoForm);

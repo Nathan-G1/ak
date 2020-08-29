@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import moment from 'moment';
 import { connect } from 'react-redux';
@@ -56,7 +56,11 @@ const CourseContent = props => {
 
   const classes = useStyles();
 
-  const [courselist] = useState(mockData);
+  const [courseLectureList, setCourseLectureList] = useState(props.courseVideoList)
+
+  useEffect(() => {
+    setCourseLectureList(props.courseVideoList);
+  })
 
   return (
     <Card
@@ -79,7 +83,7 @@ const CourseContent = props => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {props.courseVideoList.map(content => (
+                {courseLectureList.map(content => (
                   <TableRow
                     hover
                     key={content.id}

@@ -8,8 +8,10 @@ import { AddVideoForm } from './components';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-// import ImageIcon from '@material-ui/icons';
-import { updateCourse, uploadImage } from '../../actions/courseAction';
+import IconButton from '@material-ui/core/IconButton';
+import HighlightOffOutlinedIcon from '@material-ui/icons/HighlightOffOutlined';
+import VideocamOutlinedIcon from '@material-ui/icons/VideocamOutlined';
+import { updateCourse, uploadImage, deleteCourseVideo } from '../../actions/courseAction';
 import {
   Card,
   CardHeader,
@@ -23,7 +25,9 @@ import {
   Typography,
   List,
   ListItem,
-  Avatar,
+  ListItemIcon,
+  ListItemText,
+  ListItemSecondaryAction,
   CircularProgress,
 } from '@material-ui/core';
 
@@ -453,7 +457,24 @@ const CourseProfile = (props) => {
                   {
                     <List>
                       {(courseVideoList).map((v, index) => {
-                        return <ListItem key={index}>{v.title}</ListItem>
+                        return <ListItem key={index}>
+                                  <ListItemIcon>
+                                    <VideocamOutlinedIcon/>
+                                  </ListItemIcon>
+                                  <ListItemText primary={v.title} />
+                                  <ListItemSecondaryAction>
+                                    <IconButton 
+                                      edge="end"
+                                      aria-label="comments" 
+                                      onClick={() => {
+                                        props.deleteCourseVideo(v.id);
+                                        // setCourse(props.selectedCourse);
+                                      }}
+                                    >
+                                      <HighlightOffOutlinedIcon/>
+                                    </IconButton>
+                                  </ListItemSecondaryAction>
+                                </ListItem>
                       })}
 
                     </List>
@@ -527,4 +548,4 @@ function mapStateToProps(state) {
   }
 };
 
-export default connect(mapStateToProps, { updateCourse, uploadImage })(CourseProfile);
+export default connect(mapStateToProps, { updateCourse, uploadImage, deleteCourseVideo })(CourseProfile);
