@@ -419,7 +419,28 @@ const CourseProfile = (props) => {
                   {
                     <List>
                       {(selectedCourse.objectives).map((v, index) => {
-                        return <ListItem key={index}>{v}</ListItem>
+                        return <React.Fragment>  
+                                  <ListItem key={index}>
+                                    <ListItemText primary={v} />
+                                    <ListItemSecondaryAction>
+                                      <IconButton 
+                                        edge="end"
+                                        aria-label="comments" 
+                                        onClick={() => {
+                                          values.objectives.splice(index, 1);
+                                          setValues({
+                                            ...values,
+                                            objective: ''
+                                          })
+                                          // setCourse(props.selectedCourse);
+                                        }}
+                                      >
+                                        <HighlightOffOutlinedIcon/>
+                                      </IconButton>
+                                    </ListItemSecondaryAction>
+                                  </ListItem>
+                                  <Divider/>
+                                </React.Fragment>
                       })}
 
                     </List>
