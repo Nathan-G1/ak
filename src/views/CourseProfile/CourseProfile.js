@@ -29,6 +29,8 @@ import {
   ListItemText,
   ListItemSecondaryAction,
   CircularProgress,
+  FormControlLabel,
+  Checkbox, 
 } from '@material-ui/core';
 
 
@@ -87,7 +89,10 @@ const CourseProfile = (props) => {
     courseVideoList,
     updateCourse,
     courseImage,
-    user, ...rest } = props;
+    user,
+    deleteCourseVideo,
+    uploadImage,
+    isCourseLoaded, ...rest } = props;
 
   const classes = useStyles();
 
@@ -101,6 +106,8 @@ const CourseProfile = (props) => {
       icon: `${courseImage}`,
       description: `${course.description}`,
       categoryId: `${course.categoryId}`,
+      isFree: `${course.isFree}`,
+      courseFee: `${course.courseFee}`,
       objective: '',
       about: `${course.about}`,
       requirements: `${course.requirements}`,
@@ -116,6 +123,8 @@ const CourseProfile = (props) => {
       icon: `https://samvisionapi.herokuapp.com/images/${courseImage}`,
       description: `${selectedCourse.description}`,
       categoryId: `${selectedCourse.categoryId}`,
+      isFree: selectedCourse.isFree,
+      courseFee: `${selectedCourse.courseFee}`,
       about: `${selectedCourse.about}`,
       requirements: `${selectedCourse.requirements}`,
       objectives: selectedCourse.objectives,
@@ -151,15 +160,15 @@ const CourseProfile = (props) => {
       totalDownloads: selectedCourse.totalDownloads,
       updatedAt: selectedCourse.updatedAt,
       about: values.about,
-      isFree: true,
-      courseFee: 0,
+      isFree: values.isFree,
+      courseFee: values.courseFee,
       requirements: values.requirements,
 
       objectives: selectedCourse.objectives,
       id: selectedCourse.id
     }
 
-    // console.log(course);
+    console.log(course);
     updateCourse(selectedCourse.id, course);
     setImage(false);
     history.push("/courses");
@@ -172,6 +181,13 @@ const CourseProfile = (props) => {
       [event.target.name]: event.target.value
     });
   };
+
+  const handleChangeForCheckbox = event => {
+    setValues({
+      ...values,
+      [event.target.name]: event.target.checked
+    });
+  }
 
   const handleAddObjectives = event => {
     setValues({
@@ -214,7 +230,7 @@ const CourseProfile = (props) => {
       fileReader.readAsDataURL(target.files[0]);
       fileReader.onload = (e) => {
               // setImage(e.target.result);
-              props.uploadImage(target.files[0]);
+              uploadImage(target.files[0]);
               setImage(true);
       };
       
@@ -228,7 +244,7 @@ const CourseProfile = (props) => {
 
 
   return (
-    props.isCourseLoaded ? <CircularProgress className={classes.spinner}/> : 
+    isCourseLoaded ? <CircularProgress className={classes.spinner}/> : 
     <Card
       {...rest}
       className={clsx(classes.root, className)}
@@ -364,6 +380,36 @@ const CourseProfile = (props) => {
             </Grid>
             <Grid
               item
+              md={6}
+              xs={12}
+            >
+              <FormControlLabel
+                control={<Checkbox checked={values.isFree} onChange={handleChangeForCheckbox} name="isFree" />}
+                label="Free"
+              />
+            </Grid>
+            { !values.isFree ? 
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                helperText="Please set a price for this course in Birr"
+                margin="dense"
+                name="courseFee"
+                onChange={handleChange}
+                required
+                // defaultValue={course.title}
+                value={values.courseFee}
+                // ref={input => values.title = input}
+                variant="outlined"
+              />
+            </Grid> : '' 
+            }
+            <Grid
+              item
               md={12}
               xs={12}
             >
@@ -457,24 +503,27 @@ const CourseProfile = (props) => {
                   {
                     <List>
                       {(courseVideoList).map((v, index) => {
-                        return <ListItem key={index}>
-                                  <ListItemIcon>
-                                    <VideocamOutlinedIcon/>
-                                  </ListItemIcon>
-                                  <ListItemText primary={v.title} />
-                                  <ListItemSecondaryAction>
-                                    <IconButton 
-                                      edge="end"
-                                      aria-label="comments" 
-                                      onClick={() => {
-                                        props.deleteCourseVideo(v.id);
-                                        // setCourse(props.selectedCourse);
-                                      }}
-                                    >
-                                      <HighlightOffOutlinedIcon/>
-                                    </IconButton>
-                                  </ListItemSecondaryAction>
-                                </ListItem>
+                        return <React.Fragment>
+                                  <ListItem key={index}>
+                                    <ListItemIcon>
+                                      <VideocamOutlinedIcon/>
+                                    </ListItemIcon>
+                                    <ListItemText primary={v.title} />
+                                    <ListItemSecondaryAction>
+                                      <IconButton 
+                                        edge="end"
+                                        aria-label="comments" 
+                                        onClick={() => {
+                                          deleteCourseVideo(v.id);
+                                          // setCourse(props.selectedCourse);
+                                        }}
+                                      >
+                                        <HighlightOffOutlinedIcon/>
+                                      </IconButton>
+                                    </ListItemSecondaryAction>
+                                  </ListItem>
+                                  <Divider/>
+                                </React.Fragment>
                       })}
 
                     </List>

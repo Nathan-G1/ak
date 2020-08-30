@@ -95,6 +95,10 @@ const useStyles = makeStyles(theme => ({
   },
   enrolledStd: {
     marginTop: theme.spacing(2)
+  },
+  courseFee: {
+    marginLeft: theme.spacing(2),
+    fontSize: '19px'
   }
 }));
 
@@ -158,11 +162,11 @@ const CourseDetail = (props) => {
         // style={{backgroundImage: `url(${values.icon})`}}
         >
           <CardContent>
-            <Avatar
+            {/* <Avatar
               alt="course"
               className={classes.avatar}
               src={values.icon} // this is going to be removed 
-            />
+            /> */}
 
             <Typography
               className={classes.title}
@@ -218,6 +222,12 @@ const CourseDetail = (props) => {
               >
                 Enroll
               </Button>
+              <Typography 
+                className={classes.courseFee}
+                component="span"
+              >
+                { values.isFree ? 'Free' : values.courseFee + '$'}
+              </Typography>
 
             </Typography>
             <Modal

@@ -57,7 +57,7 @@ const CustomRouterLink = forwardRef((props, ref) => (
 ));
 
 const SidebarNav = props => {
-  const { user, pages, className, ...rest } = props;
+  const { user, pages, className, handleSignout, ...rest } = props;
 
   const [ fetchedUser, setUser ] = useState(user);
   useEffect(() => {
@@ -68,7 +68,7 @@ const SidebarNav = props => {
   // get user and set it here
   
   const handleSignOut = () => {
-    props.handleSignout();
+    handleSignout();
   }
 
   const classes = useStyles();
