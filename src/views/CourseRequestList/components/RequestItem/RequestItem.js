@@ -40,6 +40,11 @@ const useStyles = makeStyles(theme => ({
   requestImage: {
     width: 250,
     height: 180
+  },
+
+  handledButton: {
+    color: 'white',
+    backgroundColor: 'green'
   }
 
 }));
@@ -56,7 +61,23 @@ const RequestItem = props => {
   };
 
   const handleApprove = () => {
-    approveUserRequest(request.courseId, request.studentId);
+    const selectedRequest = {
+      studentId: request.studentId,
+      studentFirstName: request.studentFirstName,
+      studentLastName: request.studentLastName,
+      studentImage: request.studentImage,
+      courseTitle: request.courseTitle,
+      courseId: request.courseId,
+      phoneNumber: request.phoneNumber,
+      receiptImage: request.receiptImage,
+      requestDate: request.requestDate,
+      isApproved: true,
+      coursePrice: request.coursePrice,
+      id: request.id
+    }
+    
+    approveUserRequest(selectedRequest, request.courseId, request.id);
+    setOpen(!open);
   }
 
 
@@ -73,9 +94,15 @@ const RequestItem = props => {
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary={request.studentFirstName + " " + request.studentLastName} />
-        <Button variant="contained" color="secondary" size="small">
-          pending
-        </Button>
+        {request.isApproved ? 
+          <Button variant="contained" className={classes.handledButton} size="small">
+            Handled
+          </Button> :
+          <Button variant="contained" color="secondary" size="small">
+            pending
+          </Button>
+        }
+        
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
@@ -109,6 +136,7 @@ const RequestItem = props => {
                   type='submit'
                   onClick={handleApprove}
                   size="small"
+                  disabled = {request.isApproved ?  true : false}
                 >
                   Approve
                 </Button>

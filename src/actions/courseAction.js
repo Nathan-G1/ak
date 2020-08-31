@@ -185,12 +185,13 @@ export const updateCourse = (courseId, courseInfo) => (dispatch, getState) => {
 }
 
 //not working
-export const approveUserRequest = (courseId, studentId) => (dispatch, getState) => {
+export const approveUserRequest = (requestData, courseId, id) => (dispatch, getState) => {
 
-    axios.post(`https://apiak.herokuapp.com/api/courses/${studentId}/akUsers?access_token=${getState().auth.token}`, 
-        
+    axios.put(`https://apiak.herokuapp.com/api/courses/${courseId}/courseRequests/${id}?access_token=${getState().auth.token}`, 
+        requestData,
         tokenConfig(getState)
     ).then(res => {
+        console.log(res.data)
         dispatch({
             type: 'REQUEST_APPROVED',
             payload: res.data
