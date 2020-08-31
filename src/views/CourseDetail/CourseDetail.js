@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
 import { closeSuccessMsg } from '../../actions/courseRequestAction';
@@ -106,7 +107,11 @@ const CourseDetail = (props) => {
   const { className,
     selectedCourse,
     isRequestDelivered,
-    closeSuccessMsg, ...rest } = props;
+    closeSuccessMsg,
+    isUserRegistered,
+    isUserPending, ...rest } = props;
+  
+  const history = useHistory();
 
   const classes = useStyles();
 
@@ -210,25 +215,57 @@ const CourseDetail = (props) => {
             </Grid>
 
             <Typography>
-            {/* <img className={classes.freeImage}  src="/images/free.png"/> */}
-              <Button
-                className={classes.button}
-                color="primary"
-                variant="contained"
-                onClick={() => {
-                  handleOpen();
-                  // history.push("/classroom");
-                }}
-              >
-                Enroll
-              </Button>
-              <Typography 
-                className={classes.courseFee}
-                component="span"
-              >
-                { values.isFree ? 'Free' : values.courseFee + '$'}
-              </Typography>
-
+            { isUserRegistered ? 
+              <React.Fragment>
+                <Button
+                  className={classes.button}
+                  color="primary"
+                  variant="outlined"
+                  onClick={() => {
+                    history.push("/classroom");
+                  }}
+                >
+                  Resume Learning
+                </Button>
+              </React.Fragment>
+            :
+              isUserPending ?  
+                <React.Fragment>    
+                  <Button
+                    className={classes.button}
+                    color="primary"
+                    variant="outlined"
+                  >
+                    Pending...
+                  </Button>
+                  <Typography 
+                    className={classes.courseFee}
+                    component="span"
+                  >
+                    { values.isFree ? 'Free' : values.courseFee + '$'}
+                  </Typography>
+                </React.Fragment>
+                : 
+                <React.Fragment>    
+                  <Button
+                    className={classes.button}
+                    color="primary"
+                    variant="contained"
+                    onClick={() => {
+                      handleOpen();
+                      // history.push("/classroom");
+                    }}
+                  >
+                    Enroll
+                  </Button>
+                  <Typography 
+                    className={classes.courseFee}
+                    component="span"
+                  >
+                    { values.isFree ? 'Free' : values.courseFee + '$'}
+                  </Typography>
+                </React.Fragment>
+            }
             </Typography>
             <Modal
               aria-labelledby="transition-modal-title"
@@ -368,7 +405,9 @@ function mapStateToProps(state) {
   return {
     selectedCourse: state.currentCourse.course,
     isCourseLoaded: state.currentCourse.isCourseFetched,
-    isRequestDelivered: state.courseRequests.isRequestDelivered
+    isRequestDelivered: state.courseRequests.isRequestDelivered,
+    isUserRegistered: state.currentCourse.isUserAccessGranted, 
+    isUserPending: state.currentCourse.isUserInPendingState
   }
 };
 

@@ -67,6 +67,8 @@ const initialState = {
 
   isCourseFetched: false,
   courseImage : '',
+  isUserAccessGranted: false,
+  isUserInPendingState: false
 }
 
 
@@ -130,13 +132,35 @@ export default function (state = initialState, action) {
         courseImage: action.payload.data.name
       };
 
+    case 'USER_ACCESS_GRANTED':
+      return {
+        ...state,
+        isUserAccessGranted: true,
+        isUserInPendingState: false
+      }
+
+    case 'USER_ACCESS_FAILED':
+      return {
+        ...state,
+        isUserAccessGranted: false,
+        isUserInPendingState: false
+      }
+
+    case 'USER_ACCESS_DENIED':
+      return {
+        ...state,
+        isUserAccessGranted: false,
+        isUserInPendingState: true
+      }
+
     case 'persist/REHYDRATE':
       if (action.payload.currentCourse) {
         return {
           ...state,
           course: action.payload.currentCourse.course,
           lectureVideos: action.payload.currentCourse.lectureVideos,
-          courseReview: action.payload.currentCourse.courseReview
+          courseReview: action.payload.currentCourse.courseReview,
+          isUserAccessGranted: action.payload.currentCourse.isUserAccessGranted
         };
       }else{
         return state;

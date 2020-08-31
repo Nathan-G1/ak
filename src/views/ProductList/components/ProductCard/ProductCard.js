@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
 import { getCourse } from '../../../../actions/courseAction';
 import { getCourseReview } from '../../../../actions/courseAction';
+import { checkCourseAccess } from '../../../../actions/courseRequestAction';
 import { makeStyles } from '@material-ui/styles';
 import {
   Card,
@@ -61,7 +62,9 @@ const ProductCard = props => {
           course,
           getCourse, 
           userType, 
-          getCourseReview, ...rest } = props;
+          getCourseReview,
+          userId,
+          checkCourseAccess, ...rest } = props;
 
   const history = useHistory();
 
@@ -84,6 +87,7 @@ const ProductCard = props => {
         if (userType.toLowerCase() == 'student') {
           getCourse(course.id);
           getCourseReview(course.id);
+          checkCourseAccess(course.id, userId)
           history.push("/course-detail");
         } else if (userType.toLowerCase() == 'teacher') {
           getCourse(course.id);
@@ -93,66 +97,6 @@ const ProductCard = props => {
       }}
 
     >
-      {/* <CardContent>
-        <div className={classes.imageContainer}>
-          <img
-            alt="Product"
-            className={classes.image}
-            src={course.icon}
-          />
-        </div>
-        <Typography
-          align="center"
-          gutterBottom
-          variant="h4"
-        >
-          {course.title}
-        </Typography>
-        <Typography
-          align="center"
-          variant="body1"
-        >
-          {course.description}
-        </Typography>
-        <Typography 
-          variant="body2" 
-          className={classes.rating}
-          align = "center"
-          size = "small"
-          >{getRatingStars()}</Typography>
-      </CardContent>
-      <Divider />
-      <CardActions>
-        <Grid
-          container
-          justify="space-between"
-        >
-          <Grid
-            className={classes.statsItem}
-            item
-          >
-            <AccessTimeIcon className={classes.statsIcon} />
-            <Typography
-              display="inline"
-              variant="body2"
-            >
-              2hr to Complete
-            </Typography>
-          </Grid>
-          <Grid
-            className={classes.statsItem}
-            item
-          >
-            <GetAppIcon className={classes.statsIcon} />
-            <Typography
-              display="inline"
-              variant="body2"
-            >
-              {course.totalDownloads} Enrolled
-            </Typography>
-          </Grid>
-        </Grid>
-      </CardActions> */}
 
       <CardActionArea>
         <CardMedia
@@ -196,8 +140,9 @@ ProductCard.propTypes = {
 function mapStateToProps(state) {
   return {
     userType: state.currentUser.user.userType,
+    userId: state.currentUser.user.id
   }
 };
 
 
-export default connect(mapStateToProps, { getCourse, getCourseReview })(ProductCard);
+export default connect(mapStateToProps, { getCourse, getCourseReview, checkCourseAccess })(ProductCard);

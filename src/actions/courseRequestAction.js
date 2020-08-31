@@ -64,3 +64,26 @@ export const sendReceiptPicture = (image) => (dispatch, getState) => {
         });
     })
 }
+
+export const checkCourseAccess = (courseId, studentId) => (dispatch, getState) => {
+
+    axios.get(`https://apiak.herokuapp.com/api/courses/${courseId}/courseRequests?filter[where][studentId][like]=${studentId}`, 
+        tokenConfig(getState)
+    ).then(res => {
+        console.log(res.data);
+        if(res.data[0].isApproved){
+            dispatch({
+                type: 'USER_ACCESS_GRANTED',
+                // payload: res
+            });
+        }else{
+            dispatch({
+                type: 'USER_ACCESS_DENIED'
+            });
+        }
+    }).catch(err => {
+        dispatch({
+            type: 'USER_ACCESS_FAILED'
+        });
+    })
+}
