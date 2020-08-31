@@ -230,7 +230,7 @@ export const uploadImage = (image) => (dispatch, getState) => {
 }
 
 export const fetchCourseWithCategory = (category) => (dispatch, getState) => {
-    axios.get(`https://apiak.herokuapp.com/api/courses?access_token=${getState().auth.token}&filter[where][categoryId]=${category}`,
+    axios.get(`https://apiak.herokuapp.com/api/courses?access_token=${getState().auth.token}&filter[where][categoryId][like]=${category}`,
         tokenConfig(getState)
     )
         .then(res => {
