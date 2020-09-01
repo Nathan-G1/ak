@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
-import { closeSuccessMsg } from '../../actions/courseRequestAction';
+import { closeSuccessMsg, checkCourseAccess } from '../../actions/courseRequestAction';
 import { WhatToLearn, About, PaymentForm, Requirements, CourseContent, Review } from './components';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -109,7 +109,9 @@ const CourseDetail = (props) => {
     isRequestDelivered,
     closeSuccessMsg,
     isUserRegistered,
-    isUserPending, ...rest } = props;
+    isUserPending,
+    userId,
+    checkCourseAccess, ...rest } = props;
   
   const history = useHistory();
 
@@ -155,6 +157,7 @@ const CourseDetail = (props) => {
   const handleCloseForScssMod = () => {
     closeSuccessMsg();
     setOpenSuccessModal(false);
+    
   };
 
   return (
@@ -323,7 +326,11 @@ const CourseDetail = (props) => {
                         color="primary"
                         variant="contained"
                         size="small"
-                        onClick={() => handleCloseForScssMod()}
+                        onClick={() => {
+                            handleCloseForScssMod();
+                            checkCourseAccess(values.id, userId);
+                          }
+                        }
                       >
                         Close
                     </Button>
@@ -404,6 +411,7 @@ const CourseDetail = (props) => {
 function mapStateToProps(state) {
   return {
     selectedCourse: state.currentCourse.course,
+    userId: state.currentUser.user.id,
     isCourseLoaded: state.currentCourse.isCourseFetched,
     isRequestDelivered: state.courseRequests.isRequestDelivered,
     isUserRegistered: state.currentCourse.isUserAccessGranted, 
@@ -411,4 +419,4 @@ function mapStateToProps(state) {
   }
 };
 
-export default connect(mapStateToProps, { closeSuccessMsg })(CourseDetail);
+export default connect(mapStateToProps, { closeSuccessMsg, checkCourseAccess })(CourseDetail);
