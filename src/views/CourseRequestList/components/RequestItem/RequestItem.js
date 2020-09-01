@@ -161,9 +161,8 @@ const RequestItem = props => {
                   type='submit'
                   onClick={handleDeny}
                   size="small"
-                  disabled = {request.isApproved ?  true : false}
                 >
-                  Deny
+                  {request.isApproved ?  'Delete' : 'Deny'}
                 </Button>
             </Grid>
             <Grid
