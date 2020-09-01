@@ -87,3 +87,26 @@ export const checkCourseAccess = (courseId, studentId) => (dispatch, getState) =
         });
     })
 }
+
+export const denyUserRequest = (id) => (dispatch, getState) => {
+    updateRequestLoading(true);
+    axios.delete(`https://apiak.herokuapp.com/api/courseRequests/${id}?access_token=${getState().auth.token}`, 
+        tokenConfig(getState)
+    ).then(res => {
+        dispatch({
+            type: 'REQUEST_DELETED_SUCCESSFULLY'
+        })
+        updateRequestLoading(false);
+    }).catch(err => {
+        dispatch({
+            type: 'DELETE_REQUEST_FAILED'
+        })
+    })
+}
+
+export const updateRequestLoading = (isLoading) => (dispatch, getState) => {
+    dispatch({
+        type: 'IS_LOADING',
+        isLoading: isLoading
+    });
+}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -6,6 +6,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import { makeStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
 import { approveUserRequest } from '../../../../actions/courseAction';
+import { denyUserRequest } from '../../../../actions/courseRequestAction';
 import {
   Card,
   CardActions,
@@ -19,7 +20,8 @@ import {
   Collapse,
   Typography,
   Button,
-  Grid
+  Grid,
+  CircularProgress
 } from '@material-ui/core';
 
 import {
@@ -45,18 +47,25 @@ const useStyles = makeStyles(theme => ({
   handledButton: {
     color: 'white',
     backgroundColor: 'green'
-  }
+  }, 
+
+  denyBtn: {
+    color: 'white',
+    backgroundColor: 'red', 
+    marginLeft: theme.spacing(2)
+  },  
 
 }));
 
 const RequestItem = props => {
-  const { className, request, approveUserRequest, ...rest } = props;
+  const { className, request, approveUserRequest, denyUserRequest, refresPage, ...rest } = props;
 
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
+    // refresPage();
     setOpen(!open);
   };
 
@@ -78,6 +87,12 @@ const RequestItem = props => {
     
     approveUserRequest(selectedRequest, request.courseId, request.id);
     setOpen(!open);
+  }
+
+  const handleDeny = () => {
+    denyUserRequest(request.id);
+    setOpen(!open);
+    // refresPage();
   }
 
 
@@ -140,6 +155,16 @@ const RequestItem = props => {
                 >
                   Approve
                 </Button>
+                <Button
+                  className={classes.denyBtn}
+                  variant="contained"
+                  type='submit'
+                  onClick={handleDeny}
+                  size="small"
+                  disabled = {request.isApproved ?  true : false}
+                >
+                  Deny
+                </Button>
             </Grid>
             <Grid
               item
@@ -167,8 +192,8 @@ function mapStateToProps(state) {
   return {
       user : state.currentUser.user,
       // userId : state.auth.userId
-      isUserFetched: state.currentUser.isUserFetched
+      isUserFetched: state.currentUser.isUserFetched,
   }
 }
 
-export default connect(mapStateToProps, {approveUserRequest})(RequestItem);
+export default connect(mapStateToProps, {approveUserRequest, denyUserRequest})(RequestItem);

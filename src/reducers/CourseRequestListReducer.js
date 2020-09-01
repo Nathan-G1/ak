@@ -13,7 +13,8 @@ const initialState = {
 
     isRequestDelivered: false,
     isRequestlistUpdated: false,
-    currentRequestImage: ''
+    currentRequestImage: '',
+    isRequestLoading: false
 }
 
 export default function (state = initialState, action) {
@@ -43,6 +44,12 @@ export default function (state = initialState, action) {
                 isRequestDelivered: false
             }
 
+        case 'IS_LOADING': 
+            return {
+                ...state,
+                isRequestLoading: action.isLoading
+            }
+            
         case 'persist/REHYDRATE':
             if (action.payload.courseRequests) {
                 return {

@@ -31,6 +31,10 @@ const CourseRequestList = (props) => {
     // }
   })
 
+  function handleGetRequest() {
+    getRequests();
+  }
+
   const [requests, setRequests] = useState(courseRequests);
 
   
@@ -42,7 +46,7 @@ const CourseRequestList = (props) => {
         <List component='nav'>
           {
             requests.map((request, i) => (
-              <RequestItem key = {i} request={request} />
+              <RequestItem key = {i} request={request} refresPage={handleGetRequest}/>
             ))
           }
           
