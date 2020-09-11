@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import { connect } from 'react-redux';
-import { getVideo } from '../../actions/courseVideoAction'
+import { getVideo } from '../../actions/courseVideoAction';
+import { getComments } from '../../actions/commentAction';
 import {
   Grid,
   useMediaQuery,
@@ -50,9 +51,10 @@ const Classroom = props => {
   });
 
   useEffect(() => {
-    if(isVideoChange){
+    // if(isVideoChange){
       setCurrentLecture(props.selectedVideoState);
-    }
+    // }
+    props.getComments();
   })
 
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -72,7 +74,7 @@ const Classroom = props => {
 
   const handleNext = () => {
     for (var i = 0; i < courseVideos.length; i++) {
-      if (courseVideos[i].order == (currentLecture.order + 1)) {
+      if (courseVideos[i].part == (currentLecture.part + 1)) {
         setCurrentLecture(courseVideos[i]);
         props.getVideo(courseVideos[i].id);
         if (i == (courseVideos.length - 1)) {
@@ -88,7 +90,7 @@ const Classroom = props => {
 
   const handlePrev = () => {
     for (var i = 0; i < courseVideos.length; i++) {
-      if (courseVideos[i].order == (currentLecture.order - 1)) {
+      if (courseVideos[i].part == (currentLecture.part - 1)) {
         setCurrentLecture(courseVideos[i]);
         props.getVideo(courseVideos[i].id);
         if (i == 0) {
@@ -191,9 +193,9 @@ const Classroom = props => {
 
 function mapStateToProps(state) {
   return {
-    courseVideosState: state.currentCourse.course.videos,
+    courseVideosState: state.currentCourse.lectureVideos,
     selectedVideoState: state.selectedVideo.video,
   }
 };
 
-export default connect(mapStateToProps, { getVideo })(Classroom);
+export default connect(mapStateToProps, { getVideo, getComments })(Classroom);

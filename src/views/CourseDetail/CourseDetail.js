@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
+import { closeSuccessMsg, checkCourseAccess } from '../../actions/courseRequestAction';
 import { WhatToLearn, About, PaymentForm, Requirements, CourseContent, Review } from './components';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -14,7 +16,7 @@ import {
   Divider,
   Grid,
   Button,
-  TextField,
+  CircularProgress,
   Typography,
   Avatar,
 } from '@material-ui/core';
@@ -22,7 +24,18 @@ import {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: theme.spacing(4)
+    padding: theme.spacing(4),
+    backgroundImage: `url(${'/images/courseImgs/courseImg_1.jpg'})`
+  },
+  spinner: {
+    position: "absolute",
+    height: "100px",
+    width: "100px",
+    top: "50%",
+    left: "50%",
+    marginLeft: "-50px",
+    marginTop: "-50px",
+    backgroundSize: "100%"
   },
   iframe: {
     width: '100%',
@@ -31,6 +44,11 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     marginTop: theme.spacing(3),
+  },
+
+  freeImage: {
+    width: 60,
+    height: 60,
   },
 
   avatar: {
@@ -59,6 +77,15 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  paperForScssMod: {
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: '1%',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    width: 400,
+    height: 260
+  },
+
   paper: {
     backgroundColor: theme.palette.background.paper,
     borderRadius: '1%',
@@ -69,17 +96,41 @@ const useStyles = makeStyles(theme => ({
   },
   enrolledStd: {
     marginTop: theme.spacing(2)
+  },
+  courseFee: {
+    marginLeft: theme.spacing(2),
+    fontSize: '19px'
   }
 }));
 
 const CourseDetail = (props) => {
-  const { className, selectedCourse, ...rest} = props;
+  const { className,
+    selectedCourse,
+    isRequestDelivered,
+    closeSuccessMsg,
+    isUserRegistered,
+    isUserPending,
+    userId,
+    checkCourseAccess, dispatch, ...rest } = props;
+  
+  const history = useHistory();
 
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
 
+  const [openSuccessModal, setOpenSuccessModal] = React.useState(false);
+
+
   const [values, setValues] = useState(selectedCourse);
+
+  useEffect(() => {
+    setValues(selectedCourse);
+    // alert(selectedCourse.title)
+    if (isRequestDelivered) {
+      handleOpenForScssMod();
+    }
+  }, [selectedCourse, isRequestDelivered])
 
   const getRatingStars = () => {
     var rate = [];
@@ -89,6 +140,8 @@ const CourseDetail = (props) => {
     return rate;
   }
 
+
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -97,159 +150,260 @@ const CourseDetail = (props) => {
     setOpen(false);
   };
 
+  const handleOpenForScssMod = () => {
+    setOpenSuccessModal(true);
+  };
+
+  const handleCloseForScssMod = () => {
+    closeSuccessMsg();
+    setOpenSuccessModal(false);
+    
+  };
 
   return (
-    <React.Fragment>
-      <Card className={classes.root}>
-        <CardContent>
-          <Avatar
-            alt="course"
-            className={classes.avatar}
-            src={values.icon}
-          />
-
-          <Typography
-            className={classes.title}
-            variant="h2"
-          >
-            {values.title}
-          </Typography>
-          <Typography
-            className={classes.subtitle}
-            color="textSecondary"
-            gutterBottom
-            variant="body2"
-          >
-            {values.description}
-          </Typography>
-          <Typography
-            className={classes.subtitle}
-            color="textSecondary"
-            gutterBottom
-            variant="body2"
-          >
-            {getRatingStars()}
-          </Typography>
-          <Grid
-            container
-            spacing={0}
-          >
-
-            <Avatar
+    props.isCourseLoaded ? <CircularProgress
+      className={classes.spinner}
+    /> :
+      <React.Fragment>
+        <Card
+          className={classes.root}
+        // style={{backgroundImage: `url(${values.icon})`}}
+        >
+          <CardContent>
+            {/* <Avatar
               alt="course"
-              className={classes.avatarS}
-              src={values.instructorPhoto}
-            />
+              className={classes.avatar}
+              src={values.icon} // this is going to be removed 
+            /> */}
 
             <Typography
-              className={classes.subtitle}
+              className={classes.title}
+              variant="h2"
             >
-              {values.instructorName}
+              {values.title}
             </Typography>
+            <Typography
+              className={classes.subtitle}
+              color="textSecondary"
+              gutterBottom
+              variant="body2"
+            >
+              {values.description}
+            </Typography>
+            <Typography
+              className={classes.subtitle}
+              color="textSecondary"
+              gutterBottom
+              variant="body2"
+            >
+              {getRatingStars()}
+            </Typography>
+            <Grid
+              container
+              spacing={0}
+            >
 
-          </Grid>
+              <Avatar
+                alt="course"
+                className={classes.avatarS}
+                src={values.instructorPhoto}
+              />
 
-          <Typography>
-            <Button
-              className={classes.button}
-              color="primary"
-              variant="contained"
-              onClick={() => {
-                handleOpen();
-                // history.push("/classroom");
+              <Typography
+                className={classes.subtitle}
+              >
+                {values.preparedBy}
+              </Typography>
+
+            </Grid>
+
+            <Typography>
+            { isUserRegistered ? 
+              <React.Fragment>
+                <Button
+                  className={classes.button}
+                  color="primary"
+                  variant="outlined"
+                  onClick={() => {
+                    history.push("/classroom");
+                  }}
+                >
+                  Resume Learning
+                </Button>
+              </React.Fragment>
+            :
+              isUserPending ?  
+                <React.Fragment>    
+                  <Button
+                    className={classes.button}
+                    color="primary"
+                    variant="outlined"
+                  >
+                    Pending...
+                  </Button>
+                  <Typography 
+                    className={classes.courseFee}
+                    component="span"
+                  >
+                    { values.isFree ? 'Free' : values.courseFee + '$'}
+                  </Typography>
+                </React.Fragment>
+                : 
+                <React.Fragment>    
+                  <Button
+                    className={classes.button}
+                    color="primary"
+                    variant="contained"
+                    onClick={() => {
+                      handleOpen();
+                      // history.push("/classroom");
+                    }}
+                  >
+                    Enroll
+                  </Button>
+                  <Typography 
+                    className={classes.courseFee}
+                    component="span"
+                  >
+                    { values.isFree ? 'Free' : values.courseFee + '$'}
+                  </Typography>
+                </React.Fragment>
+            }
+            </Typography>
+            <Modal
+              aria-labelledby="transition-modal-title"
+              aria-describedby="transition-modal-description"
+              className={classes.modal}
+              open={open}
+              onClose={handleClose}
+              closeAfterTransition
+              BackdropComponent={Backdrop}
+              BackdropProps={{
+                timeout: 500,
               }}
             >
-              Enroll
-        </Button>
+              <Fade in={open}>
+                <div className={classes.paper}>
+                  <PaymentForm
+                    handleClose={handleClose}
+                  />
+                </div>
+              </Fade>
+            </Modal>
+            <Typography
+              className={classes.enrolledStd}
+            >
+              <b>2332</b> already enrolled
           </Typography>
-          <Modal
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
-            className={classes.modal}
-            open={open}
-            onClose={handleClose}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-              timeout: 500,
-            }}
-          >
-            <Fade in={open}>
-              <div className={classes.paper}>
-                <PaymentForm />
-              </div>
-            </Fade>
-          </Modal>
-          <Typography
-            className={classes.enrolledStd}
-          >
-            <b>2332</b> already enrolled
-        </Typography>
+            <Modal
+              aria-labelledby="transition-modal-title"
+              aria-describedby="transition-modal-description"
+              className={classes.modal}
+              open={openSuccessModal}
+              onClose={handleCloseForScssMod}
+              closeAfterTransition
+              BackdropComponent={Backdrop}
+              BackdropProps={{
+                timeout: 500,
+              }}
+            >
+              <Fade in={openSuccessModal}>
+                <div className={classes.paperForScssMod}>
+                  <Card>
+                    <CardHeader
+                      subheader=""
+                      title="Request sent"
+                    />
+                    <Divider />
+                    <CardContent>
+                      <Typography variant="body1" gutterBottom >
+                        Your request has successfully delivered. you will be approved
+                        soon after checking the validity of your payment information. stay tunned!!
+                    </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button
+                        color="primary"
+                        variant="contained"
+                        size="small"
+                        onClick={() => {
+                            handleCloseForScssMod();
+                            checkCourseAccess(values.id, userId);
+                          }
+                        }
+                      >
+                        Close
+                    </Button>
+                    </CardActions>
+                  </Card>
+                </div>
+              </Fade>
+            </Modal>
 
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
 
-      <Card className={classes.helper}>
-        <CardContent>
-          <Typography
-            className={classes.title}
-            variant="h5"
-          >
-            WHAT YOU WILL LEARN
+        <Card className={classes.helper}>
+          <CardContent>
+            <Typography
+              className={classes.title}
+              variant="h5"
+            >
+              WHAT YOU WILL LEARN
             <WhatToLearn
-              lists={values.whatToLearn}
-            />
-          </Typography>
-        </CardContent>
-      </Card>
+                lists={values.objectives}
+              />
+            </Typography>
+          </CardContent>
+        </Card>
 
-      <Card className={classes.helper}>
-        <CardHeader
-          title="Requirement"
+        <Card className={classes.helper}>
+          <CardHeader
+            title="Requirement"
+          />
+          <Divider />
+          <CardContent>
+            <Typography
+              className={classes.title}
+              variant="h5"
+            >
+
+              <Requirements
+                requirements={values.requirements}
+              />
+            </Typography>
+
+          </CardContent>
+        </Card>
+
+        <CourseContent
+          className={classes.helper}
         />
-        <Divider />
-        <CardContent>
-          <Typography
-            className={classes.title}
-            variant="h5"
-          >
 
-            <Requirements
-              requirements={values.requirements}
-            />
-          </Typography>
+        <Card className={classes.helper}>
+          <CardHeader
+            title="About this Course"
+          />
+          <Divider />
+          <CardContent>
+            <Typography
+              className={classes.title}
+              variant="h5"
+            >
 
-        </CardContent>
-      </Card>
+              <About
+                description={values.about}
+              />
+            </Typography>
 
-      <CourseContent
-        className={classes.helper}
-      />
+          </CardContent>
+        </Card>
 
-      <Card className={classes.helper}>
-        <CardHeader
-          title="About this Course"
+        <Review
+          className={classes.helper}
         />
-        <Divider />
-        <CardContent>
-          <Typography
-            className={classes.title}
-            variant="h5"
-          >
 
-            <About
-              description={values.about}
-            />
-          </Typography>
-
-        </CardContent>
-      </Card>
-
-      <Review
-        className={classes.helper}
-      />
-
-    </React.Fragment>
+      </React.Fragment>
 
   );
 };
@@ -257,7 +411,12 @@ const CourseDetail = (props) => {
 function mapStateToProps(state) {
   return {
     selectedCourse: state.currentCourse.course,
+    userId: state.currentUser.user.id,
+    isCourseLoaded: state.currentCourse.isCourseFetched,
+    isRequestDelivered: state.courseRequests.isRequestDelivered,
+    isUserRegistered: state.currentCourse.isUserAccessGranted, 
+    isUserPending: state.currentCourse.isUserInPendingState
   }
 };
 
-export default connect(mapStateToProps)(CourseDetail);
+export default connect(mapStateToProps, { closeSuccessMsg, checkCourseAccess })(CourseDetail);

@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/styles';
 import { Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { SearchInput } from 'components';
-import { handleSetUsers, fetchUsersForAdmin } from '../../../../actions/userListAction';
+import { getRequests } from '../../../../actions/courseRequestAction';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -32,12 +32,12 @@ const useStyles = makeStyles(theme => ({
 
 const UsersToolbar = props => {
 
-  const { fun, handleSetUsers, fetchUsersForAdmin, className, ...rest } = props;
+  const { fun, getRequests, className, ...rest } = props;
 
   const classes = useStyles();
 
-  function getUsers(userType) {
-    
+  function handleGetRequest() {
+    getRequests();
   }
   return (
     <div
@@ -46,13 +46,12 @@ const UsersToolbar = props => {
     >
       <div className={classes.row}>
         <span className={classes.spacer} />
-        <Button className={classes.importButton} onClick={() => fetchUsersForAdmin('student')}>Students</Button>
-        <Button className={classes.exportButton} onClick={() => fetchUsersForAdmin('Teacher')}>Teachers</Button>
         <Button
           color="primary"
           variant="contained"
+          onClick={handleGetRequest}
         >
-          Add Teacher
+          Refresh page 
         </Button>
       </div>
       <div className={classes.row}>
@@ -75,4 +74,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {fetchUsersForAdmin})(UsersToolbar);
+export default connect(mapStateToProps, { getRequests })(UsersToolbar);

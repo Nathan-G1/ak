@@ -15,7 +15,8 @@ import {
   ListItemAvatar,
   Avatar,
   ListItemText,
-  Button
+  Button,
+  Typography
 } from '@material-ui/core';
 import ReactPlayer from 'react-player'
 
@@ -33,7 +34,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const CommentForm = props => {
-  const { className, currentuser, ...rest } = props;
+  const { className, currentuser, videoId, ...rest } = props;
 
   const classes = useStyles();
 
@@ -56,32 +57,34 @@ const CommentForm = props => {
   const handleSubmit = event => {
     event.preventDefault();
     const comment = {
-      id: 43,
+      text: values.qna,
       userName: props.currentuser.firstName,
       avatar: props.currentuser.avatar,
-      comment: values.qna,
       likes: 0,
       dislikes: 0,
       replies: [
 
-      ]
+      ],
+      commentId: "",
+      videoId: videoId,
+      courseId: ""
     };
 
-    if(isTheFormForReply){
+    if (isTheFormForReply) {
       props.addReply(props.commentid, comment);
-    }else{
-      props.addComment(comment);
+    } else {
+      props.addComment(JSON.stringify(comment));
     }
-    
+
     setValues(values => ({
       ...values,
       qna: ''
     }));
 
-    if(props.setistheformvisible){
+    if (props.setistheformvisible) {
       props.setistheformvisible();
     }
-    
+
   }
   return (
     <form
@@ -102,7 +105,7 @@ const CommentForm = props => {
                 <React.Fragment>
                   <TextField
                     fullWidth
-                    label={isTheFormForReply ? 'Reply...' :'Question...' }
+                    label={isTheFormForReply ? 'Reply...' : 'Question...'}
                     margin="dense"
                     name="qna"
                     required
@@ -131,14 +134,14 @@ const CommentForm = props => {
                 }}
               >
                 Cancel
-                </Button>
+              </Button>
               <Button
                 variant="outlined"
                 size="small"
                 type="submit"
               >
-                {isTheFormForReply ? 'Reply' :'Ask' }
-                </Button>
+                {isTheFormForReply ? 'Reply' : 'Ask'}
+              </Button>
             </Grid>
           }
 
@@ -153,7 +156,8 @@ CommentForm.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  currentuser: state.currentUser.user
+  currentuser: state.currentUser.user,
+  videoId: state.selectedVideo.video.id
 });
 
 

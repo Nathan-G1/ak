@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { connect } from 'react-redux';
+import { addReview } from '../../../../../../actions/courseAction';
 import { makeStyles } from '@material-ui/styles';
 import {
   Card,
@@ -47,9 +49,37 @@ const CommentForm = props => {
     });
   };
 
+  const handleSubmit = event => {
+    event.preventDefault();
+    const review = {
+      text: values.qna,
+      userName: props.currentuser.firstName,
+      avatar: props.currentuser.avatar,
+      likes: 0,
+      dislikes: 0,
+      replies: [
+
+      ],
+      commentId: "",
+      videoId: "",
+      courseId: props.courseId
+    };
+  
+    props.addReview(JSON.stringify(review));
+  
+    setValues(values => ({
+      ...values,
+      qna: ''
+    }));
+
+  }
+
+
   return (
     //to be visible for logged in student
-    <form>
+    <form
+      onSubmit={handleSubmit}
+    >
         <Divider />
         <CardContent>
         <List>
@@ -57,7 +87,7 @@ const CommentForm = props => {
             <ListItemAvatar>
                 <Avatar
                 className={classes.avatar}
-                src={currentuser.avatar}  
+                src={`https://samvisionapi.herokuapp.com/images/${currentuser.avatar}`}  
                 />
             </ListItemAvatar>
             <ListItemText
@@ -69,6 +99,7 @@ const CommentForm = props => {
                     margin="dense"
                     name="qna"
                     onChange={handleChange}
+                    value={values.qna}
                     onClick={() => {
                         setIsFormActionVisible(true);
                     }}
@@ -113,4 +144,9 @@ CommentForm.propTypes = {
   className: PropTypes.string
 };
 
-export default CommentForm;
+const mapStateToProps = state => ({
+  currentuser: state.currentUser.user,
+  courseId: state.currentCourse.course.id
+});
+
+export default connect(mapStateToProps, { addReview })(CommentForm);

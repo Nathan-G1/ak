@@ -68,7 +68,7 @@ const Profile = props => {
 
   const course = {
     name: currentCourse.title,
-    avatar: currentCourse.imageUrl,
+    avatar: currentCourse.icon,
     // rating: 5
   };
 
@@ -97,7 +97,7 @@ const Profile = props => {
         alt="Person"
         className={classes.avatar}
         component={RouterLink}
-        src={course.avatar}
+        src={`https://samvisionapi.herokuapp.com/images/${course.avatar}`}
         to="/settings"
       />
       <Typography

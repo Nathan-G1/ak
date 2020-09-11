@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Avatar, Typography } from '@material-ui/core';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,15 +23,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Profile = props => {
-  const { className, ...rest } = props;
+  const { user, className, ...rest } = props;
 
   const classes = useStyles();
-
-  const user = {
-    name: 'Roman Getnet',
-    avatar: '/images/avatars/avatar_11.png',
-    bio: 'Accountant'
-  };
+  // avatar use default if no avatar is saved in image server
+  //user.avatar = '/images/avatars/avatar_11.png';
 
   return (
     <div
@@ -41,16 +38,16 @@ const Profile = props => {
         alt="Person"
         className={classes.avatar}
         component={RouterLink}
-        src={user.avatar}
+        src={`https://samvisionapi.herokuapp.com/images/${user.avatar}`}
         to="/settings"
       />
       <Typography
         className={classes.name}
         variant="h4"
       >
-        {user.name}
+        {user.firstName} {user.lastName} 
       </Typography>
-      <Typography variant="body2">{user.bio}</Typography>
+      <Typography variant="body2">{user.userType}</Typography>
     </div>
   );
 };
@@ -58,5 +55,10 @@ const Profile = props => {
 Profile.propTypes = {
   className: PropTypes.string
 };
+function mapStateToProps(state) {
+  return {
+      user : state.currentUser.user
+  }
+}
 
-export default Profile;
+export default connect(mapStateToProps, {})(Profile);

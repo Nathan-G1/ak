@@ -122,11 +122,11 @@ const UsersTable = props => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {users.slice(0, rowsPerPage).map(user => (
+                {users.slice(0, rowsPerPage).map((user, i) => (
                   <TableRow
                     className={classes.tableRow}
                     hover
-                    key={user.id}
+                    key={i}
                     selected={selectedUsers.indexOf(user.id) !== -1}
                   >
                     <TableCell padding="checkbox">
@@ -141,21 +141,20 @@ const UsersTable = props => {
                       <div className={classes.nameContainer}>
                         <Avatar
                           className={classes.avatar}
-                          src={user.avatarUrl}
+                          src={user.avatar}
                         >
-                          {getInitials(user.name)}
                         </Avatar>
-                        <Typography variant="body1">{user.name}</Typography>
+                        <Typography variant="body1">{user.firstName} {user.lastName}</Typography>
                       </div>
                     </TableCell>
                     <TableCell>{user.email}</TableCell>
                     <TableCell>
-                      {user.address.city}, {user.address.state},{' '}
-                      {user.address.country}
+                      Addis Ababa, Ethiopia
                     </TableCell>
-                    <TableCell>{user.phone}</TableCell>
+                    <TableCell>{user.phoneNumber}</TableCell>
                     <TableCell>
-                      {moment(user.createdAt).format('DD/MM/YYYY')}
+                      {/* {moment(user.createdAt).format('DD/MM/YYYY')} */}
+                      23/2/2020
                     </TableCell>
                   </TableRow>
                 ))}

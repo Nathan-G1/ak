@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import moment from 'moment';
+import { connect } from 'react-redux';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
@@ -51,11 +52,15 @@ const statusColors = {
 };
 
 const CourseContent = props => {
-  const { className, ...rest } = props;
+  const { className, courseVideoList, ...rest } = props;
 
   const classes = useStyles();
 
-  const [courselist] = useState(mockData);
+  const [courseLectureList, setCourseLectureList] = useState(courseVideoList)
+
+  useEffect(() => {
+    setCourseLectureList(courseVideoList);
+  })
 
   return (
     <Card
@@ -78,13 +83,14 @@ const CourseContent = props => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {courselist.map(content => (
+                {courseLectureList.map(content => (
                   <TableRow
                     hover
                     key={content.id}
                   >
                     <TableCell>{content.title}</TableCell>
-                    <TableCell>{content.videoLength}</TableCell>
+                    {/* <TableCell>{content.videoLength}</TableCell> */}
+                    <TableCell>--------</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -110,4 +116,10 @@ CourseContent.propTypes = {
   className: PropTypes.string
 };
 
-export default CourseContent;
+function mapStateToProps(state) {
+  return {
+    courseVideoList: state.currentCourse.lectureVideos,
+  }
+};
+
+export default connect(mapStateToProps)(CourseContent);

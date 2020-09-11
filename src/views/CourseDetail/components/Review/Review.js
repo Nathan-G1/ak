@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
+import { connect } from 'react-redux';
 import { ReviewItem, CommentForm } from './components'
 import {
   Card,
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Review = props => {
-  const { className, ...rest } = props;
+  const { className, courseReview, ...rest } = props;
 
   const classes = useStyles();
 
@@ -199,15 +200,15 @@ const Review = props => {
         <CardContent>
           <List>
               {
-                comments.map((comment) => (
+                courseReview.map((review) => (
                   <React.Fragment>
                     <ListItem
                       className={classes.reviewList} 
-                      key={comment.id} 
+                      key={review.id} 
                       alignItems="flex-start"
                     >
                       <ReviewItem
-                        comment={comment}
+                        review={review}
                         currentuser={currentUser}
                         handleLikeCount={handleLikeCount}
                         handleDisLikeCount={handleDisLikeCount}
@@ -229,4 +230,10 @@ Review.propTypes = {
   className: PropTypes.string
 };
 
-export default Review;
+function mapStateToProps(state) {
+  return {
+    courseReview: state.currentCourse.courseReview
+  }
+};
+
+export default connect(mapStateToProps, { })(Review);

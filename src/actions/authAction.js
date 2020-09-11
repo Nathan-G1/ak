@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { push, replace } from 'react-router-redux';
-import { handleSetUser } from './userAction';
+import { getCourses } from './courseAction';
 import {
     SIGN_UP,
     SIGN_IN_REQUEST,
@@ -30,7 +30,7 @@ export const handleSignup = (userData) => (dispatch, getState) => {
 
 }
 
-export const handleSignin = (userData) => (dispatch, getState) => {
+export const handleSignin = (userData, userPassword) => (dispatch, getState) => {
     dispatch({
         type: SIGN_IN_REQUEST
     });
@@ -42,7 +42,12 @@ export const handleSignin = (userData) => (dispatch, getState) => {
                 payload: res.data,
                 state: getState()
             });
-            // dispatch(handleSetUser(res.data.userId));
+            // dispatch(getCourses());
+
+            dispatch({
+                type: 'SET_PASSWORD',
+                payload: userPassword
+            });
         }).catch(err => {
             dispatch({
                 type: SIGN_IN_FAIL
@@ -51,7 +56,7 @@ export const handleSignin = (userData) => (dispatch, getState) => {
 
 }
 
-export const handleSignout = () => (dispatch) => {
+export const handleSignout = () => (dispatch, getState) => {
     dispatch({
         type: SIGN_OUT
     });

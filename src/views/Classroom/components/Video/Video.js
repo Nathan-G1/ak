@@ -48,7 +48,7 @@ const Video = props => {
             container
             spacing={6}
           >
-            <ReactPlayer url={currentlecture.video} controls width='100%'/>
+            <ReactPlayer url={currentlecture.url} controls width='100%'/>
           </Grid>
         </CardContent>
         <Divider />

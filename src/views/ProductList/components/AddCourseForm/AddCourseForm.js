@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AddCourseForm = props => {
-  const { className, handleClose, ...rest } = props;
+  const { className, handleClose, user, ...rest } = props;
   const [isCourseAdded, setIsCourseAdded] = useState(false);
 
   // useEffect(() => {
@@ -49,51 +49,48 @@ const AddCourseForm = props => {
   const classes = useStyles();
 
   const [values, setValues] = useState({
-    courseTitle: 'Version Control',
-    courseCategory: 'Introduction',
-    courseImage: '/images/products/product_5.png',
+    courseTitle: '',
+    courseCategory: '5f3175834262d10017f033b8',
+    courseImage: '',
     courseObjective: '',
-    courseDescription: 'ET'
+    courseDescription: ''
   });
 
   const handleSubmit = event => {
     event.preventDefault();
+
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    
     const course = {
       
-        title: values.courseTitle,
-        preparedBy: "",
-        teacher: "Abebe",
-        // instructorPhoto: '/images/avatars/avatar_11.png',
-        // instructorName: 'Abebe',
-        length: 0,
-        // time: 3, not in the model
-        certificate: true,
-        videos: [
-          ""
-        ],
-        publishedDate: "2020-08-07T15:48:33.322Z",
-        icon: '/images/products/product_1.png',
-        enrolledStudents: 0,
-        description: values.courseDescription,
-        categoryId: "",
-        rating: 0,
-        totalDownloads: 0,
-        updatedAt: "2020-08-07T15:48:33.322Z",
-        whatToLearn: [
-          ""
-        ],
-        about: "",
-        requirements: [
-          ""
-        ],
-        objectives: [
-          ""
-        ],
-        id: "string"
-      
+      title: values.courseTitle,
+      preparedBy: user.firstName,
+      instructorPhoto: user.avatar,
+      length: 0,
+      certificate: true,
+      videos: [
+        ""
+      ],
+
+      publishedDate: `${date}`,
+      icon: "",
+      enrolledStudents: 0,
+      description: values.courseDescription,
+      categoryId: values.courseCategory,
+      rating: 2,
+      totalDownloads: 0,
+      updatedAt: `${date}`,
+      about: '',
+      isFree: true,
+      courseFee: 0,
+      requirements: '',
+      objectives: [
+        ''
+      ]
     }
 
-    props.addCourse(course);
+    props.addCourse(JSON.stringify(course));
     setIsCourseAdded(true);
   }
 
@@ -106,15 +103,15 @@ const AddCourseForm = props => {
 
   const categories = [
     {
-      value: 'academic',
+      value: '5f3175834262d10017f033b8',
       label: 'Academic'
     },
     {
-      value: 'college',
+      value: '5f392e474ecbb20017ced439',
       label: 'College'
     },
     {
-      value: 'general',
+      value: '5f392e604ecbb20017ced43a',
       label: 'General'
     }
   ];
@@ -262,7 +259,7 @@ AddCourseForm.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  
+  user: state.currentUser.user
 });
 
 export default connect(mapStateToProps, { addCourse })(AddCourseForm);

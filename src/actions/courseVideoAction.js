@@ -1,4 +1,5 @@
 import { tokenConfig } from './authAction';
+import { getComments } from './commentAction';
 import { GET_VIDEO } from './types';
 // export const getVideos = (courseData) => (dispatch, getState) => {
 //     dispatch({
@@ -13,4 +14,6 @@ export const getVideo = (videoId) => (dispatch, getState) => {
             id: videoId,
             state: getState()
     });
+
+    dispatch(getComments(videoId));
 }
