@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
-import { getCommentReplies } from '../../../../actions/commentAction';
+// import { getCommentReplies } from '../../../../actions/commentAction';
 import { CommentItem, CommentForm } from './components'
 import {
   Card,
@@ -147,4 +147,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { getCommentReplies })(Comment);
+export default connect(mapStateToProps, { })(Comment);

@@ -52,14 +52,14 @@ const statusColors = {
 };
 
 const CourseContent = props => {
-  const { className, ...rest } = props;
+  const { className, courseVideoList, ...rest } = props;
 
   const classes = useStyles();
 
-  const [courseLectureList, setCourseLectureList] = useState(props.courseVideoList)
+  const [courseLectureList, setCourseLectureList] = useState(courseVideoList)
 
   useEffect(() => {
-    setCourseLectureList(props.courseVideoList);
+    setCourseLectureList(courseVideoList);
   })
 
   return (

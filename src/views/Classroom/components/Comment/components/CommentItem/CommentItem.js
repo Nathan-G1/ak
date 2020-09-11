@@ -120,15 +120,9 @@ const CommentItem = props => {
       <ListItemText
         primary={comment.userName}
         secondary={
-          <React.Fragment>
-            {/* <Typography
-                            component="span"
-                            variant="body2"
-                            className={classes.inline}
-                            color="textPrimary"
-                        >
-                            {comment.userName}
-                        </Typography> */}
+          // <React.Fragment>
+
+          <Typography component={'span'}>
             {comment.text}
             <Button
               size="small"
@@ -152,6 +146,7 @@ const CommentItem = props => {
               <Typography>{comment.dislikes}</Typography>
             </IconButton> */}
             <br />
+
             {
               isCommentFormVisible && 
               <CommentForm
@@ -208,8 +203,9 @@ const CommentItem = props => {
 
               </List>
             }
+            </Typography>
 
-          </React.Fragment>
+          // </React.Fragment>
         }
       />
     </React.Fragment>

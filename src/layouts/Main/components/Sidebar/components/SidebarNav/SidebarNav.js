@@ -8,7 +8,6 @@ import { makeStyles } from '@material-ui/styles';
 import { List, ListItem, Button, colors, Hidden, Typography  } from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { connect } from 'react-redux';
-import { handleSetUser } from '../../../../../../actions/userAction'; 
 import { handleSignout } from '../../../../../../actions/authAction';
 import {
   CircularProgress,
@@ -121,8 +120,8 @@ function mapStateToProps(state) {
   return {
       user : state.currentUser.user,
       // userId : state.auth.userId
-      isUserFetched: state.currentUser.isUserFetched
+      // isUserFetched: state.currentUser.isUserFetched
   }
 }
 
-export default connect(mapStateToProps, {handleSetUser, handleSignout})(SidebarNav);
+export default connect(mapStateToProps, {handleSignout})(SidebarNav);

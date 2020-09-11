@@ -118,10 +118,6 @@ ProductsToolbar.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    selectedCourse: state.currentCourse.course,
-    courseImage: state.currentCourse.courseImage,
-    courseVideoList: state.currentCourse.lectureVideos,
-    isCourseLoaded: state.currentCourse.isCourseFetched,
     user: state.currentUser.user
   }
 };

@@ -111,7 +111,7 @@ const CourseDetail = (props) => {
     isUserRegistered,
     isUserPending,
     userId,
-    checkCourseAccess, ...rest } = props;
+    checkCourseAccess, dispatch, ...rest } = props;
   
   const history = useHistory();
 

@@ -15,7 +15,8 @@ import {
   ListItemAvatar,
   Avatar,
   ListItemText,
-  Button
+  Button,
+  Typography
 } from '@material-ui/core';
 import ReactPlayer from 'react-player'
 

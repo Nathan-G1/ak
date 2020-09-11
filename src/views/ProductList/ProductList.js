@@ -110,7 +110,6 @@ const ProductList = (props) => {
 
 const mapStateToProps = state => ({
   courseList: state.courseList.courses,
-  isCourseLoaded: state.currentCourse.isCourseFetched,
   isCourseUpdated: state.courseList.isCourseUpdated,
   userId: state.auth.userId,
   userType: state.currentUser.user.userType,
