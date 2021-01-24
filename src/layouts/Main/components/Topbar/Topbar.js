@@ -57,7 +57,7 @@ const Topbar = props => {
         <Hidden mdDown>
           <Avatar
             className={classes.small}
-            src={currentuser.avatar} />
+            src={`https://samvisionapi.herokuapp.com/images/${currentuser.avatar}`} />
           <Typography
             className={classes.nameTxt}
           >{currentuser.firstName}</Typography>

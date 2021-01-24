@@ -39,11 +39,12 @@ export default function (state = initialState, action) {
                     token: action.payload.id,
                     userId: action.payload.userId,
                     isAuthenticated: true,
-                    isAuthenticating: false
+                    isAuthenticating: false,
+                    isAuthenticationFailed: false
                 };
                 
             }
-            
+
         // case '@@router/CALL_HISTORY_METHOD':
         //     window.location.replace('/dashboard');
 

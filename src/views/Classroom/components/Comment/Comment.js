@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
-// import { updateComments } from '../../../../actions/commentAction';
+import { getCommentReplies } from '../../../../actions/commentAction';
 import { CommentItem, CommentForm } from './components'
 import {
   Card,
@@ -48,10 +48,12 @@ const Comment = props => {
   const [comments, setComments] = useState(incomingComments);
 
   useEffect(() => {
-    if(isCommentAdded){
+    // if(isCommentAdded){
       setComments(incomingComments);
     //   // props.updateComments();
-    }
+    // }
+
+    // props.getCommentReplies();
   })
 
   const handleLikeCount = (id) => {
@@ -145,4 +147,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, {})(Comment);
+export default connect(mapStateToProps, { getCommentReplies })(Comment);

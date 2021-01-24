@@ -182,7 +182,7 @@ const SignIn = props => {
   const handleSignIn = event => {
     event.preventDefault();
     const loginData = JSON.stringify(formState.values);
-    props.handleSignin(loginData);
+    props.handleSignin(loginData, formState.values.password);
     // history.push('/dashboard');
     // navHistory.push('/dashboard');
   };
@@ -373,7 +373,8 @@ SignIn.propTypes = {
 const mapStateToProps = state => ({
   isAuthenticating: state.auth.isAuthenticating,
   isAuthenticationFailed: state.auth.isAuthenticationFailed,
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  userId: state.auth.userId
 });
 
 export default connect(mapStateToProps, { handleSignin })(withRouter(SignIn));
